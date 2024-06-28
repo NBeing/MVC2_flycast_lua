@@ -153,7 +153,7 @@ GLOBALS = {
 local stuff
 print("hello world")
 print("util", util)
-stuff = util.read_object_from_json_file('./training/keywordObject.json')
+stuff = util.read_object_from_json_file('./training/data/keywordObject.json')
 print("My shit", stuff.Base.Description)
 
 function cbStart()
