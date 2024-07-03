@@ -1,4 +1,3 @@
-P1_A_Base = 0x2C268340
 return {
   ['P1_A_Base'] = 0x2C268340,
   ['P1_B_Base'] = 0x2C268E88,
