@@ -6,26 +6,31 @@
 -- local BTN_Z = assist 1
 -- Imports
 -- Util
-local util = require './training/utilities'
+util = require './training/utilities'
 -- MVC2 Addresses
-local mvc2 = util.read_object_from_json_file('./training/data/SPREADSHEET.json')
-local jSS = mvc2.SPREADSHEET -- json file: Spreadsheet object (contains other objects)
-local jAdr = mvc2.AllAddresses -- json file: AllAddresses (contains unfiltered object with k-v addresses)
-local jKeywords = mvc2.Keywords -- json file: Keywords (contains unfiltered object with k-v keywords)
+MVC2_OBJ = util.read_object_from_json_file('./training/data/SPREADSHEET.json')
+jsonSpreadsheet = MVC2_OBJ.SPREADSHEET -- json file: Spreadsheet object (contains other objects)
+jsonAllAddresses = MVC2_OBJ.AllAddresses -- json file: AllAddresses (contains unfiltered object with k-v addresses)
+jsonKeywords = MVC2_OBJ.Keywords -- json file: Keywords (contains unfiltered object with k-v keywords)
 
 -- Data
-local DC_MVC2_MEMORY_TABLE = require './training/data/DC_MVC2_MEMORY_TABLE'
-local CHARACTER = require './training/data/characters'
-local STAGES = require './training/data/stages'
+DC_MVC2_MEMORY_TABLE = require './training/data/DC_MVC2_MEMORY_TABLE'
+CHARACTER = require './training/data/characters'
+STAGES = require './training/data/stages'
 
 -- Buttons
 -- -- local buttonUtil            = require './training/buttons'
 
 -- Readers / Writers Aliases
-local read8 = flycast.memory.read8
-local read16 = flycast.memory.read16
-local write8 = flycast.memory.write8
-local write16 = flycast.memory.write16
+read8 = flycast.memory.read8
+read16 = flycast.memory.read16
+read32 = flycast.memory.read32
+write8 = flycast.memory.write8
+write16 = flycast.memory.write16
+write32 = flycast.memory.write32
+
+-- Important Constants
+CURRENT_FRAME = read32(jsonAllAddresses.Frame_Counter)
 
 -- -- Example will be read8(jAdr.P1_A_Is_Point)
 
@@ -71,25 +76,25 @@ function GetPoint(oneOrTwo)
   local pointPrefix = '' -- will contain the character that is on point for the specified player.
 
   if oneOrTwo == 1 then
-    if flycast.memory.read8(jAdr.P1_A_Is_Point) == 0 then
+    if flycast.memory.read8(jsonAllAddresses.P1_A_Is_Point) == 0 then
       pointPrefix = 'P1_A_'
       return pointPrefix
-    elseif flycast.memory.read8(jAdr.P1_B_Is_Point) == 0 then
+    elseif flycast.memory.read8(jsonAllAddresses.P1_B_Is_Point) == 0 then
       pointPrefix = 'P1_B_'
       return pointPrefix
-    elseif flycast.memory.read8(jAdr.P1_C_Is_Point) == 0 then
+    elseif flycast.memory.read8(jsonAllAddresses.P1_C_Is_Point) == 0 then
       pointPrefix = 'P1_C_'
       return pointPrefix
     end
   else
     if oneOrTwo == 2 then
-      if flycast.memory.read8(jAdr.P2_A_Is_Point) == 0 then
+      if flycast.memory.read8(jsonAllAddresses.P2_A_Is_Point) == 0 then
         pointPrefix = 'P2_A_'
         return pointPrefix
-      elseif flycast.memory.read8(jAdr.P2_B_Is_Point) == 0 then
+      elseif flycast.memory.read8(jsonAllAddresses.P2_B_Is_Point) == 0 then
         pointPrefix = 'P2_B_'
         return pointPrefix
-      elseif flycast.memory.read8(jAdr.P2_C_Is_Point) == 0 then
+      elseif flycast.memory.read8(jsonAllAddresses.P2_C_Is_Point) == 0 then
         pointPrefix = 'P2_C_'
         return pointPrefix
       end
@@ -102,42 +107,20 @@ end
 function GetPMemUsingPoint(player, address_name)
   local pointCharForPlayer = GetPoint(player)
   local concat = pointCharForPlayer .. address_name
-  local lookUp = jAdr[concat]
+  local lookUp = jsonAllAddresses[concat]
   return flycast.memory.read8(lookUp) -- Example: P1_A_ .. Health_Big
 end
 
 function cbOverlay()
+  print(jsonAllAddresses.Frame_Counter)
   local ui = flycast.ui
   local MEMORY = flycast.memory
-  local current_frame = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
 
   ui.beginWindow("Debug", 100, 10, 300, 0)
-  -- local key = jKeywords.ID_2
-  -- local val = flycast.memory.read16(jAdr.P1_A_ID_2) -- flycast.memory.read8(0x2C26A51F)
-  -- local Camera_X_Position = flycast.memory.read16(0x2C26A56C)
-  -- local Camera_X_Rotation = flycast.memory.read16(0x2C26A524)
-
-  -- knockdown_condition = flycast.memory.read8(DC_MVC2_MEMORY_TABLE.p2_char1_knockdown_state) == 32
-  -- hitstop_timer = flycast.memory.read8(DC_MVC2_MEMORY_TABLE.p2_char1_hit_stop2)
-  -- hitstop_condition = hitstop_timer > 0
-  -- p2_char1_being_hit = knockdown_condition and hitstop_condition
-  -- knockdown_condition_p1 = flycast.memory.read8(DC_MVC2_MEMORY_TABLE.p1_char1_knockdown_state)
-  -- if (knockdown_condition_p1 == 2) then
-  --   current_frame_unambiguous = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
-  --   -- print("It is 2 on frame : " .. current_frame_unambiguous)
-  -- end
-  -- knockdown_condition_p1_state = flycast.memory.read8(knockdown_condition_p1)
-
   -- Draw
   flycast.ui.text(string.format("P1_IsPoint: %s", GetPoint(1)))
   flycast.ui.text(string.format("P2_IsPoint: %s", GetPoint(2)))
   flycast.ui.text(string.format("P2_Health_Big: %d", GetPMemUsingPoint(2, 'Health_Big')))
-
-  -- if is_guarding and hitstop_condition then
-  --   pushblock(2)
-  -- elseif is_guarding and hitstop_timer == 0 then
-  --   release_pb(2)
-  -- end
 
   ui.endWindow()
 
@@ -234,12 +217,12 @@ function cbOverlay()
     ui.button('Do the load', function()
       flycast.emulator.loadState(1)
       jump(1)
-      current_frame = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
-      -- print("Load state occurred on frame:", current_frame)
+      CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
+      print("Load state occurred on frame:", CURRENT_FRAME)
     end)
     ui.button('Do the save', function()
-      current_frame = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
-      -- print("Save state was saved on frame:", current_frame)
+      CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
+      print("Save state was saved on frame:", CURRENT_FRAME)
       flycast.emulator.saveState(1)
       -- 24 - 0
       -- 25 - 0
@@ -364,7 +347,7 @@ function release_pb(player)
   flycast.input.releaseButtons(player, BTN_X | BTN_Y)
 end
 function pushblock(player)
-  current_frame = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
+  CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
   flycast.input.pressButtons(player, BTN_X | BTN_Y)
   -- if time_to_release_pb == nil then
   --     time_to_release_pb = current_frame + 2 
