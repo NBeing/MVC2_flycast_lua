@@ -151,8 +151,30 @@ function round(num, numDecimalPlaces)
 	local mult = 10^(numDecimalPlaces or 0)
 	return math.floor(num * mult + 0.5) / mult
   end
-
+function hex_to_number(someHexString)
+	return tonumber(someHexString, 16)
+end
+function dump(o)
+	if type(o) == 'table' then
+	   local s = '{ '
+	   for k,v in pairs(o) do
+		  if type(k) ~= 'number' then k = '"'..k..'"' end
+		  s = s .. '['..k..'] = ' .. dump(v) .. ','
+	   end
+	   return s .. '} '
+	else
+	   return tostring(o)
+	end
+ end
+ function table.shallow_copy(t)
+    local t2 = {}
+    for k,v in pairs(t) do
+      t2[k] = v
+    end
+    return t2
+ end
 utilitiesModule = {
+    ["hex_to_number"]              = hex_to_number,
     ["do_tables_match"]            = do_tables_match,
     ["to_hex"]                     = to_hex,
 	["round"]                      = round,
@@ -160,5 +182,6 @@ utilitiesModule = {
 	["write_object_to_json_file"]  = write_object_to_json_file,
 	["string_to_color"]			   = string_to_color,
 	["tablelength"]                = tablelength,
+	["dump"]                	   = dump,
 }
 return utilitiesModule
