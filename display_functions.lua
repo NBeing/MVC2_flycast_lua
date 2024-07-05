@@ -76,35 +76,7 @@ local function displaySpecialCases(address_name)
   return nil
 end
 
--- Function to get the appropriate read function based on the type
-local function getReadFunction(objectType)
-  if objectType then
-    print("Type found:", objectType)
-    -- Check if the type is in config.byteSize
-    for _, type in ipairs(config.byteSize) do
-      if type == objectType then
-        print("Valid type:", objectType)
-        if objectType == "Byte" then
-          return config.read8
-        elseif objectType == "2 Byte" then
-          return config.read16
-        elseif objectType == "4 Byte" then
-          return config.read32
-        elseif objectType == "Float" then
-          return config.readFloat
-        else
-          print("Unknown type:", objectType)
-          return nil
-        end
-      end
-    end
-    print("Invalid type:", objectType)
-  else
-    print("Type not found for object")
-  end
-  return nil
-end
-
+-- Function to look up an address and print the containing object
 local function lookUp(address_name, oneOrTwo)
   for sectionName, section in pairs(config) do
     if type(section) == "table" then
@@ -115,7 +87,7 @@ local function lookUp(address_name, oneOrTwo)
           print("Object details:", obj)
 
           -- Determine the read function
-          local readFunction = getReadFunction(obj.Type)
+          local readFunction = pMem.getReadFunction(obj.Type)
           if not readFunction then
             print("Failed to determine read function for type:", obj.Type)
             return

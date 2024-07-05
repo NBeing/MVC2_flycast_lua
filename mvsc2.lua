@@ -18,10 +18,10 @@ function cbOverlay()
   -- end
 
   -- Use the lookUp function
-  local lookUpResult = display.lookUp("A_2D_Game_Timer") -- Example with optional arguments
-  if lookUpResult then
-    ui.text(lookUpResult)
-  end
+  display.lookUp("X_Position_Arena", 1) -- Example with optional arguments
+  -- display.lookUp("P1_X_Position_Arena")
+  -- display.lookUp("Total_Frames")
+  -- display.lookUp("A_2D_Game_Timer")
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

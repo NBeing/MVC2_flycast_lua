@@ -34,6 +34,37 @@ local function GetPoint(oneOrTwo)
   end
 end
 
+-- Function to get the appropriate read function based on the type
+-- @param objectType The type of the object.
+-- @return The read function based on the type.
+local function getReadFunction(objectType)
+  if objectType then
+    print("Type found:", objectType)
+    -- Check if the type is in config.byteSize
+    for _, type in ipairs(config.byteSize) do
+      if type == objectType then
+        print("Valid type:", objectType)
+        if objectType == "Byte" then
+          return config.read8
+        elseif objectType == "2 Byte" then
+          return config.read16
+        elseif objectType == "4 Byte" then
+          return config.read32
+        elseif objectType == "Float" then
+          return config.readFloat
+        else
+          print("Unknown type:", objectType)
+          return nil
+        end
+      end
+    end
+    print("Invalid type:", objectType)
+  else
+    print("Type not found for object")
+  end
+  return nil
+end
+
 -- Retrieves the value from a memory address based on the player's point character and the address name.
 -- @param oneOrTwo The player number (1 or 2).
 -- @param address_name The name of the memory address.
@@ -48,7 +79,7 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
     -- If not found, check in SpecificCharacterAddresses
     lookup = config.SpecificCharacterAddresses[address_name]
     if not lookup then
-      error("Address not found for key: " .. concat .. " in PlayerMemoryAddresses or SpecificCharacterAddresses")
+      error("Address not found for key: " .. concat)
     end
   end
 
@@ -57,12 +88,19 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
     error("Concatenated address not found in lookup result: " .. concat)
   end
 
-  local value = config.read8(address)
+  -- Determine the read function
+  local readFunction = getReadFunction(lookup.Type)
+  if not readFunction then
+    error("Failed to determine read function for type: " .. tostring(lookup.Type))
+  end
+
+  local value = readFunction(address)
   return value
 end
 
 -- Return the functions as a module
 return {
   GetPoint = GetPoint,
-  GetPMemUsingPoint = GetPMemUsingPoint
+  GetPMemUsingPoint = GetPMemUsingPoint,
+  getReadFunction = getReadFunction
 }

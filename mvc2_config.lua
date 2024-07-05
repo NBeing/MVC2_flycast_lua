@@ -18,21 +18,35 @@ local byteSize = {
   "4 Byte",
   "Float"
 }
+
 -- Readers / Writers Aliases
 local read8 = flycast.memory.read8
 local read16 = flycast.memory.read16
 local read32 = flycast.memory.read32
+
+-- Custom function to read float values
+local readFloat = function(address)
+  print("Reading float value from address", address)
+  local intValue = read32(address)
+  print("Integer value read:", intValue)
+  local sign = (intValue & 0x80000000) ~= 0 and -1 or 1
+  local exponent = ((intValue >> 23) & 0xFF) - 127
+  local mantissa = (intValue & 0x7FFFFF) | 0x800000
+  local floatValue = sign * mantissa * (2 ^ (exponent - 23))
+  print("Converted float value:", floatValue)
+  return floatValue
+end
+
 local write8 = flycast.memory.write8
 local write16 = flycast.memory.write16
 local write32 = flycast.memory.write32
+local writeFloat = flycast.memory.writeFloat
 
 -- Important Constants
 -- Ensure the Frame_Counter address is correctly referenced
 local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.Address
 local CURRENT_FRAME = read32(CURRENT_FRAME_ADDRESS)
 
--- print(CURRENT_FRAME)
--- 
 -- UI and Memory Aliases
 local ui = flycast.ui
 local MEMORY = flycast.memory
@@ -49,9 +63,11 @@ return {
   read8 = read8,
   read16 = read16,
   read32 = read32,
+  readFloat = readFloat,
   write8 = write8,
   write16 = write16,
   write32 = write32,
+  writeFloat = writeFloat,
   CURRENT_FRAME = CURRENT_FRAME,
   ui = ui,
   MEMORY = MEMORY,
