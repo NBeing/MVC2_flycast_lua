@@ -1,7 +1,7 @@
 {
   "SPREADSHEET": {
-    "PlayerMemoryAddresses": [
-      {
+    "PlayerMemoryAddresses": {
+      "Base": {
         "Description": "Base",
         "hexOffset": "0x00",
         "decOffset": "0",
@@ -15,7 +15,7 @@
         "Note1": "START",
         "Note2": ""
       },
-      {
+      "Is_Active": {
         "Description": "Is_Active",
         "hexOffset": "0x00",
         "decOffset": "0",
@@ -29,7 +29,7 @@
         "Note1": "Indicates if the character is active (tagged in & assist)",
         "Note2": "0: Not active\n1: Active"
       },
-      {
+      "ID_2": {
         "Description": "ID_2",
         "hexOffset": "0x01",
         "decOffset": "1",
@@ -43,7 +43,7 @@
         "Note1": "In game character identification value",
         "Note2": "0x00: Ryu\r\n0x01: Zangief\r\n0x02: Guile\r\n0x03: Morrigan\r\n0x04: Anakaris\r\n0x05: Strider Hiryu\r\n0x06: Cyclops\r\n0x07: Wolverine\r\n0x08: Psylocke\r\n0x09: Iceman\r\n0x0A: Rogue\r\n0x0B: Captain America\r\n0x0C: Spider-Man\r\n0x0D: Hulk\r\n0x0E: Venom\r\n0x0F: Doctor Doom\r\n0x10: Tron Bonne\r\n0x11: Jill\r\n0x12: Hayato\r\n0x13: Ruby Heart\r\n0x14: Sonson\r\n0x15: Amingo\r\n0x16: Marrow\r\n0x17: Cable\r\n0x18: Abyss-A\r\n0x19: Abyss-B\r\n0x1A: Abyss-C\r\n0x1B: Chun-Li\r\n0x1C: Megaman\r\n0x1D: Roll\r\n0x1E: Akuma\r\n0x1F: B.B. Hood\r\n0x20: Felicia\r\n0x21: Charlie\r\n0x22: Sakura\r\n0x23: Dan\r\n0x24: Cammy\r\n0x25: Dhalsim\r\n0x26: M.Bison\r\n0x27: Ken\r\n0x28: Gambit\r\n0x29: Juggernaut\r\n0x2A: Storm\r\n0x2B: Sabretooth\r\n0x2C: Magneto\r\n0x2D: Shuma-Gorath\r\n0x2E: War Machine\r\n0x2F: Silver Samurai\r\n0x30: Omega Red\r\n0x31: Spiral\r\n0x32: Colossus\r\n0x33: Iron Man\r\n0x34: Sentinel\r\n0x35: Blackheart\r\n0x36: Thanos\r\n0x37: Jin\r\n0x38: Captain Commando\r\n0x39: Wolverine-B\r\n0x3A: Servbot"
       },
-      {
+      "PlayerID": {
         "Description": "PlayerID",
         "hexOffset": "0x02",
         "decOffset": "2",
@@ -57,7 +57,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Animation_Lock": {
         "Description": "Animation_Lock",
         "hexOffset": "0x04",
         "decOffset": "4",
@@ -71,7 +71,7 @@
         "Note1": "Controls animation states",
         "Note2": "0: Intro Taunt\n1: Default\n2: Freezes sprite"
       },
-      {
+      "Stun_Check": {
         "Description": "Stun_Check",
         "hexOffset": "0x05",
         "decOffset": "5",
@@ -85,7 +85,7 @@
         "Note1": "Keeps track of the type of stun on a character.",
         "Note2": "0: Not being hit or thrown. Doesn't activate if Super Armor absorbs hit\n1: Is Throwing\n2: Being thrown\n3: Being hit. Doesn't stop if character dies (until they disappear)\n"
       },
-      {
+      "Action_Flags": {
         "Description": "Action_Flags",
         "hexOffset": "0x06",
         "decOffset": "6",
@@ -99,7 +99,7 @@
         "Note1": "Tends to show which state the character's attack is on. Ex. Tag",
         "Note2": "0: Default\r\n1: Start-up\r\n2: Active\r\n3: Recovery"
       },
-      {
+      "Animation_Reset": {
         "Description": "Animation_Reset",
         "hexOffset": "0x07",
         "decOffset": "7",
@@ -113,7 +113,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Animation_Timer_Main": {
         "Description": "Animation_Timer_Main",
         "hexOffset": "0x1C",
         "decOffset": "28",
@@ -127,7 +127,7 @@
         "Note1": "Used for various attack and move durations, such as supers and dashes",
         "Note2": "Related to mashing, ex: hail storm (mashing will prevent this number from decreasing at its normal rate)"
       },
-      {
+      "Animation_Timer_2": {
         "Description": "Animation_Timer_2",
         "hexOffset": "0x1E",
         "decOffset": "30",
@@ -141,7 +141,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Normal_Held_Direction": {
         "Description": "Normal_Held_Direction",
         "hexOffset": "0x22",
         "decOffset": "34",
@@ -155,7 +155,7 @@
         "Note1": "If left or right are held when pressing a normal. Also Dash Direction",
         "Note2": "0: Default\n1: Left + Attack button\n2: Right + Attack button"
       },
-      {
+      "Color": {
         "Description": "Color",
         "hexOffset": "0x25",
         "decOffset": "37",
@@ -169,7 +169,7 @@
         "Note1": "Main palette. Palette changes when character is hit usually",
         "Note2": "0: LP\n1: LK\n2: HP\n3: HK\n4: A1\n5: A2"
       },
-      {
+      "X_Position_Arena": {
         "Description": "X_Position_Arena",
         "hexOffset": "0x34",
         "decOffset": "52",
@@ -183,7 +183,7 @@
         "Note1": "Character's x-position in the entire arena",
         "Note2": "-1250 to 1250"
       },
-      {
+      "Y_Position_Arena": {
         "Description": "Y_Position_Arena",
         "hexOffset": "0x38",
         "decOffset": "56",
@@ -197,7 +197,7 @@
         "Note1": "Character's y-position in the entire arena (0 to 900)",
         "Note2": "The camera stops tracking at 900"
       },
-      {
+      "Sprite_Scale_X": {
         "Description": "Sprite_Scale_X",
         "hexOffset": "0x50",
         "decOffset": "80",
@@ -211,7 +211,7 @@
         "Note1": "X Size of the sprite (Default 1)",
         "Note2": ""
       },
-      {
+      "Sprite_Scale_Y": {
         "Description": "Sprite_Scale_Y",
         "hexOffset": "0x54",
         "decOffset": "84",
@@ -225,7 +225,7 @@
         "Note1": "Y Size of the sprite (Default 1)",
         "Note2": ""
       },
-      {
+      "Sprite_Scale_Z": {
         "Description": "Sprite_Scale_Z",
         "hexOffset": "0x58",
         "decOffset": "88",
@@ -239,7 +239,7 @@
         "Note1": "Z Size of the sprite (Default 1)",
         "Note2": ""
       },
-      {
+      "X_Velocity": {
         "Description": "X_Velocity",
         "hexOffset": "0x5C",
         "decOffset": "92",
@@ -253,7 +253,7 @@
         "Note1": "Forward and backward velocity",
         "Note2": "Varies"
       },
-      {
+      "Y_Velocity": {
         "Description": "Y_Velocity",
         "hexOffset": "0x60",
         "decOffset": "96",
@@ -267,7 +267,7 @@
         "Note1": "Upward and downward velocity",
         "Note2": "Varies"
       },
-      {
+      "Z_Velocity": {
         "Description": "Z_Velocity",
         "hexOffset": "0x64",
         "decOffset": "100",
@@ -281,7 +281,7 @@
         "Note1": "Could be wrong, as it never gets used? 2D",
         "Note2": ""
       },
-      {
+      "X_Gravity": {
         "Description": "X_Gravity",
         "hexOffset": "0x68",
         "decOffset": "104",
@@ -295,7 +295,7 @@
         "Note1": "Left-Right gravity value",
         "Note2": "Unique number to character"
       },
-      {
+      "Trip_Checker": {
         "Description": "Trip_Checker",
         "hexOffset": "0x6C",
         "decOffset": "108",
@@ -309,7 +309,7 @@
         "Note1": "A type of stun tracker. Used for explicitly tracking tripped during combos",
         "Note2": "36: Air Throw Stun\n73: Most air stuns\n146: Tripped (Falling)"
       },
-      {
+      "Y_Gravity": {
         "Description": "Y_Gravity",
         "hexOffset": "0x6C",
         "decOffset": "108",
@@ -323,7 +323,7 @@
         "Note1": "Up-Down gravity value. Maybe tied to Y-Boost",
         "Note2": "Unique number to character"
       },
-      {
+      "Z_Gravity": {
         "Description": "Z_Gravity",
         "hexOffset": "0x70",
         "decOffset": "112",
@@ -337,7 +337,7 @@
         "Note1": "Could be wrong, as it never gets used? 2D",
         "Note2": ""
       },
-      {
+      "X_Position_Screen": {
         "Description": "X_Position_Screen",
         "hexOffset": "0xE0",
         "decOffset": "224",
@@ -351,7 +351,7 @@
         "Note1": "Character's x-position on the current screen",
         "Note2": "0-640"
       },
-      {
+      "Y_Position_Screen": {
         "Description": "Y_Position_Screen",
         "hexOffset": "0xE4",
         "decOffset": "228",
@@ -365,7 +365,7 @@
         "Note1": "Character's y-position on the current screen",
         "Note2": "0-480"
       },
-      {
+      "Hitbox_Scale_X": {
         "Description": "Hitbox_Scale_X",
         "hexOffset": "0xEC",
         "decOffset": "236",
@@ -379,7 +379,7 @@
         "Note1": "Hitbox_X's value (Default 1.666666985)",
         "Note2": ""
       },
-      {
+      "Hitbox_Scale_Y": {
         "Description": "Hitbox_Scale_Y",
         "hexOffset": "0xF0",
         "decOffset": "240",
@@ -393,7 +393,7 @@
         "Note1": "Hitbox_Y's value (Default 2.142857552)",
         "Note2": ""
       },
-      {
+      "Facing_Right": {
         "Description": "Facing_Right",
         "hexOffset": "0x110",
         "decOffset": "272",
@@ -407,7 +407,7 @@
         "Note1": "Keeps track of the direction the character is facing",
         "Note2": "0: Facing Left\n1: Facing Right"
       },
-      {
+      "Unknown_0x012C": {
         "Description": "Unknown_0x012C",
         "hexOffset": "0x12C",
         "decOffset": "300",
@@ -421,7 +421,7 @@
         "Note1": "Seems to be always 1, unsure will note more context.",
         "Note2": ""
       },
-      {
+      "Facing_Right_1": {
         "Description": "Facing_Right_1",
         "hexOffset": "0x130",
         "decOffset": "304",
@@ -435,7 +435,7 @@
         "Note1": "Duplicate?",
         "Note2": ""
       },
-      {
+      "Anim_AnimationFlag_0x00": {
         "Description": "Anim_AnimationFlag_0x00",
         "hexOffset": "0x140",
         "decOffset": "320",
@@ -449,7 +449,7 @@
         "Note1": "",
         "Note2": "Range 0x0140 to 0x154 is copied from animation data. [0x0140,0x0154)"
       },
-      {
+      "Anim_AnimationFlag_0x01": {
         "Description": "Anim_AnimationFlag_0x01",
         "hexOffset": "0x141",
         "decOffset": "321",
@@ -463,7 +463,7 @@
         "Note1": "Used in character programming. Example: Rogue's DiveKick uses flag to set NJ Mode",
         "Note2": ""
       },
-      {
+      "Anim_KeyFrame_FrameCount": {
         "Description": "Anim_KeyFrame_FrameCount",
         "hexOffset": "0x142",
         "decOffset": "322",
@@ -477,7 +477,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Animation_Value": {
         "Description": "Animation_Value",
         "hexOffset": "0x144",
         "decOffset": "324",
@@ -491,7 +491,7 @@
         "Note1": "Displays which sprite number is being shown on-screen.",
         "Note2": "Can be increased starting from 0 for sprite rips"
       },
-      {
+      "Proxblock": {
         "Description": "Proxblock",
         "hexOffset": "0x14A",
         "decOffset": "330",
@@ -505,7 +505,7 @@
         "Note1": "Indicates if the particular attack can cause proximity block. Contains other values",
         "Note2": "20: Is causing Proximity-Block & Cannot cancel move?\n128: Is causing Proximity-Block\n64: Is not causing Proximity-Block"
       },
-      {
+      "Anim_CurrentAnimPTR": {
         "Description": "Anim_CurrentAnimPTR",
         "hexOffset": "0x154",
         "decOffset": "340",
@@ -519,7 +519,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Anim_AnimID": {
         "Description": "Anim_AnimID",
         "hexOffset": "0x158",
         "decOffset": "344",
@@ -533,7 +533,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Anim_GroupID": {
         "Description": "Anim_GroupID",
         "hexOffset": "0x159",
         "decOffset": "345",
@@ -547,7 +547,7 @@
         "Note1": "Is_Prox_Block and ?",
         "Note2": ""
       },
-      {
+      "Is_Prox_Block": {
         "Description": "Is_Prox_Block",
         "hexOffset": "0x159",
         "decOffset": "345",
@@ -561,7 +561,7 @@
         "Note1": "State Tracker 1. Missing 14, 23, 25.",
         "Note2": "0: Neutral\r\n1: Air\r\n2: Dashing\r\n3: Crouching\r\n4: Turning Around\r\n5: Ground Block\r\n6: Air Block\r\n7: Stand Punches\r\n8: Stand Kicks\r\n9: Crouch Punches\r\n10: Crouch Kicks\r\n11: Air Punches\r\n12: Air Kicks\r\n13: Stunned\r\n14: ???\r\n15: Throwing\r\n16: Being Thrown\r\n17: OTG Rise\r\n18: Match Start\r\n19: Win Pose\r\n20: Tag-in & OC Launcher\r\n21: Specials & Snapbacks\r\n22: Supers\r\n23: ???\r\n24: Assist Related\r\n25: ???\r\n26: Air Dash"
       },
-      {
+      "DAT_GFX00_PTR": {
         "Description": "DAT_GFX00_PTR",
         "hexOffset": "0x15C",
         "decOffset": "348",
@@ -575,7 +575,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_GFX01_PTR": {
         "Description": "DAT_GFX01_PTR",
         "hexOffset": "0x160",
         "decOffset": "352",
@@ -589,7 +589,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_PaletteData_PTR": {
         "Description": "DAT_PaletteData_PTR",
         "hexOffset": "0x164",
         "decOffset": "356",
@@ -603,7 +603,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_AnimationData_PTR": {
         "Description": "DAT_AnimationData_PTR",
         "hexOffset": "0x168",
         "decOffset": "360",
@@ -617,7 +617,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_HitboxPatternTable_PTR": {
         "Description": "DAT_HitboxPatternTable_PTR",
         "hexOffset": "0x16C",
         "decOffset": "364",
@@ -631,7 +631,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_HitboxData_PTR": {
         "Description": "DAT_HitboxData_PTR",
         "hexOffset": "0x170",
         "decOffset": "368",
@@ -645,7 +645,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_AttackData_PTR": {
         "Description": "DAT_AttackData_PTR",
         "hexOffset": "0x174",
         "decOffset": "372",
@@ -659,7 +659,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "SpriteExtras_PTR": {
         "Description": "SpriteExtras_PTR",
         "hexOffset": "0x178",
         "decOffset": "376",
@@ -673,7 +673,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DAT_FilePTR": {
         "Description": "DAT_FilePTR",
         "hexOffset": "0x17C",
         "decOffset": "380",
@@ -687,7 +687,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "FAC_FilePTR": {
         "Description": "FAC_FilePTR",
         "hexOffset": "0x184",
         "decOffset": "388",
@@ -701,7 +701,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Hitstop2": {
         "Description": "Hitstop2",
         "hexOffset": "0x1A0",
         "decOffset": "416",
@@ -715,7 +715,7 @@
         "Note1": "Keeps track of the hitstop after an attack connects",
         "Note2": ""
       },
-      {
+      "Attack_Number": {
         "Description": "Attack_Number",
         "hexOffset": "0x1A1",
         "decOffset": "417",
@@ -729,7 +729,7 @@
         "Note1": "Displays the current attack by its memory ID",
         "Note2": "Unique to each character. Large range. Only for attacks"
       },
-      {
+      "Attack_Unknown_0x01A2": {
         "Description": "Attack_Unknown_0x01A2",
         "hexOffset": "0x1A2",
         "decOffset": "418",
@@ -743,7 +743,7 @@
         "Note1": "Seems to be used for attack data.",
         "Note2": ""
       },
-      {
+      "Assist_Counter": {
         "Description": "Assist_Counter",
         "hexOffset": "0x1A3",
         "decOffset": "419",
@@ -757,7 +757,7 @@
         "Note1": "Duplicate",
         "Note2": "Duplicate"
       },
-      {
+      "Special_Strength": {
         "Description": "Special_Strength",
         "hexOffset": "0x1A3",
         "decOffset": "419",
@@ -771,7 +771,7 @@
         "Note1": "Tracks the strength of specials. On PCSX2, setting these to 10+ allows some A2 bugs.",
         "Note2": "0: Light-Special\n1: Heavy-Special | A1-Snapback\n2: A2-Snapback\n"
       },
-      {
+      "CharacterSlot_0": {
         "Description": "CharacterSlot_0",
         "hexOffset": "0x1A4",
         "decOffset": "420",
@@ -785,7 +785,7 @@
         "Note1": "Is for keeping easy track of character slot.",
         "Note2": "0=P1A, 1=P2A, 2=P1B, 3=P2B, 4=P1C, 5=P2C"
       },
-      {
+      "Normal_Strength": {
         "Description": "Normal_Strength",
         "hexOffset": "0x1A7",
         "decOffset": "423",
@@ -799,7 +799,7 @@
         "Note1": "Tracks where normal attacks are done (ground/nj/sj)",
         "Note2": "0: Ground\n1: NJ\n2: SJ"
       },
-      {
+      "Unknown_0x01AC": {
         "Description": "Unknown_0x01AC",
         "hexOffset": "0x1AC",
         "decOffset": "428",
@@ -813,7 +813,7 @@
         "Note1": "Deals with normals logic",
         "Note2": ""
       },
-      {
+      "Knockdown_State": {
         "Description": "Knockdown_State",
         "hexOffset": "0x1D0",
         "decOffset": "464",
@@ -827,7 +827,7 @@
         "Note1": "State Tracker 2. Missing 16, 33",
         "Note2": "0: Neutral\n1: Walking\n2: Normal Jump Rise\n3: Normal Jump\n4: Landing\n5: Crouching\n6: Crouched\n7: Stand Rise\n8: Stand Turn\n9: Crouch Turning\n10: Forward Dashing\n11: Back Dashing\n12: Double Dizzy // DC-only\n13: Super Jump Rise\n14: Super Jumping\n15: Air Recovery\n16: ???\n17: Knockdown Rise\n18: Ground Block\n19: Air Blocking\n20: Normal Attacks\n21: Special Attacks\n22: Post-Match Pose\n23: Extra OTG Stun\n24: Neutral Flight\n25: Corner Jump\n26: Air Dash\n27: Tech Hit\n28: Switching & Assists\n29: Supers & Flashes\n30: Throwing\n31: Being Thrown\n32: Stunned\n33: ???\n34: Command Launcher"
       },
-      {
+      "Facing_Right_2": {
         "Description": "Facing_Right_2",
         "hexOffset": "0x1D2",
         "decOffset": "466",
@@ -841,7 +841,7 @@
         "Note1": "Duplicate?",
         "Note2": ""
       },
-      {
+      "Walking": {
         "Description": "Walking",
         "hexOffset": "0x1D3",
         "decOffset": "467",
@@ -855,7 +855,7 @@
         "Note1": "tracks the type of movement",
         "Note2": "0: Walking or rolling forward\n1: Walking backward\n255: Standing"
       },
-      {
+      "Jumping_Special_Counter": {
         "Description": "Jumping_Special_Counter",
         "hexOffset": "0x1D4",
         "decOffset": "468",
@@ -869,7 +869,7 @@
         "Note1": "Tracks actions in a Normal Jump",
         "Note2": "0: Nothing & Normals\n1: Specials and Supers"
       },
-      {
+      "SpecialMove_In_NJ": {
         "Description": "SpecialMove_In_NJ",
         "hexOffset": "0x1D4",
         "decOffset": "468",
@@ -883,7 +883,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Air_Dash_Count": {
         "Description": "Air_Dash_Count",
         "hexOffset": "0x1D5",
         "decOffset": "469",
@@ -897,7 +897,7 @@
         "Note1": "Not a max-number possible.",
         "Note2": "0: Default/Hasn't been done\r\n1: Has occurred"
       },
-      {
+      "CornerJump": {
         "Description": "CornerJump",
         "hexOffset": "0x1D5",
         "decOffset": "469",
@@ -911,7 +911,7 @@
         "Note1": "tracks if character has used corner jump in their current jump",
         "Note2": "0: Has not occurred\n1: Has occurred"
       },
-      {
+      "Unfly": {
         "Description": "Unfly",
         "hexOffset": "0x1D6",
         "decOffset": "470",
@@ -925,7 +925,7 @@
         "Note1": "Jump-state and by extension, Unfly tracker. 0-255.",
         "Note2": "0: Default\n1: Lowest number after attacking (cannot attack during unfly)\n17: Normal Jump (NJ Unfly can be done) & Chain-Unfly\n18-255: Unfly is active\n255: Attacked and landed on feet. \"Full Unfly Meter\"\n"
       },
-      {
+      "SuperJump_Startup": {
         "Description": "SuperJump_Startup",
         "hexOffset": "0x1D8",
         "decOffset": "472",
@@ -939,7 +939,7 @@
         "Note1": "Startup time for SJ",
         "Note2": "Counts up to 7"
       },
-      {
+      "Jumps": {
         "Description": "Jumps",
         "hexOffset": "0x1D9",
         "decOffset": "473",
@@ -953,7 +953,7 @@
         "Note1": "Tracks jumps",
         "Note2": "0: Grounded\n128: Has not occurred\n1: has occurred"
       },
-      {
+      "Block_Stun": {
         "Description": "Block_Stun",
         "hexOffset": "0x1DE",
         "decOffset": "478",
@@ -967,7 +967,7 @@
         "Note1": "Displays the expected blockstun after hitstun.",
         "Note2": "Light: 10\nMedium:15\nHeavy: 20"
       },
-      {
+      "Dizzy": {
         "Description": "Dizzy",
         "hexOffset": "0x1E1",
         "decOffset": "481",
@@ -981,7 +981,7 @@
         "Note1": "Stun for undizzy. RNG",
         "Note2": "0-80"
       },
-      {
+      "Dizzy_Reset_Timer": {
         "Description": "Dizzy_Reset_Timer",
         "hexOffset": "0x1E2",
         "decOffset": "482",
@@ -995,7 +995,7 @@
         "Note1": "How long until the dizzy-timer resets back to 0",
         "Note2": "60 frames after the character stops being hit"
       },
-      {
+      "Special_Attack_ID": {
         "Description": "Special_Attack_ID",
         "hexOffset": "0x1E9",
         "decOffset": "489",
@@ -1009,7 +1009,7 @@
         "Note1": "Displays the special/super attack ID in decimal",
         "Note2": "each character varies"
       },
-      {
+      "Throw_Immune": {
         "Description": "Throw_Immune",
         "hexOffset": "0x1EB",
         "decOffset": "491",
@@ -1023,7 +1023,7 @@
         "Note1": "Tracks current state",
         "Note2": "0: Default\n2: OTG\n4: Is getting up from OTG. Counts down to 0."
       },
-      {
+      "Attack_Immune": {
         "Description": "Attack_Immune",
         "hexOffset": "0x1ED",
         "decOffset": "493",
@@ -1037,7 +1037,7 @@
         "Note1": "Keeps track of when a character is immune to attacks.",
         "Note2": "0: Can be hurt\n1: Cannot be hurt\n2: Is snapped out"
       },
-      {
+      "Incoming_Timer": {
         "Description": "Incoming_Timer",
         "hexOffset": "0x1F2",
         "decOffset": "498",
@@ -1051,7 +1051,7 @@
         "Note1": "Tracks time before character can do special/super on Incoming",
         "Note2": "21 Frames"
       },
-      {
+      "Move_Disable": {
         "Description": "Move_Disable",
         "hexOffset": "0x1F3",
         "decOffset": "499",
@@ -1065,7 +1065,7 @@
         "Note1": "if on, character cannot do anything. Used in FSD-Dash",
         "Note2": "0: Inactive\n1: On"
       },
-      {
+      "Assist_Onscreen": {
         "Description": "Assist_Onscreen",
         "hexOffset": "0x1F4",
         "decOffset": "500",
@@ -1079,7 +1079,7 @@
         "Note1": "Seems to go to 1 when assist is called or has \"finished\"",
         "Note2": "0: On-screen\r\n1: Off-screen"
       },
-      {
+      "Assist_Leaving": {
         "Description": "Assist_Leaving",
         "hexOffset": "0x1F5",
         "decOffset": "501",
@@ -1093,7 +1093,7 @@
         "Note1": "Seems to go to 1 when Assist is jumping off screen",
         "Note2": ""
       },
-      {
+      "Airborne": {
         "Description": "Airborne",
         "hexOffset": "0x1F9",
         "decOffset": "505",
@@ -1107,7 +1107,7 @@
         "Note1": "Whether or not the character is in the air.",
         "Note2": "0: Standing\r\n1: Crouching\r\n2: Air"
       },
-      {
+      "SJ_Counter": {
         "Description": "SJ_Counter",
         "hexOffset": "0x1FC",
         "decOffset": "508",
@@ -1121,7 +1121,7 @@
         "Note1": "For Super Jump Install. Tracks ascent, descent and grounded or normal jump",
         "Note2": "0: Grounded or Normal Jump\n1: SJ-Ascending\n2: SJ-Descending"
       },
-      {
+      "Corner_Touch": {
         "Description": "Corner_Touch",
         "hexOffset": "0x1FD",
         "decOffset": "509",
@@ -1135,7 +1135,7 @@
         "Note1": "Indicates if the character is touching a corner",
         "Note2": "0: No\n1: Right Corner\n2: Left Corner"
       },
-      {
+      "PunchKick": {
         "Description": "PunchKick",
         "hexOffset": "0x1FE",
         "decOffset": "510",
@@ -1149,7 +1149,7 @@
         "Note1": "Displays whether attack is punch or kick; doesn't reset after attack finishes.",
         "Note2": "0: Punch\n1: Kick"
       },
-      {
+      "Normal_Location": {
         "Description": "Normal_Location",
         "hexOffset": "0x1FF",
         "decOffset": "511",
@@ -1163,7 +1163,7 @@
         "Note1": "Tracks if left or right are held when pressing an attack",
         "Note2": "0: Default\n1: Left + Attack button\n2: Right + Attack button\n"
       },
-      {
+      "Speedup": {
         "Description": "Speedup",
         "hexOffset": "0x200",
         "decOffset": "512",
@@ -1177,7 +1177,7 @@
         "Note1": "Tracks speedup if active",
         "Note2": ""
       },
-      {
+      "Flight_Flag": {
         "Description": "Flight_Flag",
         "hexOffset": "0x201",
         "decOffset": "513",
@@ -1191,7 +1191,7 @@
         "Note1": "Flying. No unfly",
         "Note2": "0: Not Flying\n1: Flying"
       },
-      {
+      "Hyper_Armor": {
         "Description": "Hyper_Armor",
         "hexOffset": "0x202",
         "decOffset": "514",
@@ -1205,7 +1205,7 @@
         "Note1": "Indicates if character has Hyper Armor",
         "Note2": "0: Not active\n128: Active"
       },
-      {
+      "Idle_Hover": {
         "Description": "Idle_Hover",
         "hexOffset": "0x203",
         "decOffset": "515",
@@ -1219,7 +1219,7 @@
         "Note1": "Displays whether the character is hovering during idle animation (ex: magneto & storm)",
         "Note2": ""
       },
-      {
+      "Damage_Modifier": {
         "Description": "Damage_Modifier",
         "hexOffset": "0x205",
         "decOffset": "517",
@@ -1233,7 +1233,7 @@
         "Note1": "Tracks any damage modifier",
         "Note2": ""
       },
-      {
+      "Defense_Modifier": {
         "Description": "Defense_Modifier",
         "hexOffset": "0x206",
         "decOffset": "518",
@@ -1247,7 +1247,7 @@
         "Note1": "Tracks any defense modifier",
         "Note2": ""
       },
-      {
+      "Landing_Shake": {
         "Description": "Landing_Shake",
         "hexOffset": "0x207",
         "decOffset": "519",
@@ -1261,7 +1261,7 @@
         "Note1": "Screen-shake that occurs when the character lands from a jump",
         "Note2": "3 is default"
       },
-      {
+      "PointEnemy_PLMEM_PTR": {
         "Description": "PointEnemy_PLMEM_PTR",
         "hexOffset": "0x20C",
         "decOffset": "524",
@@ -1275,7 +1275,7 @@
         "Note1": "Points to Opponent's Point Character PLMEM",
         "Note2": ""
       },
-      {
+      "Guardbreak_Flag": {
         "Description": "Guardbreak_Flag",
         "hexOffset": "0x210",
         "decOffset": "528",
@@ -1289,7 +1289,7 @@
         "Note1": "Keeps track of how many attacks have been blocked during normal jump state",
         "Note2": "Only tracked during NJ or Unfly"
       },
-      {
+      "Block_Meter": {
         "Description": "Block_Meter",
         "hexOffset": "0x211",
         "decOffset": "529",
@@ -1303,7 +1303,7 @@
         "Note1": "Tracks blocked attacks, used for autoblock and fast-fall",
         "Note2": "> 0: Can fast-fall\nRelated to autoblock. \nPushblock freezes number."
       },
-      {
+      "FlyingScreen": {
         "Description": "FlyingScreen",
         "hexOffset": "0x235",
         "decOffset": "565",
@@ -1317,7 +1317,7 @@
         "Note1": "FS flag",
         "Note2": "0: Character has not had FS triggered on them\n1: Character has been hit by an attack that caused Flying Screen"
       },
-      {
+      "Magneto_Throw_Toggle": {
         "Description": "Magneto_Throw_Toggle",
         "hexOffset": "0x236",
         "decOffset": "566",
@@ -1331,7 +1331,7 @@
         "Note1": "Magneto's HK-Throw Bug",
         "Note2": "0: Inactive\n128: Active/Possible to do the bug"
       },
-      {
+      "Air_Recovery_Timer": {
         "Description": "Air_Recovery_Timer",
         "hexOffset": "0x239",
         "decOffset": "569",
@@ -1345,7 +1345,7 @@
         "Note1": "Tracks when the dummy will be able to attack after being hit in the air\r",
         "Note2": ""
       },
-      {
+      "Throw_Limiter": {
         "Description": "Throw_Limiter",
         "hexOffset": "0x23A",
         "decOffset": "570",
@@ -1359,7 +1359,7 @@
         "Note1": "Tracks if the character can be thrown",
         "Note2": "0: Has not been thrown\n1: Has been thrown once\n2: Has been thrown twice. Cannot be thrown until it resets to 0"
       },
-      {
+      "THC_State": {
         "Description": "THC_State",
         "hexOffset": "0x255",
         "decOffset": "597",
@@ -1373,7 +1373,7 @@
         "Note1": "Tracks Assist and THC Values. 4 is NO FS",
         "Note2": "0x00: is assist call\n0x01: is tag\n0x02: is a incoming (not tag)\n0x03: alpha counter. \n0x04: is a sort of setup for A1+A2 teamSuper call\n0x05: level 3 team super without the team super icons animation\n0x06: just super portrait animation\n0x07: attacking tag in current character\n0x08:attacking tagin as well\n0x09: get offscreen after assist and taunt animation "
       },
-      {
+      "Throw_Counter_Mash": {
         "Description": "Throw_Counter_Mash",
         "hexOffset": "0x25C",
         "decOffset": "604",
@@ -1387,7 +1387,7 @@
         "Note1": "Tracker for mashing attacks. [Direction+Button, Different-Button]",
         "Note2": "Initial value can be RNG"
       },
-      {
+      "Throw_RNG": {
         "Description": "Throw_RNG",
         "hexOffset": "0x25E",
         "decOffset": "606",
@@ -1401,7 +1401,7 @@
         "Note1": "RNG Value that dictates whether a throw will be mashable to its limit",
         "Note2": "1-4. 1 is most favorable"
       },
-      {
+      "Combo_Meter_HitsToOpponent": {
         "Description": "Combo_Meter_HitsToOpponent",
         "hexOffset": "0x260",
         "decOffset": "608",
@@ -1415,7 +1415,7 @@
         "Note1": "Increments with combo display",
         "Note2": ""
       },
-      {
+      "FSI_Combo": {
         "Description": "FSI_Combo",
         "hexOffset": "0x260",
         "decOffset": "608",
@@ -1429,7 +1429,7 @@
         "Note1": "Flying Screen lnstall combo counter related to points",
         "Note2": ""
       },
-      {
+      "Combo_Meter_HitsFromOpponent": {
         "Description": "Combo_Meter_HitsFromOpponent",
         "hexOffset": "0x26C",
         "decOffset": "620",
@@ -1443,7 +1443,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "FSI_Points": {
         "Description": "FSI_Points",
         "hexOffset": "0x273",
         "decOffset": "627",
@@ -1457,7 +1457,7 @@
         "Note1": "Flying Screen Install",
         "Note2": "9: FSI-1 (FS will be set in 2 hits)\n11: FSI-2 (FS will be set in 1 hit)"
       },
-      {
+      "FSI_Projectile": {
         "Description": "FSI_Projectile",
         "hexOffset": "0x276",
         "decOffset": "630",
@@ -1471,7 +1471,7 @@
         "Note1": "If the projectile possesses FSI ability",
         "Note2": ""
       },
-      {
+      "X_Position_From_Enemy": {
         "Description": "X_Position_From_Enemy",
         "hexOffset": "0x298",
         "decOffset": "664",
@@ -1485,7 +1485,7 @@
         "Note1": "Character's x-distance away from the point-character opponent",
         "Note2": "Varies. Tracks to center-point which isn't always reachable"
       },
-      {
+      "Snapback_Timer": {
         "Description": "Snapback_Timer",
         "hexOffset": "0x2A0",
         "decOffset": "672",
@@ -1499,7 +1499,7 @@
         "Note1": "Tracks how long until the snapped-out character can come back in. 4-Byte",
         "Note2": "2: while leaving\n76048: countdown"
       },
-      {
+      "Attacks_Left": {
         "Description": "Attacks_Left",
         "hexOffset": "0x2A8",
         "decOffset": "680",
@@ -1513,7 +1513,7 @@
         "Note1": "Remaining attacks, ex: lightning attack 2>1>0",
         "Note2": ""
       },
-      {
+      "Damage": {
         "Description": "Damage",
         "hexOffset": "0x32E",
         "decOffset": "814",
@@ -1527,7 +1527,7 @@
         "Note1": "Tracks how much damage the character is receiving from the current attack",
         "Note2": "Varies by character defense and damage scaling."
       },
-      {
+      "BUTTON SEQUENCE BUFFER MEMORY": {
         "Description": "BUTTON SEQUENCE BUFFER MEMORY",
         "hexOffset": "0x364",
         "decOffset": "868",
@@ -1541,7 +1541,7 @@
         "Note1": "Button Sequnce Areas seem to vary with character.",
         "Note2": "0x384 Can be DQCF for one characer but FDP for another. Same with any other area in region."
       },
-      {
+      "ButtonBuffer_Start": {
         "Description": "ButtonBuffer_Start",
         "hexOffset": "0x364",
         "decOffset": "868",
@@ -1555,7 +1555,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "ButtonBuffer_End": {
         "Description": "ButtonBuffer_End",
         "hexOffset": "0x3CC",
         "decOffset": "972",
@@ -1569,7 +1569,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Powerup_Timer": {
         "Description": "Powerup_Timer",
         "hexOffset": "0x3E6",
         "decOffset": "998",
@@ -1583,7 +1583,7 @@
         "Note1": "Shows powerup duration values",
         "Note2": "counts down every frame"
       },
-      {
+      "Powerup_Modifier": {
         "Description": "Powerup_Modifier",
         "hexOffset": "0x3EE",
         "decOffset": "1006",
@@ -1597,7 +1597,7 @@
         "Note1": "Affects the default strength of attacks",
         "Note2": "0: Default\r\n1: Very-weak\r\n"
       },
-      {
+      "Super_Armor": {
         "Description": "Super_Armor",
         "hexOffset": "0x3F2",
         "decOffset": "1010",
@@ -1611,7 +1611,7 @@
         "Note1": "Indicates if the character has Super Armor",
         "Note2": "0: Does not\n1: Has"
       },
-      {
+      "MeterMain_PTR": {
         "Description": "MeterMain_PTR",
         "hexOffset": "0x40C",
         "decOffset": "1036",
@@ -1625,7 +1625,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Is_Point": {
         "Description": "Is_Point",
         "hexOffset": "0x411",
         "decOffset": "1041",
@@ -1639,7 +1639,7 @@
         "Note1": "Displays whether character is point",
         "Note2": "0: Point\n1: Assist-1\n2: Assist-2"
       },
-      {
+      "Floor_Height": {
         "Description": "Floor_Height",
         "hexOffset": "0x41C",
         "decOffset": "1052",
@@ -1653,7 +1653,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Health_Big": {
         "Description": "Health_Big",
         "hexOffset": "0x420",
         "decOffset": "1056",
@@ -1667,7 +1667,7 @@
         "Note1": "Non-recoverable health",
         "Note2": "144"
       },
-      {
+      "Health_Small": {
         "Description": "Health_Small",
         "hexOffset": "0x424",
         "decOffset": "1060",
@@ -1681,7 +1681,7 @@
         "Note1": "Recoverable health",
         "Note2": "144"
       },
-      {
+      "Healing_Timer": {
         "Description": "Healing_Timer",
         "hexOffset": "0x426",
         "decOffset": "1062",
@@ -1695,7 +1695,7 @@
         "Note1": "Rate of healing while tagged out",
         "Note2": "Heals a point every 51 frames"
       },
-      {
+      "CharacterProgrammingTable_PTR": {
         "Description": "CharacterProgrammingTable_PTR",
         "hexOffset": "0x428",
         "decOffset": "1064",
@@ -1709,7 +1709,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Y_Position_From_Enemy": {
         "Description": "Y_Position_From_Enemy",
         "hexOffset": "0x48C",
         "decOffset": "1164",
@@ -1723,7 +1723,7 @@
         "Note1": "Character's y-distance away from the point-character opponent",
         "Note2": "Varies. Tracks to center-point which isn't always reachable"
       },
-      {
+      "Assist_Value": {
         "Description": "Assist_Value",
         "hexOffset": "0x4C9",
         "decOffset": "1225",
@@ -1737,7 +1737,7 @@
         "Note1": "Assist-Type",
         "Note2": "0: Alpha\r\n1: Beta\r\n2: Gamma"
       },
-      {
+      "PlayerID_1": {
         "Description": "PlayerID_1",
         "hexOffset": "0x524",
         "decOffset": "1316",
@@ -1751,7 +1751,7 @@
         "Note1": "Pretty sure its playerID, could be \"controllerID\" but sure its former",
         "Note2": ""
       },
-      {
+      "CPU": {
         "Description": "CPU",
         "hexOffset": "0x525",
         "decOffset": "1317",
@@ -1765,7 +1765,7 @@
         "Note1": "If character is CPU-controlled",
         "Note2": "0: Inactive\n1: CPU"
       },
-      {
+      "CharacterID_2": {
         "Description": "CharacterID_2",
         "hexOffset": "0x52C",
         "decOffset": "1324",
@@ -1779,7 +1779,7 @@
         "Note1": "Another memory location for characterID",
         "Note2": "Used for out of match logic"
       },
-      {
+      "PaletteID_2": {
         "Description": "PaletteID_2",
         "hexOffset": "0x52D",
         "decOffset": "1325",
@@ -1793,7 +1793,7 @@
         "Note1": "Another memory location for paletteID",
         "Note2": "Used for out of match logic"
       },
-      {
+      "CharacterSlot_1": {
         "Description": "CharacterSlot_1",
         "hexOffset": "0x55C",
         "decOffset": "1372",
@@ -1807,9 +1807,9 @@
         "Note1": "Is for keeping easy track of character slot.",
         "Note2": "0=P1A, 1=P2A, 2=P1B, 3=P2B, 4=P1C, 5=P2C"
       }
-    ],
-    "SpecificCharacterAddresses": [
-      {
+    },
+    "SpecificCharacterAddresses": {
+      "Bison_214kk_Timer": {
         "Description": "Bison_214kk_Timer",
         "Type": "Byte",
         "P1_A_Bison_214kk_Timer": "0x2C2685EE",
@@ -1821,7 +1821,7 @@
         "Note1": "Flight timer",
         "Note2": "Bison, Doom share this"
       },
-      {
+      "Dhalsim_214kk_Timer": {
         "Description": "Dhalsim_214kk_Timer",
         "Type": "Byte",
         "P1_A_Dhalsim_214kk_Timer": "0x2C2685EC",
@@ -1833,7 +1833,7 @@
         "Note1": "Flight timer",
         "Note2": ""
       },
-      {
+      "Doom_214kk_Timer": {
         "Description": "Doom_214kk_Timer",
         "Type": "Byte",
         "P1_A_Doom_214kk_Timer": "0x2C2685EE",
@@ -1845,7 +1845,7 @@
         "Note1": "Flight timer",
         "Note2": "Bison, Doom share this"
       },
-      {
+      "Iron_Man_214kk_Timer": {
         "Description": "Iron_Man_214kk_Timer",
         "Type": "Byte",
         "P1_A_Iron_Man_214kk_Timer": "0x2C2685E8",
@@ -1857,7 +1857,7 @@
         "Note1": "Flight timer",
         "Note2": "Iron Man, War Machine share this"
       },
-      {
+      "Magneto_214kk_Timer": {
         "Description": "Magneto_214kk_Timer",
         "Type": "Byte",
         "P1_A_Magneto_214kk_Timer": "0x2C2685EA",
@@ -1869,7 +1869,7 @@
         "Note1": "Flight timer",
         "Note2": ""
       },
-      {
+      "Megaman_214kk_Timer": {
         "Description": "Megaman_214kk_Timer",
         "Type": "2 Bytes",
         "P1_A_Megaman_214kk_Timer": "0x0540D386",
@@ -1881,7 +1881,7 @@
         "Note1": "Beat Plane",
         "Note2": ""
       },
-      {
+      "Sentinel_214kk_Timer": {
         "Description": "Sentinel_214kk_Timer",
         "Type": "Byte",
         "P1_A_Sentinel_214kk_Timer": "0x2C2685E4",
@@ -1893,7 +1893,7 @@
         "Note1": "Flight timer",
         "Note2": ""
       },
-      {
+      "Storm_214kk_Timer": {
         "Description": "Storm_214kk_Timer",
         "Type": "Byte",
         "P1_A_Storm_214kk_Timer": "0x2C2685F4",
@@ -1905,7 +1905,7 @@
         "Note1": "Flight timer",
         "Note2": ""
       },
-      {
+      "War_Machine_214kk_Timer": {
         "Description": "War_Machine_214kk_Timer",
         "Type": "Float",
         "P1_A_War_Machine_214kk_Timer": "0x2C2685E8",
@@ -1917,9 +1917,9 @@
         "Note1": "Flight timer",
         "Note2": "Iron Man, War Machine share this"
       }
-    ],
-    "Player1And2Addresses": [
-      {
+    },
+    "Player1And2Addresses": {
+      "Assist_Flag": {
         "Description": "Assist_Flag",
         "P1_Assist_Flag": "0x2C289632",
         "P2_Assist_Flag": "0x2C289633",
@@ -1927,7 +1927,7 @@
         "Note1": "Which assist is on-screen",
         "Note2": "0: Default\r\n2: Assist-1\r\n4: Assist-2"
       },
-      {
+      "Attacks_Done": {
         "Description": "Attacks_Done",
         "P1_Attacks_Done": "0x2C28966C",
         "P2_Attacks_Done": "0x2C28966E",
@@ -1935,7 +1935,7 @@
         "Note1": "Total number of attacks attempted",
         "Note2": "0: Default"
       },
-      {
+      "Attacks_Successful": {
         "Description": "Attacks_Successful",
         "P1_Attacks_Successful": "0x2C289670",
         "P2_Attacks_Successful": "0x2C289672",
@@ -1943,7 +1943,7 @@
         "Note1": "Total number of attacks which connected successfully",
         "Note2": "0: Default"
       },
-      {
+      "Combo_Meter_Value": {
         "Description": "Combo_Meter_Value",
         "P1_Combo_Meter_Value": "0x2C268B50",
         "P2_Combo_Meter_Value": "0x2C2685AC",
@@ -1951,7 +1951,7 @@
         "Note1": "Current combo counter",
         "Note2": "03: Yes\n04-05: Good\n06-07: Great\n08-09: Very Good\n10-29: Wonderful\n30-49: Fantastic\n50-99: Monster\n100+: Marvelous"
       },
-      {
+      "Dead_Counter": {
         "Description": "Dead_Counter",
         "P1_Dead_Counter": "0x2C269DE1",
         "P2_Dead_Counter": "0x2C26A385",
@@ -1959,7 +1959,7 @@
         "Note1": "The number of dead characters",
         "Note2": "0: 3 characters alive\n1: 2 characters alive\n2: 1 character alive"
       },
-      {
+      "Hitbox_Count": {
         "Description": "Hitbox_Count",
         "P1_Hitbox_Count": "0x2C287DDE",
         "P2_Hitbox_Count": "0x2C287DDF",
@@ -1967,7 +1967,7 @@
         "Note1": "The number of existing hitboxes",
         "Note2": "Used in hitbox displays"
       },
-      {
+      "Input_DEC": {
         "Description": "Input_DEC",
         "P1_Input_DEC": "0x2C2681DC",
         "P2_Input_DEC": "0x2C2681F0",
@@ -1975,7 +1975,7 @@
         "Note1": "Input tracker",
         "Note2": "1024: Right\r\n2048: Left\r\n4096: Down\r\n8192: Up\r\n512: LP\r\n64: LK\r\n256: HP\r\n32: HK\r\n128: A1\r\n16: A2\r\n32768: START"
       },
-      {
+      "Max_Combo": {
         "Description": "Max_Combo",
         "P1_Max_Combo": "0x2C2685AA",
         "P2_Max_Combo": "0x2C268B4E",
@@ -1983,7 +1983,7 @@
         "Note1": "The maximum successful combo",
         "Note2": "0: Default\n999: Max"
       },
-      {
+      "Meter_Big": {
         "Description": "Meter_Big",
         "P1_Meter_Big": "0x2C28964A",
         "P2_Meter_Big": "0x2C28964B",
@@ -1991,7 +1991,7 @@
         "Note1": "The meter gauge's whole numbers",
         "Note2": "0-5"
       },
-      {
+      "Meter_Small": {
         "Description": "Meter_Small",
         "P1_Meter_Small": "0x2C28966C",
         "P2_Meter_Small": "0x2C28966E",
@@ -1999,7 +1999,7 @@
         "Note1": "The meter gauge's small numbers",
         "Note2": ""
       },
-      {
+      "Pause_ID": {
         "Description": "Pause_ID",
         "P1_Pause_ID": "0x2C212CA2",
         "P2_Pause_ID": "0x2C212CA3",
@@ -2007,7 +2007,7 @@
         "Note1": "Which player paused the game",
         "Note2": ""
       },
-      {
+      "Wins_Label": {
         "Description": "Wins_Label",
         "P1_Wins_Label": "0x2C13A2AC",
         "P2_Wins_Label": "0x2C28A053",
@@ -2015,7 +2015,7 @@
         "Note1": "The \"WINS\" text",
         "Note2": ""
       },
-      {
+      "Wins_Value": {
         "Description": "Wins_Value",
         "P1_Wins_Value": "0x2C28968C",
         "P2_Wins_Value": "0x2C28968D",
@@ -2023,235 +2023,235 @@
         "Note1": "The number of wins",
         "Note2": ""
       }
-    ],
-    "SystemMemoryAddresses": [
-      {
+    },
+    "SystemMemoryAddresses": {
+      "A_2D_Game_Timer": {
         "Description": "A_2D_Game_Timer",
         "ADDRESS": "0x2C289630",
         "Type": "Byte",
         "Note1": "Match timer (big)",
         "Note2": "0-99"
       },
-      {
+      "Abyss_ Stage_Change": {
         "Description": "Abyss_ Stage_Change",
         "ADDRESS": "0x2C26A8C8",
         "Type": "Byte",
         "Note1": "Toggles final stage collapse",
         "Note2": "0: Normal/Abyss1\n1: Abyss2\n2: Abyss3"
       },
-      {
+      "Attack_Info_Display_A": {
         "Description": "Attack_Info_Display_A",
         "ADDRESS": "0x2C2682EE",
         "Type": "Byte",
         "Note1": "One address related to enabling Training-Style health",
         "Note2": "Both have to be 1"
       },
-      {
+      "Attack_Info_Display_Health": {
         "Description": "Attack_Info_Display_Health",
         "ADDRESS": "0x2C2682E6",
         "Type": "Byte",
         "Note1": "Another address related to enableing Training-Style health",
         "Note2": "Both have to be 1"
       },
-      {
+      "Attack_Info_Display_Y_Position": {
         "Description": "Attack_Info_Display_Y_Position",
         "ADDRESS": "0x2C2682F2",
         "Type": "Byte",
         "Note1": "Attack info Y-Position (3 is default)",
         "Note2": "Can be moved using 0-255"
       },
-      {
+      "Camera_Field_of_View": {
         "Description": "Camera_Field_of_View",
         "ADDRESS": "0x2C26A584",
         "Type": "Float",
         "Note1": "",
         "Note2": "43: Default"
       },
-      {
+      "Camera_Lock": {
         "Description": "Camera_Lock",
         "ADDRESS": "0x2C26A51F",
         "Type": "Byte",
         "Note1": "Controls whether custom values are allowed",
         "Note2": "0: Resets Camera\n1: Default\n2: Allows custom values"
       },
-      {
+      "Camera_X_Left_Max": {
         "Description": "Camera_X_Left_Max",
         "ADDRESS": "0x2C26A5B0",
         "Type": "Float",
         "Note1": "Left-screen edge lock",
         "Note2": "-1280: Default"
       },
-      {
+      "Camera_X_Position": {
         "Description": "Camera_X_Position",
         "ADDRESS": "0x2C26A56C",
         "Type": "Float",
         "Note1": "Left-right",
         "Note2": "0: Default"
       },
-      {
+      "Camera_X_Right_Max": {
         "Description": "Camera_X_Right_Max",
         "ADDRESS": "0x2C26A5B4",
         "Type": "Float",
         "Note1": "Right-screen edge lock",
         "Note2": "1280: Default"
       },
-      {
+      "Camera_X_Rotation": {
         "Description": "Camera_X_Rotation",
         "ADDRESS": "0x2C26A524",
         "Type": "Float",
         "Note1": "Left-right",
         "Note2": "0: Default"
       },
-      {
+      "Camera_Y_Position": {
         "Description": "Camera_Y_Position",
         "ADDRESS": "0x2C26A570",
         "Type": "Float",
         "Note1": "Up-down",
         "Note2": "95: Default"
       },
-      {
+      "Camera_Y_Rotation": {
         "Description": "Camera_Y_Rotation",
         "ADDRESS": "0x2C26A528",
         "Type": "Float",
         "Note1": "Up-down",
         "Note2": "95: Default"
       },
-      {
+      "Camera_Z_Mirror_1": {
         "Description": "Camera_Z_Mirror_1",
         "ADDRESS": "0x2C2D6B14",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
-      {
+      "Camera_Z_Mirror_2": {
         "Description": "Camera_Z_Mirror_2",
         "ADDRESS": "0x2C1F9CE0",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
-      {
+      "Camera_Z_Position": {
         "Description": "Camera_Z_Position",
         "ADDRESS": "0x2C26A52C",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
-      {
+      "Camera_Z_Sprite_Scale": {
         "Description": "Camera_Z_Sprite_Scale",
         "ADDRESS": "0x2C26A538",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
-      {
+      "Demo_Mode_Pointer": {
         "Description": "Demo_Mode_Pointer",
         "ADDRESS": "0x2C14DAE8",
         "Type": "4 Bytes",
         "Note1": "Enables Model Viewer & Sound Test; needs to be triggered in-match.",
         "Note2": "Model Viewer value: 8C0EF3E8\nSound Test value: 8C0429F8"
       },
-      {
+      "First_Attack_Indicator": {
         "Description": "First_Attack_Indicator",
         "ADDRESS": "0x2C2895F2",
         "Type": "Byte",
         "Note1": "Tracks first attack",
         "Note2": "0: No first attack has happened\n128: P1-triggered\n129: P2-triggered"
       },
-      {
+      "Frame_Counter": {
         "Description": "Frame_Counter",
         "ADDRESS": "0x2C1F9D80",
         "Type": "Byte",
         "Note1": "Scene/Fight frame counter",
         "Note2": ""
       },
-      {
+      "Frame_Skip_Counter": {
         "Description": "Frame_Skip_Counter",
         "ADDRESS": "0x2C289621",
         "Type": "Byte",
         "Note1": "Displays the frame values",
         "Note2": "1-4: Default\n1: Drawn\n2: Drawn\n3: Drawn\n4: Skipped"
       },
-      {
+      "Frame_Skip_Cycle_Value": {
         "Description": "Frame_Skip_Cycle_Value",
         "ADDRESS": "0x2C289600",
         "Type": "2 Bytes",
         "Note1": "frame counter, including skipped since match start",
         "Note2": ""
       },
-      {
+      "Frame_Skip_Rate": {
         "Description": "Frame_Skip_Rate",
         "ADDRESS": "0x2C289620",
         "Type": "Byte",
         "Note1": "Frame Skip rate. 0 turns off frame skipping",
         "Note2": "0: Off for real\n1: Custom\n2: Normal \n3: Custom\n4: Default (Turbo1)\n5: Custom\n6: Turbo2"
       },
-      {
+      "Frame_Skip_Toggle": {
         "Description": "Frame_Skip_Toggle",
         "ADDRESS": "0x2C289622",
         "Type": "Byte",
         "Note1": "When active, the frame is skipped",
         "Note2": "0: Drawn\n255: Skipped"
       },
-      {
+      "HC_Gauge_Toggle": {
         "Description": "HC_Gauge_Toggle",
         "ADDRESS": "0x2C2682EA",
         "Type": "Byte",
         "Note1": "Enabled will allow HC Gauge to refill in the style of Training Mode",
         "Note2": "0: Disabled\n1: Enabled"
       },
-      {
+      "Is_Paused": {
         "Description": "Is_Paused",
         "ADDRESS": "0x2C1C9166",
         "Type": "Byte",
         "Note1": "Tracks whether or not the game is paused using the start button",
         "Note2": "0: Unpaused\n1: Paused"
       },
-      {
+      "Match_Start_Throw_Timer": {
         "Description": "Match_Start_Throw_Timer",
         "ADDRESS": "0x2C289602",
         "Type": "2 Bytes",
         "Note1": "Timer that prevents throwing during the start of a match. Counts down",
         "Note2": "60: Default"
       },
-      {
+      "Match_Tracker": {
         "Description": "Match_Tracker",
         "ADDRESS": "0x2C2895F0",
         "Type": "Byte",
         "Note1": "Tracks/Can Set the 'states of a match'",
         "Note2": "0: Loading Screen\n2: Intro Poses\n3: Intro-Can Walk Around\n4: Mid-Match\n5: KO/Time Over\n6: P1/P2 Wins / Draw Game\n9: Finishing Poses"
       },
-      {
+      "Pause_Count": {
         "Description": "Pause_Count",
         "ADDRESS": "0x2C3461FD",
         "Type": "Byte",
         "Note1": "Tracks total times the game has been paused",
         "Note2": ""
       },
-      {
+      "Stage_Selector": {
         "Description": "Stage_Selector",
         "ADDRESS": "0x2C26A95C",
         "Type": "Byte",
         "Note1": "Dec in game-order",
         "Note2": "0: Boat1\n1: Desert1\n2: Factory\n3: Carnival1\n4: Bridge1\n5: Cave2\n6: Clock2\n7: Raft2\n8: Abyss\n9: Boat2\n10: Desert2\n11: Training\n12: Carnival2\n13: Bridge2\n14: Cave1\n15: Clock1\n16: Raft1"
       },
-      {
+      "Timer_Secondary": {
         "Description": "Timer_Secondary",
         "ADDRESS": "0x2C289631",
         "Type": "Byte",
         "Note1": "Match timer (small). The amount of time that passes in one 'marvel-second'",
         "Note2": "0-120"
       },
-      {
+      "Total_Frames": {
         "Description": "Total_Frames",
         "ADDRESS": "0x2C3496B0",
         "Type": "4 Byte",
         "Note1": "Total frames since launch",
         "Note2": ""
       }
-    ],
-    "CharacterInfo": [
-      {
+    },
+    "CharacterInfo": {
+      "Ryu": {
         "Dec": "0",
         "Hex": "0x00",
         "ENNameDev": "Ryu",
@@ -2271,7 +2271,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Zangief": {
         "Dec": "1",
         "Hex": "0x01",
         "ENNameDev": "Zangief",
@@ -2291,7 +2291,7 @@
         "Note1": "Unique THC HC",
         "Note2": ""
       },
-      {
+      "Guile": {
         "Dec": "2",
         "Hex": "0x02",
         "ENNameDev": "Guile",
@@ -2311,7 +2311,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Morrigan": {
         "Dec": "3",
         "Hex": "0x03",
         "ENNameDev": "Morrigan",
@@ -2331,7 +2331,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Anakaris": {
         "Dec": "4",
         "Hex": "0x04",
         "ENNameDev": "Anakaris",
@@ -2351,7 +2351,7 @@
         "Note1": "Variety",
         "Note2": ""
       },
-      {
+      "StriderHiryu": {
         "Dec": "5",
         "Hex": "0x05",
         "ENNameDev": "StriderHiryu",
@@ -2371,7 +2371,7 @@
         "Note1": "Variety",
         "Note2": ""
       },
-      {
+      "Cyclops": {
         "Dec": "6",
         "Hex": "0x06",
         "ENNameDev": "Cyclops",
@@ -2391,7 +2391,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Wolverine": {
         "Dec": "7",
         "Hex": "0x07",
         "ENNameDev": "Wolverine",
@@ -2411,7 +2411,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Psylocke": {
         "Dec": "8",
         "Hex": "0x08",
         "ENNameDev": "Psylocke",
@@ -2431,7 +2431,7 @@
         "Note1": "Variety",
         "Note2": ""
       },
-      {
+      "Iceman": {
         "Dec": "9",
         "Hex": "0x09",
         "ENNameDev": "Iceman",
@@ -2451,7 +2451,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Rogue": {
         "Dec": "10",
         "Hex": "0x0A",
         "ENNameDev": "Rogue",
@@ -2471,7 +2471,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "CaptainAmerica": {
         "Dec": "11",
         "Hex": "0x0B",
         "ENNameDev": "CaptainAmerica",
@@ -2491,7 +2491,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "SpiderMan": {
         "Dec": "12",
         "Hex": "0x0C",
         "ENNameDev": "SpiderMan",
@@ -2511,7 +2511,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Hulk": {
         "Dec": "13",
         "Hex": "0x0D",
         "ENNameDev": "Hulk",
@@ -2531,7 +2531,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Venom": {
         "Dec": "14",
         "Hex": "0x0E",
         "ENNameDev": "Venom",
@@ -2551,7 +2551,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "DoctorDoom": {
         "Dec": "15",
         "Hex": "0x0F",
         "ENNameDev": "DoctorDoom",
@@ -2571,7 +2571,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "TronBonne": {
         "Dec": "16",
         "Hex": "0x10",
         "ENNameDev": "TronBonne",
@@ -2591,7 +2591,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Jill": {
         "Dec": "17",
         "Hex": "0x11",
         "ENNameDev": "Jill",
@@ -2611,7 +2611,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Hayato": {
         "Dec": "18",
         "Hex": "0x12",
         "ENNameDev": "Hayato",
@@ -2631,7 +2631,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "RubyHeart": {
         "Dec": "19",
         "Hex": "0x13",
         "ENNameDev": "RubyHeart",
@@ -2651,7 +2651,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Sonson": {
         "Dec": "20",
         "Hex": "0x14",
         "ENNameDev": "Sonson",
@@ -2671,7 +2671,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Amingo": {
         "Dec": "21",
         "Hex": "0x15",
         "ENNameDev": "Amingo",
@@ -2691,7 +2691,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Marrow": {
         "Dec": "22",
         "Hex": "0x16",
         "ENNameDev": "Marrow",
@@ -2711,7 +2711,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Cable": {
         "Dec": "23",
         "Hex": "0x17",
         "ENNameDev": "Cable",
@@ -2731,7 +2731,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "AbyssA": {
         "Dec": "24",
         "Hex": "0x18",
         "ENNameDev": "AbyssA",
@@ -2751,7 +2751,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "AbyssB": {
         "Dec": "25",
         "Hex": "0x19",
         "ENNameDev": "AbyssB",
@@ -2771,7 +2771,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "AbyssC": {
         "Dec": "26",
         "Hex": "0x1A",
         "ENNameDev": "AbyssC",
@@ -2791,7 +2791,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "ChunLi": {
         "Dec": "27",
         "Hex": "0x1B",
         "ENNameDev": "ChunLi",
@@ -2811,7 +2811,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Megaman": {
         "Dec": "28",
         "Hex": "0x1C",
         "ENNameDev": "Megaman",
@@ -2831,7 +2831,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Roll": {
         "Dec": "29",
         "Hex": "0x1D",
         "ENNameDev": "Roll",
@@ -2851,7 +2851,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Akuma": {
         "Dec": "30",
         "Hex": "0x1E",
         "ENNameDev": "Akuma",
@@ -2871,7 +2871,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "BBHood": {
         "Dec": "31",
         "Hex": "0x1F",
         "ENNameDev": "BBHood",
@@ -2891,7 +2891,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Felicia": {
         "Dec": "32",
         "Hex": "0x20",
         "ENNameDev": "Felicia",
@@ -2911,7 +2911,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Charlie": {
         "Dec": "33",
         "Hex": "0x21",
         "ENNameDev": "Charlie",
@@ -2931,7 +2931,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Sakura": {
         "Dec": "34",
         "Hex": "0x22",
         "ENNameDev": "Sakura",
@@ -2951,7 +2951,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Dan": {
         "Dec": "35",
         "Hex": "0x23",
         "ENNameDev": "Dan",
@@ -2971,7 +2971,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Cammy": {
         "Dec": "36",
         "Hex": "0x24",
         "ENNameDev": "Cammy",
@@ -2991,7 +2991,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Dhalsim": {
         "Dec": "37",
         "Hex": "0x25",
         "ENNameDev": "Dhalsim",
@@ -3011,7 +3011,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "MBison": {
         "Dec": "38",
         "Hex": "0x26",
         "ENNameDev": "MBison",
@@ -3031,7 +3031,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Ken": {
         "Dec": "39",
         "Hex": "0x27",
         "ENNameDev": "Ken",
@@ -3051,7 +3051,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Gambit": {
         "Dec": "40",
         "Hex": "0x28",
         "ENNameDev": "Gambit",
@@ -3071,7 +3071,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Juggernaut": {
         "Dec": "41",
         "Hex": "0x29",
         "ENNameDev": "Juggernaut",
@@ -3091,7 +3091,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Storm": {
         "Dec": "42",
         "Hex": "0x2A",
         "ENNameDev": "Storm",
@@ -3111,7 +3111,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Sabretooth": {
         "Dec": "43",
         "Hex": "0x2B",
         "ENNameDev": "Sabretooth",
@@ -3131,7 +3131,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Magneto": {
         "Dec": "44",
         "Hex": "0x2C",
         "ENNameDev": "Magneto",
@@ -3151,7 +3151,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "ShumaGorath": {
         "Dec": "45",
         "Hex": "0x2D",
         "ENNameDev": "ShumaGorath",
@@ -3171,7 +3171,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "WarMachine": {
         "Dec": "46",
         "Hex": "0x2E",
         "ENNameDev": "WarMachine",
@@ -3191,7 +3191,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "SilverSamurai": {
         "Dec": "47",
         "Hex": "0x2F",
         "ENNameDev": "SilverSamurai",
@@ -3211,7 +3211,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "OmegaRed": {
         "Dec": "48",
         "Hex": "0x30",
         "ENNameDev": "OmegaRed",
@@ -3231,7 +3231,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Spiral": {
         "Dec": "49",
         "Hex": "0x31",
         "ENNameDev": "Spiral",
@@ -3251,7 +3251,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Colossus": {
         "Dec": "50",
         "Hex": "0x32",
         "ENNameDev": "Colossus",
@@ -3271,7 +3271,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "IronMan": {
         "Dec": "51",
         "Hex": "0x33",
         "ENNameDev": "IronMan",
@@ -3291,7 +3291,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Sentinel": {
         "Dec": "52",
         "Hex": "0x34",
         "ENNameDev": "Sentinel",
@@ -3311,7 +3311,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Blackheart": {
         "Dec": "53",
         "Hex": "0x35",
         "ENNameDev": "Blackheart",
@@ -3331,7 +3331,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Thanos": {
         "Dec": "54",
         "Hex": "0x36",
         "ENNameDev": "Thanos",
@@ -3351,7 +3351,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Jin": {
         "Dec": "55",
         "Hex": "0x37",
         "ENNameDev": "Jin",
@@ -3371,7 +3371,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "CaptainCommando": {
         "Dec": "56",
         "Hex": "0x38",
         "ENNameDev": "CaptainCommando",
@@ -3391,7 +3391,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "WolverineB": {
         "Dec": "57",
         "Hex": "0x39",
         "ENNameDev": "WolverineB",
@@ -3411,7 +3411,7 @@
         "Note1": "",
         "Note2": ""
       },
-      {
+      "Servbot": {
         "Dec": "58",
         "Hex": "0x3A",
         "ENNameDev": "Servbot",
@@ -3431,214 +3431,214 @@
         "Note1": "",
         "Note2": ""
       }
-    ],
-    "StagesInfo": [
-      {
+    },
+    "StagesInfo": {
+      "Boat1": {
         "Dec": "0",
         "Hex": "0x00",
         "Name": "Boat1",
         "Custom2": "Day_Boat",
         "Custom3": ""
       },
-      {
+      "Desert1": {
         "Dec": "1",
         "Hex": "0x01",
         "Name": "Desert1",
         "Custom2": "Sunset_Desert",
         "Custom3": ""
       },
-      {
+      "Factory": {
         "Dec": "2",
         "Hex": "0x02",
         "Name": "Factory",
         "Custom2": "Factory",
         "Custom3": ""
       },
-      {
+      "Carnival1": {
         "Dec": "3",
         "Hex": "0x03",
         "Name": "Carnival1",
         "Custom2": "Day_Carnival",
         "Custom3": ""
       },
-      {
+      "Bridge1": {
         "Dec": "4",
         "Hex": "0x04",
         "Name": "Bridge1",
         "Custom2": "Brown_Bridge",
         "Custom3": ""
       },
-      {
+      "Cave2": {
         "Dec": "5",
         "Hex": "0x05",
         "Name": "Cave2",
         "Custom2": "Blue_Cave",
         "Custom3": ""
       },
-      {
+      "Clock2": {
         "Dec": "6",
         "Hex": "0x06",
         "Name": "Clock2",
         "Custom2": "Summer_Clock",
         "Custom3": ""
       },
-      {
+      "Raft2": {
         "Dec": "7",
         "Hex": "0x07",
         "Name": "Raft2",
         "Custom2": "Snow_Raft",
         "Custom3": ""
       },
-      {
+      "Abyss": {
         "Dec": "8",
         "Hex": "0x08",
         "Name": "Abyss",
         "Custom2": "Abyss",
         "Custom3": ""
       },
-      {
+      "Boat2": {
         "Dec": "9",
         "Hex": "0x09",
         "Name": "Boat2",
         "Custom2": "Night_Boat",
         "Custom3": ""
       },
-      {
+      "Desert2": {
         "Dec": "10",
         "Hex": "0x0A",
         "Name": "Desert2",
         "Custom2": "Day_Desert",
         "Custom3": ""
       },
-      {
+      "Training": {
         "Dec": "11",
         "Hex": "0x0B",
         "Name": "Training",
         "Custom2": "Training",
         "Custom3": ""
       },
-      {
+      "Carnival2": {
         "Dec": "12",
         "Hex": "0x0C",
         "Name": "Carnival2",
         "Custom2": "Dark_Carnival",
         "Custom3": ""
       },
-      {
+      "Bridge2": {
         "Dec": "13",
         "Hex": "0x0D",
         "Name": "Bridge2",
         "Custom2": "Pink_Bridge",
         "Custom3": ""
       },
-      {
+      "Cave1": {
         "Dec": "14",
         "Hex": "0x0E",
         "Name": "Cave1",
         "Custom2": "Red_Cave",
         "Custom3": ""
       },
-      {
+      "Clock1": {
         "Dec": "15",
         "Hex": "0x0F",
         "Name": "Clock1",
         "Custom2": "Snow_Clock",
         "Custom3": ""
       },
-      {
+      "Raft1": {
         "Dec": "16",
         "Hex": "0x10",
         "Name": "Raft1",
         "Custom2": "Day_Raft",
         "Custom3": ""
       },
-      {
+      "Random": {
         "Dec": "17",
         "Hex": "0x11",
         "Name": "Random",
         "Custom2": "?",
         "Custom3": ""
       }
-    ],
-    "InputsInfo": [
-      {
+    },
+    "InputsInfo": {
+      "Right": {
         "Dec": "1024",
         "Hex": "0x400",
         "Custom1": "6",
         "Custom2": "6",
         "Name": "Right"
       },
-      {
+      "Left": {
         "Dec": "2048",
         "Hex": "0x800",
         "Custom1": "4",
         "Custom2": "4",
         "Name": "Left"
       },
-      {
+      "Down": {
         "Dec": "4096",
         "Hex": "0x1000",
         "Custom1": "2",
         "Custom2": "2",
         "Name": "Down"
       },
-      {
+      "Up": {
         "Dec": "8192",
         "Hex": "0x2000",
         "Custom1": "8",
         "Custom2": "8",
         "Name": "Up"
       },
-      {
+      "LP": {
         "Dec": "512",
         "Hex": "0x200",
         "Custom1": "u",
         "Custom2": "LP",
         "Name": "LP"
       },
-      {
+      "LK": {
         "Dec": "64",
         "Hex": "0x40",
         "Custom1": "j",
         "Custom2": "LK",
         "Name": "LK"
       },
-      {
+      "HP": {
         "Dec": "256",
         "Hex": "0x100",
         "Custom1": "i",
         "Custom2": "HP",
         "Name": "HP"
       },
-      {
+      "HK": {
         "Dec": "32",
         "Hex": "0x20",
         "Custom1": "k",
         "Custom2": "HK",
         "Name": "HK"
       },
-      {
+      "A1": {
         "Dec": "128",
         "Hex": "0x80",
         "Custom1": "o",
         "Custom2": "A1",
         "Name": "A1"
       },
-      {
+      "A2": {
         "Dec": "16",
         "Hex": "0x10",
         "Custom1": "l",
         "Custom2": "A2",
         "Name": "A2"
       },
-      {
+      "START": {
         "Dec": "32768",
         "Hex": "0x8000",
         "Custom1": "(",
         "Custom2": "START",
         "Name": "START"
       }
-    ]
+    }
   },
   "AllAddresses": {
     "P1_A_Base": "0x2C268340",

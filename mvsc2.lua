@@ -1,21 +1,28 @@
 -- Require the configuration module
 config = require './training/mvc2_config'
 pMem = require './training/player_functions'
+-- print("pMem:")
+ui = config.ui
 
--- Further abstraction 😎
-ui = flycast.ui
-keys = config.jKeys -- object with keyword terms
-adr = config.jAdr -- all memory addresses using keywords as keys
 GetPoint = pMem.GetPoint
 GetPMemUsingPoint = pMem.GetPMemUsingPoint
+
+-- print(GetPoint(1))
+-- print(GetPMemUsingPoint(1, "Health_Big"))
 
 -- Custom function to display memory values
 function DisplayPMem(player, address_name)
   local prefix = player == 1 and "P1_" or player == 2 and "P2_" or ""
   local key = prefix .. address_name
-  -- print("Key:", key) -- Debug print statement for the key
-  local value = GetPMemUsingPoint(player, address_name)
-  -- print("Value:", value) -- Debug print statement for the value
+  -- -- print("Key:", key) -- Debug print statement for the key
+
+  local success, value = pcall(GetPMemUsingPoint, player, address_name)
+  if not success then
+    -- print("Error:", value) -- Print the error message
+    return string.format("%s: Error", key)
+  end
+
+  -- -- print("Value:", value) -- Debug print statement for the value
   local formatString = string.format("%s: %d", key, value)
   -- print("Formatted String:", formatString) -- Debug print statement for the formatted string
   return formatString
@@ -24,9 +31,9 @@ end
 function cbOverlay()
   ui.beginWindow("New", 100, 10, 300, 0)
   -- Draw
-  ui.text(DisplayPMem(1, "Is_Point"))
-  ui.text(DisplayPMem(2, "Is_Point"))
-  ui.text(DisplayPMem(2, "Unfly"))
+  ui.text(DisplayPMem(1, "Hitstop2"))
+  ui.text(DisplayPMem(2, "Hitstop2"))
+  ui.text(DisplayPMem(2, "Health_Big"))
 
   ui.endWindow()
 

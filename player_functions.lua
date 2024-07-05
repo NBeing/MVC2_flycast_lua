@@ -6,25 +6,25 @@ local config = require './training/mvc2_config'
 local function GetPoint(oneOrTwo)
   local pointPrefix = '' -- will contain the character that is on point for the specified player.
   if oneOrTwo == 1 then
-    if config.read8(config.jAdr.P1_A_Is_Point) == 0 then
+    if config.read8(config.PlayerMemoryAddresses.Is_Point.P1_A_Is_Point) == 0 then
       pointPrefix = 'P1_A_'
       return pointPrefix
-    elseif config.read8(config.jAdr.P1_B_Is_Point) == 0 then
+    elseif config.read8(config.PlayerMemoryAddresses.Is_Point.P1_B_Is_Point) == 0 then
       pointPrefix = 'P1_B_'
       return pointPrefix
-    elseif config.read8(config.jAdr.P1_C_Is_Point) == 0 then
+    elseif config.read8(config.PlayerMemoryAddresses.Is_Point.P1_C_Is_Point) == 0 then
       pointPrefix = 'P1_C_'
       return pointPrefix
     end
   else
     if oneOrTwo == 2 then
-      if config.read8(config.jAdr.P2_A_Is_Point) == 0 then
+      if config.read8(config.PlayerMemoryAddresses.Is_Point.P2_A_Is_Point) == 0 then
         pointPrefix = 'P2_A_'
         return pointPrefix
-      elseif config.read8(config.jAdr.P2_B_Is_Point) == 0 then
+      elseif config.read8(config.PlayerMemoryAddresses.Is_Point.P2_B_Is_Point) == 0 then
         pointPrefix = 'P2_B_'
         return pointPrefix
-      elseif config.read8(config.jAdr.P2_C_Is_Point) == 0 then
+      elseif config.read8(config.PlayerMemoryAddresses.Is_Point.P2_C_Is_Point) == 0 then
         pointPrefix = 'P2_C_'
         return pointPrefix
       end
@@ -39,10 +39,30 @@ end
 -- @param address_name The name of the memory address.
 -- @return Number from the memory address.
 local function GetPMemUsingPoint(oneOrTwo, address_name)
+  -- print("GetPMemUsingPoint called with:", oneOrTwo, address_name)
+
   local pointCharForPlayer = GetPoint(oneOrTwo)
+  -- print("pointCharForPlayer:", pointCharForPlayer)
+
   local concat = pointCharForPlayer .. address_name
-  local lookUp = config.jAdr[concat]
-  return config.read8(lookUp)
+  -- print("Concatenated key:", concat)
+
+  local lookup = config.PlayerMemoryAddresses[address_name]
+  if not lookup then
+    error("Address not found for key: " .. concat)
+  end
+  -- print("Lookup result:", lookup)
+
+  local address = lookup[concat]
+  if not address then
+    error("Concatenated address not found in lookup result: " .. concat)
+  end
+  -- print("Final address:", address)
+
+  local value = config.read8(address)
+  -- print("Read value:", value)
+
+  return value
 end
 
 -- Return the functions as a module

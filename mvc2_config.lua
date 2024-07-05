@@ -1,17 +1,26 @@
--- mvc2_config.lua
 -- Imports
 local util = require './training/utilities'
 local MVC2_OBJ = util.read_object_from_json_file('./training/data/SPREADSHEET.json')
-
 -- Abstractions
-local jSS = MVC2_OBJ.SPREADSHEET -- json file: Spreadsheet object (contains other objects)
-local jAdr = MVC2_OBJ.AllAddresses -- json file: AllAddresses (contains unfiltered object with k-v addresses)
-local jKeys = MVC2_OBJ.Keywords -- json file: Keywords (contains unfiltered object with k-v keywords)
+local jSS = MVC2_OBJ.SPREADSHEET
 
--- Data
-local DC_MVC2_MEMORY_TABLE = require './training/data/DC_MVC2_MEMORY_TABLE'
-local CHARACTER = require './training/data/characters'
-local STAGES = require './training/data/stages'
+-- Create shorthand variables for each sub-object
+local PlayerMemoryAddresses = jSS.PlayerMemoryAddresses
+local SpecificCharacterAddresses = jSS.SpecificCharacterAddresses
+local Player1And2Addresses = jSS.Player1And2Addresses
+local SystemMemoryAddresses = jSS.SystemMemoryAddresses
+local CharacterInfo = jSS.CharacterInfo
+local StagesInfo = jSS.StagesInfo
+local InputsInfo = jSS.InputsInfo
+
+-- Verify existence of each entry
+assert(PlayerMemoryAddresses, "PlayerMemoryAddresses not found")
+assert(SpecificCharacterAddresses, "SpecificCharacterAddresses not found")
+assert(Player1And2Addresses, "Player1And2Addresses not found")
+assert(SystemMemoryAddresses, "SystemMemoryAddresses not found")
+assert(CharacterInfo, "CharacterInfo not found")
+assert(StagesInfo, "StagesInfo not found")
+assert(InputsInfo, "InputsInfo not found")
 
 -- Readers / Writers Aliases
 local read8 = flycast.memory.read8
@@ -22,22 +31,23 @@ local write16 = flycast.memory.write16
 local write32 = flycast.memory.write32
 
 -- Important Constants
-local CURRENT_FRAME = read32(jAdr.Frame_Counter)
-
+-- Ensure the Frame_Counter address is correctly referenced
+local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.ADDRESS
+assert(CURRENT_FRAME_ADDRESS, "Frame_Counter address not found")
+local CURRENT_FRAME = read32(CURRENT_FRAME_ADDRESS)
 -- UI and Memory Aliases
 local ui = flycast.ui
 local MEMORY = flycast.memory
 
 -- Return as a module
 return {
-  util = util,
-  MVC2_OBJ = MVC2_OBJ,
-  jSS = jSS,
-  jAdr = jAdr,
-  jKeys = jKeys,
-  DC_MVC2_MEMORY_TABLE = DC_MVC2_MEMORY_TABLE,
-  CHARACTER = CHARACTER,
-  STAGES = STAGES,
+  PlayerMemoryAddresses = PlayerMemoryAddresses,
+  SpecificCharacterAddresses = SpecificCharacterAddresses,
+  Player1And2Addresses = Player1And2Addresses,
+  SystemMemoryAddresses = SystemMemoryAddresses,
+  CharacterInfo = CharacterInfo,
+  StagesInfo = StagesInfo,
+  InputsInfo = InputsInfo,
   read8 = read8,
   read16 = read16,
   read32 = read32,
@@ -48,16 +58,3 @@ return {
   ui = ui,
   MEMORY = MEMORY
 }
-
--- TODO: buttons
--- local BTN_B = 1 << 1 -- hk
--- local BTN_A = 1 << 2  -- lk
--- local BTN_Y = 1 << 9 -- heavy 
--- local BTN_X = 1 << 10 --light poonch
--- local BTN_C = assist 2
--- local BTN_Z = assist 1
-
--- GLOBALS = {
---   CHARACTER = CHARACTER,
---   STAGES = STAGES
--- }
