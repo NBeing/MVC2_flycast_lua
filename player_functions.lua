@@ -6,25 +6,25 @@ local config = require './training/mvc2_config'
 local function GetPoint(oneOrTwo)
   local pointPrefix = '' -- will contain the character that is on point for the specified player.
   if oneOrTwo == 1 then
-    if config.read8(config.jsonAllAddresses.P1_A_Is_Point) == 0 then
+    if config.read8(config.jAdr.P1_A_Is_Point) == 0 then
       pointPrefix = 'P1_A_'
       return pointPrefix
-    elseif config.read8(config.jsonAllAddresses.P1_B_Is_Point) == 0 then
+    elseif config.read8(config.jAdr.P1_B_Is_Point) == 0 then
       pointPrefix = 'P1_B_'
       return pointPrefix
-    elseif config.read8(config.jsonAllAddresses.P1_C_Is_Point) == 0 then
+    elseif config.read8(config.jAdr.P1_C_Is_Point) == 0 then
       pointPrefix = 'P1_C_'
       return pointPrefix
     end
   else
     if oneOrTwo == 2 then
-      if config.read8(config.jsonAllAddresses.P2_A_Is_Point) == 0 then
+      if config.read8(config.jAdr.P2_A_Is_Point) == 0 then
         pointPrefix = 'P2_A_'
         return pointPrefix
-      elseif config.read8(config.jsonAllAddresses.P2_B_Is_Point) == 0 then
+      elseif config.read8(config.jAdr.P2_B_Is_Point) == 0 then
         pointPrefix = 'P2_B_'
         return pointPrefix
-      elseif config.read8(config.jsonAllAddresses.P2_C_Is_Point) == 0 then
+      elseif config.read8(config.jAdr.P2_C_Is_Point) == 0 then
         pointPrefix = 'P2_C_'
         return pointPrefix
       end
@@ -41,7 +41,7 @@ end
 local function GetPMemUsingPoint(oneOrTwo, address_name)
   local pointCharForPlayer = GetPoint(oneOrTwo)
   local concat = pointCharForPlayer .. address_name
-  local lookUp = config.jsonAllAddresses[concat]
+  local lookUp = config.jAdr[concat]
   return config.read8(lookUp)
 end
 

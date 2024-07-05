@@ -1,38 +1,35 @@
 -- Require the configuration module
 config = require './training/mvc2_config'
 pMem = require './training/player_functions'
+
+-- Further abstraction 😎
 ui = flycast.ui
--- local BTN_B = 1 << 1 -- hk
--- local BTN_A = 1 << 2  -- lk
--- local BTN_Y = 1 << 9 -- heavy 
--- local BTN_X = 1 << 10 --light poonch
--- local BTN_C = assist 2
--- local BTN_Z = assist 1
+keys = config.jKeys -- object with keyword terms
+adr = config.jAdr -- all memory addresses using keywords as keys
+GetPoint = pMem.GetPoint
+GetPMemUsingPoint = pMem.GetPMemUsingPoint
 
--- GLOBALS = {
---   CHARACTER = CHARACTER,
---   STAGES = STAGES
--- }
-
-function cbStart()
+-- Custom function to display memory values
+function DisplayPMem(player, address_name)
+  local prefix = player == 1 and "P1_" or player == 2 and "P2_" or ""
+  local key = prefix .. address_name
+  -- print("Key:", key) -- Debug print statement for the key
+  local value = GetPMemUsingPoint(player, address_name)
+  -- print("Value:", value) -- Debug print statement for the value
+  local formatString = string.format("%s: %d", key, value)
+  -- print("Formatted String:", formatString) -- Debug print statement for the formatted string
+  return formatString
 end
--- time_to_release_pb = nil
 
 function cbOverlay()
-
-  -- Use the functions from player_functions
-  local GetPoint = pMem.GetPoint
-  local GetPMemUsingPoint = pMem.GetPMemUsingPoint
-
-  print(pMem.GetPoint(1))
-
   ui.beginWindow("New", 100, 10, 300, 0)
   -- Draw
-  ui.text(string.format(config.jsonKeywords.P1_Is_Point .. ": %s", GetPoint(1)))
-  ui.text(string.format(config.jsonKeywords.P2_Is_Point .. ": %s", GetPoint(2)))
-  ui.text(string.format(config.jsonKeywords.P2_Health_Big .. ": %d", GetPMemUsingPoint(2, jsonKeywords.Health_Big)))
+  ui.text(DisplayPMem(1, "Is_Point"))
+  ui.text(DisplayPMem(2, "Is_Point"))
+  ui.text(DisplayPMem(2, "Unfly"))
 
   ui.endWindow()
+
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
   --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
   --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
@@ -404,7 +401,7 @@ end
 --  end
 
 flycast_callbacks = {
-  start = cbStart,
+  -- start = cbStart,
   overlay = cbOverlay
   -- vblank = cbVBlank
 }

@@ -4,9 +4,9 @@ local util = require './training/utilities'
 local MVC2_OBJ = util.read_object_from_json_file('./training/data/SPREADSHEET.json')
 
 -- Abstractions
-local jsonSpreadsheet = MVC2_OBJ.SPREADSHEET -- json file: Spreadsheet object (contains other objects)
-local jsonAllAddresses = MVC2_OBJ.AllAddresses -- json file: AllAddresses (contains unfiltered object with k-v addresses)
-local jsonKeywords = MVC2_OBJ.Keywords -- json file: Keywords (contains unfiltered object with k-v keywords)
+local jSS = MVC2_OBJ.SPREADSHEET -- json file: Spreadsheet object (contains other objects)
+local jAdr = MVC2_OBJ.AllAddresses -- json file: AllAddresses (contains unfiltered object with k-v addresses)
+local jKeys = MVC2_OBJ.Keywords -- json file: Keywords (contains unfiltered object with k-v keywords)
 
 -- Data
 local DC_MVC2_MEMORY_TABLE = require './training/data/DC_MVC2_MEMORY_TABLE'
@@ -22,7 +22,7 @@ local write16 = flycast.memory.write16
 local write32 = flycast.memory.write32
 
 -- Important Constants
-local CURRENT_FRAME = read32(jsonAllAddresses.Frame_Counter)
+local CURRENT_FRAME = read32(jAdr.Frame_Counter)
 
 -- UI and Memory Aliases
 local ui = flycast.ui
@@ -32,9 +32,9 @@ local MEMORY = flycast.memory
 return {
   util = util,
   MVC2_OBJ = MVC2_OBJ,
-  jsonSpreadsheet = jsonSpreadsheet,
-  jsonAllAddresses = jsonAllAddresses,
-  jsonKeywords = jsonKeywords,
+  jSS = jSS,
+  jAdr = jAdr,
+  jKeys = jKeys,
   DC_MVC2_MEMORY_TABLE = DC_MVC2_MEMORY_TABLE,
   CHARACTER = CHARACTER,
   STAGES = STAGES,
@@ -48,3 +48,16 @@ return {
   ui = ui,
   MEMORY = MEMORY
 }
+
+-- TODO: buttons
+-- local BTN_B = 1 << 1 -- hk
+-- local BTN_A = 1 << 2  -- lk
+-- local BTN_Y = 1 << 9 -- heavy 
+-- local BTN_X = 1 << 10 --light poonch
+-- local BTN_C = assist 2
+-- local BTN_Z = assist 1
+
+-- GLOBALS = {
+--   CHARACTER = CHARACTER,
+--   STAGES = STAGES
+-- }
