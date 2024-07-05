@@ -3,10 +3,8 @@ config = require './training/mvc2_config'
 pMem = require './training/player_functions'
 display = require './training/display_functions'
 
+-- Further abstraction 😎
 ui = config.ui
-
-GetPoint = pMem.GetPoint
-GetPMemUsingPoint = pMem.GetPMemUsingPoint
 
 function cbOverlay()
   ui.beginWindow("New", 100, 10, 300, 0)
@@ -14,6 +12,7 @@ function cbOverlay()
   ui.text(display.displayPMem(1, "Hitstop2"))
   ui.text(display.displayPMem(2, "Hitstop2"))
   ui.text(display.displayPMem(2, "ID_2"))
+  ui.text(display.parseNote2(config.PlayerMemoryAddresses.Is_Point.Note2)) -- Example of using parseNote2 directly
 
   ui.endWindow()
 

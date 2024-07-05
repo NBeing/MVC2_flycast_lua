@@ -29,6 +29,20 @@ local function formatPMemValue(player, address_name)
   return formatString
 end
 
+-- Parses the Note2 entry and returns a formatted string
+local function parseNote2(note)
+  local result = ""
+  for line in note:gmatch("([^\n]*)\n?") do
+    if line:match(":") then
+      print("Line with colon:", line)
+    else
+      print("Line without colon:", line)
+    end
+    result = result .. line .. "\n"
+  end
+  return result
+end
+
 -- Main function to display PMem
 local function displayPMem(player, address_name)
   if address_name == "ID_2" then
@@ -40,7 +54,7 @@ local function displayPMem(player, address_name)
   -- Example of handling Note2 parsing if address_name corresponds to Note2 entry
   if address_name == "Note2" then
     local note = config.PlayerMemoryAddresses.Is_Point.Note2 -- Adjust this line as per your actual data structure
-    return pMem.parseNote2(note)
+    return parseNote2(note)
   end
 
   return formatPMemValue(player, address_name)
@@ -51,5 +65,6 @@ return {
   displayPMem = displayPMem,
   getKeyPrefix = getKeyPrefix,
   displayJSONContents = displayJSONContents,
-  formatPMemValue = formatPMemValue
+  formatPMemValue = formatPMemValue,
+  parseNote2 = parseNote2
 }

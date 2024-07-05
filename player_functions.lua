@@ -56,18 +56,8 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
   return value
 end
 
--- Parses the Note2 entry and returns a formatted string
-local function parseNote2(note)
-  local result = ""
-  for line in note:gmatch("([^\n]*)\n?") do
-    result = result .. line .. "\n"
-  end
-  return result
-end
-
 -- Return the functions as a module
 return {
   GetPoint = GetPoint,
-  GetPMemUsingPoint = GetPMemUsingPoint,
-  parseNote2 = parseNote2
+  GetPMemUsingPoint = GetPMemUsingPoint
 }
