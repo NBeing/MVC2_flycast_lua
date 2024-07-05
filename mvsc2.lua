@@ -11,15 +11,15 @@ function cbOverlay()
   ui.text(display.displayPMem(1, "Hitstop2"))
   ui.text(display.displayPMem(2, "Hitstop2"))
 
-  -- Check for special cases and Note2
-  -- local specialCaseOutput = display.displaySpecialCases("ID_2")
-  -- if specialCaseOutput then
-  --   ui.text(specialCaseOutput)
-  -- end
+  -- Example test calls
+  local address = "0x2C268378" -- Replace with a valid address
+
+  -- Reading the float value from the address
+  local readValue = config.readFloat(address)
+  print("Read back value:", readValue)
 
   -- Use the lookUp function
-  display.lookUp("X_Position_Arena", 1) -- Example with optional arguments
-  -- display.lookUp("P1_X_Position_Arena")
+  -- display.lookUp("X_Position_Arena", 1) -- Example with optional arguments
   -- display.lookUp("Total_Frames")
   -- display.lookUp("A_2D_Game_Timer")
   ui.endWindow()
