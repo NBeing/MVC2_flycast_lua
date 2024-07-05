@@ -1,39 +1,19 @@
 -- Require the configuration module
 config = require './training/mvc2_config'
 pMem = require './training/player_functions'
--- print("pMem:")
+display = require './training/display_functions'
+
 ui = config.ui
 
 GetPoint = pMem.GetPoint
 GetPMemUsingPoint = pMem.GetPMemUsingPoint
 
--- print(GetPoint(1))
--- print(GetPMemUsingPoint(1, "Health_Big"))
-
--- Custom function to display memory values
-function DisplayPMem(player, address_name)
-  local prefix = player == 1 and "P1_" or player == 2 and "P2_" or ""
-  local key = prefix .. address_name
-  -- -- print("Key:", key) -- Debug print statement for the key
-
-  local success, value = pcall(GetPMemUsingPoint, player, address_name)
-  if not success then
-    -- print("Error:", value) -- Print the error message
-    return string.format("%s: Error", key)
-  end
-
-  -- -- print("Value:", value) -- Debug print statement for the value
-  local formatString = string.format("%s: %d", key, value)
-  -- print("Formatted String:", formatString) -- Debug print statement for the formatted string
-  return formatString
-end
-
 function cbOverlay()
   ui.beginWindow("New", 100, 10, 300, 0)
   -- Draw
-  ui.text(DisplayPMem(1, "Hitstop2"))
-  ui.text(DisplayPMem(2, "Hitstop2"))
-  ui.text(DisplayPMem(2, "Health_Big"))
+  ui.text(display.displayPMem(1, "Hitstop2"))
+  ui.text(display.displayPMem(2, "Hitstop2"))
+  ui.text(display.displayPMem(2, "ID_2"))
 
   ui.endWindow()
 

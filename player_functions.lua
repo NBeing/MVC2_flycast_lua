@@ -1,5 +1,5 @@
--- player_functions.lua
 local config = require './training/mvc2_config'
+
 -- GetPoint function
 -- @param oneOrTwo: The player number (1 or 2).
 -- @return string representing the prefix for the on-point && active character for the specified player.
@@ -39,34 +39,35 @@ end
 -- @param address_name The name of the memory address.
 -- @return Number from the memory address.
 local function GetPMemUsingPoint(oneOrTwo, address_name)
-  -- print("GetPMemUsingPoint called with:", oneOrTwo, address_name)
-
   local pointCharForPlayer = GetPoint(oneOrTwo)
-  -- print("pointCharForPlayer:", pointCharForPlayer)
-
   local concat = pointCharForPlayer .. address_name
-  -- print("Concatenated key:", concat)
 
   local lookup = config.PlayerMemoryAddresses[address_name]
   if not lookup then
     error("Address not found for key: " .. concat)
   end
-  -- print("Lookup result:", lookup)
 
   local address = lookup[concat]
   if not address then
     error("Concatenated address not found in lookup result: " .. concat)
   end
-  -- print("Final address:", address)
 
   local value = config.read8(address)
-  -- print("Read value:", value)
-
   return value
+end
+
+-- Parses the Note2 entry and returns a formatted string
+local function parseNote2(note)
+  local result = ""
+  for line in note:gmatch("([^\n]*)\n?") do
+    result = result .. line .. "\n"
+  end
+  return result
 end
 
 -- Return the functions as a module
 return {
   GetPoint = GetPoint,
-  GetPMemUsingPoint = GetPMemUsingPoint
+  GetPMemUsingPoint = GetPMemUsingPoint,
+  parseNote2 = parseNote2
 }

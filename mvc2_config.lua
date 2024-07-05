@@ -12,16 +12,7 @@ local SystemMemoryAddresses = jSS.SystemMemoryAddresses
 local CharacterInfo = jSS.CharacterInfo
 local StagesInfo = jSS.StagesInfo
 local InputsInfo = jSS.InputsInfo
-
--- Verify existence of each entry
-assert(PlayerMemoryAddresses, "PlayerMemoryAddresses not found")
-assert(SpecificCharacterAddresses, "SpecificCharacterAddresses not found")
-assert(Player1And2Addresses, "Player1And2Addresses not found")
-assert(SystemMemoryAddresses, "SystemMemoryAddresses not found")
-assert(CharacterInfo, "CharacterInfo not found")
-assert(StagesInfo, "StagesInfo not found")
-assert(InputsInfo, "InputsInfo not found")
-
+-- 
 -- Readers / Writers Aliases
 local read8 = flycast.memory.read8
 local read16 = flycast.memory.read16
@@ -32,9 +23,11 @@ local write32 = flycast.memory.write32
 
 -- Important Constants
 -- Ensure the Frame_Counter address is correctly referenced
-local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.ADDRESS
-assert(CURRENT_FRAME_ADDRESS, "Frame_Counter address not found")
+local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.Address
 local CURRENT_FRAME = read32(CURRENT_FRAME_ADDRESS)
+
+-- print(CURRENT_FRAME)
+-- 
 -- UI and Memory Aliases
 local ui = flycast.ui
 local MEMORY = flycast.memory
