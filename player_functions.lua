@@ -42,9 +42,14 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
   local pointCharForPlayer = GetPoint(oneOrTwo)
   local concat = pointCharForPlayer .. address_name
 
+  -- Check in PlayerMemoryAddresses
   local lookup = config.PlayerMemoryAddresses[address_name]
   if not lookup then
-    error("Address not found for key: " .. concat)
+    -- If not found, check in SpecificCharacterAddresses
+    lookup = config.SpecificCharacterAddresses[address_name]
+    if not lookup then
+      error("Address not found for key: " .. concat .. " in PlayerMemoryAddresses or SpecificCharacterAddresses")
+    end
   end
 
   local address = lookup[concat]

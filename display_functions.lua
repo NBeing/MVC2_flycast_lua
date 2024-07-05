@@ -31,40 +31,149 @@ end
 
 -- Parses the Note2 entry and returns a formatted string
 local function parseNote2(note)
-  local result = ""
+  local result = "Note2:\n"
   for line in note:gmatch("([^\n]*)\n?") do
     if line:match(":") then
-      print("Line with colon:", line)
+      local key, value = line:match("([^:]+):%s*(.*)")
+      result = result .. value .. ": " .. key .. "\n"
+      print("Line with colon:", line, " -> ", value .. ": " .. key)
     else
+      result = result .. line .. "\n"
       print("Line without colon:", line)
     end
-    result = result .. line .. "\n"
   end
   return result
 end
 
--- Main function to display PMem
+-- Function to get Note2 contents if they exist
+local function getNote2(address_name)
+  local lookup = config.PlayerMemoryAddresses[address_name]
+  if lookup and lookup.Note2 then
+    return parseNote2(lookup.Note2)
+  end
+  return nil
+end
+
+-- Main function to display PMem value
 local function displayPMem(player, address_name)
+  return formatPMemValue(player, address_name)
+end
+
+-- Function to handle special cases and return Note2 contents if they exist
+local function displaySpecialCases(address_name)
+  -- Check for Note2 and return its contents if it exists
+  local note2Contents = getNote2(address_name)
+  if note2Contents then
+    return note2Contents
+  end
+
   if address_name == "ID_2" then
     -- Handle special case for ID_2
     local json_object = config.PlayerMemoryAddresses.ID_2
     return displayJSONContents(json_object)
   end
 
-  -- Example of handling Note2 parsing if address_name corresponds to Note2 entry
-  if address_name == "Note2" then
-    local note = config.PlayerMemoryAddresses.Is_Point.Note2 -- Adjust this line as per your actual data structure
-    return parseNote2(note)
-  end
+  return nil
+end
 
-  return formatPMemValue(player, address_name)
+-- Function to get the appropriate read function based on the type
+local function getReadFunction(objectType)
+  if objectType then
+    print("Type found:", objectType)
+    -- Check if the type is in config.byteSize
+    for _, type in ipairs(config.byteSize) do
+      if type == objectType then
+        print("Valid type:", objectType)
+        if objectType == "Byte" then
+          return config.read8
+        elseif objectType == "2 Byte" then
+          return config.read16
+        elseif objectType == "4 Byte" then
+          return config.read32
+        elseif objectType == "Float" then
+          return config.readFloat
+        else
+          print("Unknown type:", objectType)
+          return nil
+        end
+      end
+    end
+    print("Invalid type:", objectType)
+  else
+    print("Type not found for object")
+  end
+  return nil
+end
+
+local function lookUp(address_name, oneOrTwo)
+  for sectionName, section in pairs(config) do
+    if type(section) == "table" then
+      for key, obj in pairs(section) do
+        if key == address_name then
+          print("Found in section:", sectionName)
+          print("Object name:", key)
+          print("Object details:", obj)
+
+          -- Determine the read function
+          local readFunction = getReadFunction(obj.Type)
+          if not readFunction then
+            print("Failed to determine read function for type:", obj.Type)
+            return
+          end
+
+          -- Perform the read operation based on the determined function
+          local value
+          if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
+            if oneOrTwo then
+              value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
+              print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
+            else
+              print("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
+              return
+            end
+          elseif sectionName == "Player1And2Addresses" then
+            if oneOrTwo then
+              local prefix = oneOrTwo == 1 and "P1_" or oneOrTwo == 2 and "P2_"
+              local concat = prefix .. address_name
+              local address = obj[concat]
+              if address then
+                value = readFunction(address)
+                print("Using read function for address", address)
+              else
+                print("Concatenated address not found in object:", concat)
+                return
+              end
+            else
+              print("OneOrTwo argument is required for Player1And2Addresses but not provided")
+              return
+            end
+          elseif sectionName == "SystemMemoryAddresses" then
+            local address = obj.Address
+            value = readFunction(address)
+            print("Using read function for SystemMemoryAddresses address", address)
+          else
+            local address = obj.ADDRESS
+            value = readFunction(address)
+            print("Using read function for address", address)
+          end
+
+          print("Value from read function:", value)
+          return
+        end
+      end
+    end
+  end
+  print("Address not found")
 end
 
 -- Return the functions as a module
 return {
   displayPMem = displayPMem,
+  displaySpecialCases = displaySpecialCases,
   getKeyPrefix = getKeyPrefix,
   displayJSONContents = displayJSONContents,
   formatPMemValue = formatPMemValue,
-  parseNote2 = parseNote2
+  parseNote2 = parseNote2,
+  getNote2 = getNote2,
+  lookUp = lookUp
 }

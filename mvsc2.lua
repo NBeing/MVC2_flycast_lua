@@ -3,7 +3,6 @@ config = require './training/mvc2_config'
 pMem = require './training/player_functions'
 display = require './training/display_functions'
 
--- Further abstraction 😎
 ui = config.ui
 
 function cbOverlay()
@@ -11,9 +10,18 @@ function cbOverlay()
   -- Draw
   ui.text(display.displayPMem(1, "Hitstop2"))
   ui.text(display.displayPMem(2, "Hitstop2"))
-  ui.text(display.displayPMem(2, "ID_2"))
-  ui.text(display.parseNote2(config.PlayerMemoryAddresses.Is_Point.Note2)) -- Example of using parseNote2 directly
 
+  -- Check for special cases and Note2
+  -- local specialCaseOutput = display.displaySpecialCases("ID_2")
+  -- if specialCaseOutput then
+  --   ui.text(specialCaseOutput)
+  -- end
+
+  -- Use the lookUp function
+  local lookUpResult = display.lookUp("A_2D_Game_Timer") -- Example with optional arguments
+  if lookUpResult then
+    ui.text(lookUpResult)
+  end
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

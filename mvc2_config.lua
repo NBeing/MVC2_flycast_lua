@@ -12,7 +12,12 @@ local SystemMemoryAddresses = jSS.SystemMemoryAddresses
 local CharacterInfo = jSS.CharacterInfo
 local StagesInfo = jSS.StagesInfo
 local InputsInfo = jSS.InputsInfo
--- 
+local byteSize = {
+  "Byte",
+  "2 Byte",
+  "4 Byte",
+  "Float"
+}
 -- Readers / Writers Aliases
 local read8 = flycast.memory.read8
 local read16 = flycast.memory.read16
@@ -49,5 +54,6 @@ return {
   write32 = write32,
   CURRENT_FRAME = CURRENT_FRAME,
   ui = ui,
-  MEMORY = MEMORY
+  MEMORY = MEMORY,
+  byteSize = byteSize
 }
