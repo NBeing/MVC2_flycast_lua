@@ -41,7 +41,7 @@
         "P2_B_ID_2": "0x2C26942D",
         "P2_C_ID_2": "0x2C269F75",
         "Note1": "In game character identification value",
-        "Note2": "0x00: Ryu\r\n0x01: Zangief\r\n0x02: Guile\r\n0x03: Morrigan\r\n0x04: Anakaris\r\n0x05: Strider Hiryu\r\n0x06: Cyclops\r\n0x07: Wolverine\r\n0x08: Psylocke\r\n0x09: Iceman\r\n0x0A: Rogue\r\n0x0B: Captain America\r\n0x0C: Spider-Man\r\n0x0D: Hulk\r\n0x0E: Venom\r\n0x0F: Doctor Doom\r\n0x10: Tron Bonne\r\n0x11: Jill\r\n0x12: Hayato\r\n0x13: Ruby Heart\r\n0x14: Sonson\r\n0x15: Amingo\r\n0x16: Marrow\r\n0x17: Cable\r\n0x18: Abyss-A\r\n0x19: Abyss-B\r\n0x1A: Abyss-C\r\n0x1B: Chun-Li\r\n0x1C: Megaman\r\n0x1D: Roll\r\n0x1E: Akuma\r\n0x1F: B.B. Hood\r\n0x20: Felicia\r\n0x21: Charlie\r\n0x22: Sakura\r\n0x23: Dan\r\n0x24: Cammy\r\n0x25: Dhalsim\r\n0x26: M.Bison\r\n0x27: Ken\r\n0x28: Gambit\r\n0x29: Juggernaut\r\n0x2A: Storm\r\n0x2B: Sabretooth\r\n0x2C: Magneto\r\n0x2D: Shuma-Gorath\r\n0x2E: War Machine\r\n0x2F: Silver Samurai\r\n0x30: Omega Red\r\n0x31: Spiral\r\n0x32: Colossus\r\n0x33: Iron Man\r\n0x34: Sentinel\r\n0x35: Blackheart\r\n0x36: Thanos\r\n0x37: Jin\r\n0x38: Captain Commando\r\n0x39: Wolverine-B\r\n0x3A: Servbot"
+        "Note2": "0: Ryu\r\n1: Zangief\r\n2: Guile\r\n3: Morrigan\r\n4: Anakaris\r\n5: StriderHiryu\r\n6: Cyclops\r\n7: Wolverine\r\n8: Psylocke\r\n9: Iceman\r\n10: Rogue\r\n11: CaptainAmerica\r\n12: SpiderMan\r\n13: Hulk\r\n14: Venom\r\n15: DoctorDoom\r\n16: TronBonne\r\n17: Jill\r\n18: Hayato\r\n19: RubyHeart\r\n20: Sonson\r\n21: Amingo\r\n22: Marrow\r\n23: Cable\r\n24: AbyssA\r\n25: AbyssB\r\n26: AbyssC\r\n27: ChunLi\r\n28: Megaman\r\n29: Roll\r\n30: Akuma\r\n31: BBHood\r\n32: Felicia\r\n33: Charlie\r\n34: Sakura\r\n35: Dan\r\n36: Cammy\r\n37: Dhalsim\r\n38: MBison\r\n39: Ken\r\n40: Gambit\r\n41: Juggernaut\r\n42: Storm\r\n43: Sabretooth\r\n44: Magneto\r\n45: ShumaGorath\r\n46: WarMachine\r\n47: SilverSamurai\r\n48: OmegaRed\r\n49: Spiral\r\n50: Colossus\r\n51: IronMan\r\n52: Sentinel\r\n53: Blackheart\r\n54: Thanos\r\n55: Jin\r\n56: CaptainCommando\r\n57: WolverineB\r\n58: Servbot"
       },
       "PlayerID": {
         "Description": "PlayerID",
@@ -2027,224 +2027,224 @@
     "SystemMemoryAddresses": {
       "A_2D_Game_Timer": {
         "Description": "A_2D_Game_Timer",
-        "ADDRESS": "0x2C289630",
+        "Address": "0x2C289630",
         "Type": "Byte",
         "Note1": "Match timer (big)",
         "Note2": "0-99"
       },
-      "Abyss_ Stage_Change": {
-        "Description": "Abyss_ Stage_Change",
-        "ADDRESS": "0x2C26A8C8",
+      "Abyss_Stage_Change": {
+        "Description": "Abyss_Stage_Change",
+        "Address": "0x2C26A8C8",
         "Type": "Byte",
         "Note1": "Toggles final stage collapse",
         "Note2": "0: Normal/Abyss1\n1: Abyss2\n2: Abyss3"
       },
       "Attack_Info_Display_A": {
         "Description": "Attack_Info_Display_A",
-        "ADDRESS": "0x2C2682EE",
+        "Address": "0x2C2682EE",
         "Type": "Byte",
         "Note1": "One address related to enabling Training-Style health",
         "Note2": "Both have to be 1"
       },
       "Attack_Info_Display_Health": {
         "Description": "Attack_Info_Display_Health",
-        "ADDRESS": "0x2C2682E6",
+        "Address": "0x2C2682E6",
         "Type": "Byte",
         "Note1": "Another address related to enableing Training-Style health",
         "Note2": "Both have to be 1"
       },
       "Attack_Info_Display_Y_Position": {
         "Description": "Attack_Info_Display_Y_Position",
-        "ADDRESS": "0x2C2682F2",
+        "Address": "0x2C2682F2",
         "Type": "Byte",
         "Note1": "Attack info Y-Position (3 is default)",
         "Note2": "Can be moved using 0-255"
       },
       "Camera_Field_of_View": {
         "Description": "Camera_Field_of_View",
-        "ADDRESS": "0x2C26A584",
+        "Address": "0x2C26A584",
         "Type": "Float",
         "Note1": "",
         "Note2": "43: Default"
       },
       "Camera_Lock": {
         "Description": "Camera_Lock",
-        "ADDRESS": "0x2C26A51F",
+        "Address": "0x2C26A51F",
         "Type": "Byte",
         "Note1": "Controls whether custom values are allowed",
         "Note2": "0: Resets Camera\n1: Default\n2: Allows custom values"
       },
       "Camera_X_Left_Max": {
         "Description": "Camera_X_Left_Max",
-        "ADDRESS": "0x2C26A5B0",
+        "Address": "0x2C26A5B0",
         "Type": "Float",
         "Note1": "Left-screen edge lock",
         "Note2": "-1280: Default"
       },
       "Camera_X_Position": {
         "Description": "Camera_X_Position",
-        "ADDRESS": "0x2C26A56C",
+        "Address": "0x2C26A56C",
         "Type": "Float",
         "Note1": "Left-right",
         "Note2": "0: Default"
       },
       "Camera_X_Right_Max": {
         "Description": "Camera_X_Right_Max",
-        "ADDRESS": "0x2C26A5B4",
+        "Address": "0x2C26A5B4",
         "Type": "Float",
         "Note1": "Right-screen edge lock",
         "Note2": "1280: Default"
       },
       "Camera_X_Rotation": {
         "Description": "Camera_X_Rotation",
-        "ADDRESS": "0x2C26A524",
+        "Address": "0x2C26A524",
         "Type": "Float",
         "Note1": "Left-right",
         "Note2": "0: Default"
       },
       "Camera_Y_Position": {
         "Description": "Camera_Y_Position",
-        "ADDRESS": "0x2C26A570",
+        "Address": "0x2C26A570",
         "Type": "Float",
         "Note1": "Up-down",
         "Note2": "95: Default"
       },
       "Camera_Y_Rotation": {
         "Description": "Camera_Y_Rotation",
-        "ADDRESS": "0x2C26A528",
+        "Address": "0x2C26A528",
         "Type": "Float",
         "Note1": "Up-down",
         "Note2": "95: Default"
       },
       "Camera_Z_Mirror_1": {
         "Description": "Camera_Z_Mirror_1",
-        "ADDRESS": "0x2C2D6B14",
+        "Address": "0x2C2D6B14",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
       "Camera_Z_Mirror_2": {
         "Description": "Camera_Z_Mirror_2",
-        "ADDRESS": "0x2C1F9CE0",
+        "Address": "0x2C1F9CE0",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
       "Camera_Z_Position": {
         "Description": "Camera_Z_Position",
-        "ADDRESS": "0x2C26A52C",
+        "Address": "0x2C26A52C",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
       "Camera_Z_Sprite_Scale": {
         "Description": "Camera_Z_Sprite_Scale",
-        "ADDRESS": "0x2C26A538",
+        "Address": "0x2C26A538",
         "Type": "Float",
         "Note1": "Controls Z-Axis/Zoom",
         "Note2": "812.3571167: Default"
       },
       "Demo_Mode_Pointer": {
         "Description": "Demo_Mode_Pointer",
-        "ADDRESS": "0x2C14DAE8",
+        "Address": "0x2C14DAE8",
         "Type": "4 Bytes",
         "Note1": "Enables Model Viewer & Sound Test; needs to be triggered in-match.",
         "Note2": "Model Viewer value: 8C0EF3E8\nSound Test value: 8C0429F8"
       },
       "First_Attack_Indicator": {
         "Description": "First_Attack_Indicator",
-        "ADDRESS": "0x2C2895F2",
+        "Address": "0x2C2895F2",
         "Type": "Byte",
         "Note1": "Tracks first attack",
         "Note2": "0: No first attack has happened\n128: P1-triggered\n129: P2-triggered"
       },
       "Frame_Counter": {
         "Description": "Frame_Counter",
-        "ADDRESS": "0x2C1F9D80",
+        "Address": "0x2C1F9D80",
         "Type": "Byte",
         "Note1": "Scene/Fight frame counter",
         "Note2": ""
       },
       "Frame_Skip_Counter": {
         "Description": "Frame_Skip_Counter",
-        "ADDRESS": "0x2C289621",
+        "Address": "0x2C289621",
         "Type": "Byte",
         "Note1": "Displays the frame values",
         "Note2": "1-4: Default\n1: Drawn\n2: Drawn\n3: Drawn\n4: Skipped"
       },
       "Frame_Skip_Cycle_Value": {
         "Description": "Frame_Skip_Cycle_Value",
-        "ADDRESS": "0x2C289600",
+        "Address": "0x2C289600",
         "Type": "2 Bytes",
         "Note1": "frame counter, including skipped since match start",
         "Note2": ""
       },
       "Frame_Skip_Rate": {
         "Description": "Frame_Skip_Rate",
-        "ADDRESS": "0x2C289620",
+        "Address": "0x2C289620",
         "Type": "Byte",
         "Note1": "Frame Skip rate. 0 turns off frame skipping",
         "Note2": "0: Off for real\n1: Custom\n2: Normal \n3: Custom\n4: Default (Turbo1)\n5: Custom\n6: Turbo2"
       },
       "Frame_Skip_Toggle": {
         "Description": "Frame_Skip_Toggle",
-        "ADDRESS": "0x2C289622",
+        "Address": "0x2C289622",
         "Type": "Byte",
         "Note1": "When active, the frame is skipped",
         "Note2": "0: Drawn\n255: Skipped"
       },
       "HC_Gauge_Toggle": {
         "Description": "HC_Gauge_Toggle",
-        "ADDRESS": "0x2C2682EA",
+        "Address": "0x2C2682EA",
         "Type": "Byte",
         "Note1": "Enabled will allow HC Gauge to refill in the style of Training Mode",
         "Note2": "0: Disabled\n1: Enabled"
       },
       "Is_Paused": {
         "Description": "Is_Paused",
-        "ADDRESS": "0x2C1C9166",
+        "Address": "0x2C1C9166",
         "Type": "Byte",
         "Note1": "Tracks whether or not the game is paused using the start button",
         "Note2": "0: Unpaused\n1: Paused"
       },
       "Match_Start_Throw_Timer": {
         "Description": "Match_Start_Throw_Timer",
-        "ADDRESS": "0x2C289602",
+        "Address": "0x2C289602",
         "Type": "2 Bytes",
         "Note1": "Timer that prevents throwing during the start of a match. Counts down",
         "Note2": "60: Default"
       },
       "Match_Tracker": {
         "Description": "Match_Tracker",
-        "ADDRESS": "0x2C2895F0",
+        "Address": "0x2C2895F0",
         "Type": "Byte",
         "Note1": "Tracks/Can Set the 'states of a match'",
         "Note2": "0: Loading Screen\n2: Intro Poses\n3: Intro-Can Walk Around\n4: Mid-Match\n5: KO/Time Over\n6: P1/P2 Wins / Draw Game\n9: Finishing Poses"
       },
       "Pause_Count": {
         "Description": "Pause_Count",
-        "ADDRESS": "0x2C3461FD",
+        "Address": "0x2C3461FD",
         "Type": "Byte",
         "Note1": "Tracks total times the game has been paused",
         "Note2": ""
       },
       "Stage_Selector": {
         "Description": "Stage_Selector",
-        "ADDRESS": "0x2C26A95C",
+        "Address": "0x2C26A95C",
         "Type": "Byte",
         "Note1": "Dec in game-order",
         "Note2": "0: Boat1\n1: Desert1\n2: Factory\n3: Carnival1\n4: Bridge1\n5: Cave2\n6: Clock2\n7: Raft2\n8: Abyss\n9: Boat2\n10: Desert2\n11: Training\n12: Carnival2\n13: Bridge2\n14: Cave1\n15: Clock1\n16: Raft1"
       },
       "Timer_Secondary": {
         "Description": "Timer_Secondary",
-        "ADDRESS": "0x2C289631",
+        "Address": "0x2C289631",
         "Type": "Byte",
         "Note1": "Match timer (small). The amount of time that passes in one 'marvel-second'",
         "Note2": "0-120"
       },
       "Total_Frames": {
         "Description": "Total_Frames",
-        "ADDRESS": "0x2C3496B0",
+        "Address": "0x2C3496B0",
         "Type": "4 Byte",
         "Note1": "Total frames since launch",
         "Note2": ""
@@ -4496,7 +4496,7 @@
     "P1_Wins_Value": "0x2C28968C",
     "P2_Wins_Value": "0x2C28968D",
     "A_2D_Game_Timer": "0x2C289630",
-    "Abyss_ Stage_Change": "0x2C26A8C8",
+    "Abyss_Stage_Change": "0x2C26A8C8",
     "Attack_Info_Display_A": "0x2C2682EE",
     "Attack_Info_Display_Health": "0x2C2682E6",
     "Attack_Info_Display_Y_Position": "0x2C2682F2",
@@ -5811,7 +5811,7 @@
     "P1_Wins_Value": "P1_Wins_Value",
     "P2_Wins_Value": "P2_Wins_Value",
     "A_2D_Game_Timer": "A_2D_Game_Timer",
-    "Abyss_ Stage_Change": "Abyss_ Stage_Change",
+    "Abyss_Stage_Change": "Abyss_Stage_Change",
     "Attack_Info_Display_A": "Attack_Info_Display_A",
     "Attack_Info_Display_Health": "Attack_Info_Display_Health",
     "Attack_Info_Display_Y_Position": "Attack_Info_Display_Y_Position",
