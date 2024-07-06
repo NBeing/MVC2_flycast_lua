@@ -47,9 +47,9 @@ end
 
 -- Function to get Note2 contents if they exist
 local function getNote2(address_name)
-  local lookup = config.PlayerMemoryAddresses[address_name]
-  if lookup and lookup.Note2 then
-    return parseNote2(lookup.Note2)
+  local lookUpValue = config.PlayerMemoryAddresses[address_name]
+  if lookUpValue and lookUpValue.Note2 then
+    return parseNote2(lookUpValue.Note2)
   end
   return nil
 end
@@ -77,14 +77,14 @@ local function displaySpecialCases(address_name)
 end
 
 -- Function to look up an address and print the containing object
-local function lookUp(address_name, oneOrTwo)
+local function lookUpValue(address_name, oneOrTwo)
   for sectionName, section in pairs(config) do
     if type(section) == "table" then
       for key, obj in pairs(section) do
         if key == address_name then
-          print("Found in section:", sectionName)
-          print("Object name:", key)
-          print("Object details:", obj)
+          -- print("Found in section:", sectionName)
+          -- print("Object name:", key)
+          -- print("Object details:", obj)
 
           -- Determine the read function
           local readFunction = pMem.getReadFunction(obj.Type)
@@ -98,9 +98,9 @@ local function lookUp(address_name, oneOrTwo)
           if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
             if oneOrTwo then
               value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
-              print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
+              -- print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
             else
-              print("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
+              -- print("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
               return
             end
           elseif sectionName == "Player1And2Addresses" then
@@ -110,26 +110,26 @@ local function lookUp(address_name, oneOrTwo)
               local address = obj[concat]
               if address then
                 value = readFunction(address)
-                print("Using read function for address", address)
+                -- print("Using read function for address", address)
               else
-                print("Concatenated address not found in object:", concat)
+                -- print("Concatenated address not found in object:", concat)
                 return
               end
             else
-              print("OneOrTwo argument is required for Player1And2Addresses but not provided")
+              -- print("OneOrTwo argument is required for Player1And2Addresses but not provided")
               return
             end
           elseif sectionName == "SystemMemoryAddresses" then
             local address = obj.Address
             value = readFunction(address)
-            print("Using read function for SystemMemoryAddresses address", address)
+            -- print("Using read function for SystemMemoryAddresses address", address)
           else
             local address = obj.ADDRESS
             value = readFunction(address)
-            print("Using read function for address", address)
+            -- print("Using read function for address", address)
           end
 
-          print("Value from read function:", value)
+          -- print("Value from read function:", value)
           return
         end
       end
@@ -147,5 +147,5 @@ return {
   formatPMemValue = formatPMemValue,
   parseNote2 = parseNote2,
   getNote2 = getNote2,
-  lookUp = lookUp
+  lookUpValue = lookUpValue
 }

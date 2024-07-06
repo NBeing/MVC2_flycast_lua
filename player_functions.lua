@@ -39,11 +39,11 @@ end
 -- @return The read function based on the type.
 local function getReadFunction(objectType)
   if objectType then
-    print("Type found:", objectType)
+    -- print("Type found:", objectType)
     -- Check if the type is in config.byteSize
     for _, type in ipairs(config.byteSize) do
       if type == objectType then
-        print("Valid type:", objectType)
+        -- print("Valid type:", objectType)
         if objectType == "Byte" then
           return config.read8
         elseif objectType == "2 Byte" then
@@ -53,14 +53,14 @@ local function getReadFunction(objectType)
         elseif objectType == "Float" then
           return config.readFloat
         else
-          print("Unknown type:", objectType)
+          -- print("Unknown type:", objectType)
           return nil
         end
       end
     end
-    print("Invalid type:", objectType)
+    -- print("Invalid type:", objectType)
   else
-    print("Type not found for object")
+    -- print("Type not found for object")
   end
   return nil
 end

@@ -6,22 +6,12 @@ display = require './training/display_functions'
 ui = config.ui
 
 function cbOverlay()
+
   ui.beginWindow("New", 100, 10, 300, 0)
   -- Draw
-  ui.text(display.displayPMem(1, "Hitstop2"))
-  ui.text(display.displayPMem(2, "Hitstop2"))
-
-  -- Example test calls
-  local address = "0x2C268378" -- Replace with a valid address
-
-  -- Reading the float value from the address
-  local readValue = config.readFloat(address)
-  print("Read back value:", readValue)
-
-  -- Use the lookUp function
-  -- display.lookUp("X_Position_Arena", 1) -- Example with optional arguments
-  -- display.lookUp("Total_Frames")
-  -- display.lookUp("A_2D_Game_Timer")
+  ui.text(display.displayPMem(1, "Knockdown_State"))
+  ui.text(display.displayPMem(2, "Knockdown_State"))
+  ui.text(display.displayJSONContents(config.PlayerMemoryAddresses.Knockdown_State))
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

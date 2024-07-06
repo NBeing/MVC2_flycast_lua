@@ -26,9 +26,9 @@ local read32 = flycast.memory.read32
 
 -- Custom function to read float values
 local readFloat = function(address)
-  print("Reading float value from address", address)
+  -- print("Reading float value from address", address)
   local intValue = read32(address)
-  print("Integer value read:", intValue)
+  -- print("Integer value read:", intValue)
 
   if intValue == 0 then
     return 0.0
@@ -39,7 +39,7 @@ local readFloat = function(address)
   local mantissa = (intValue & 0x7FFFFF) | 0x800000
 
   local floatValue = sign * mantissa * (2 ^ (exponent - 23))
-  print("Converted float value:", floatValue)
+  -- print("Converted float value:", floatValue)
   return floatValue
 end
 
