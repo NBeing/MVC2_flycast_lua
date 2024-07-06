@@ -6,12 +6,18 @@ display = require './training/display_functions'
 ui = config.ui
 
 function cbOverlay()
+  ui.beginWindow("New", 0, 10, 300, 0)
 
-  ui.beginWindow("New", 100, 10, 300, 0)
   -- Draw
-  ui.text(display.displayPMem(1, "Knockdown_State"))
-  ui.text(display.displayPMem(2, "Knockdown_State"))
-  ui.text(display.displayJSONContents(config.PlayerMemoryAddresses.Knockdown_State))
+  local value = display.lookUpValue("Frame_Skip_Counter")
+  local name = display.lookUpName(value, "Frame_Skip_Counter")
+
+  if value then
+    ui.text(value)
+    ui.text(name)
+    ui.text(display.displayJSONContents(config.SystemMemoryAddresses.Frame_Skip_Counter))
+  end
+
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

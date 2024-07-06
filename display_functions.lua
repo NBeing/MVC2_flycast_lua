@@ -22,11 +22,10 @@ local function formatPMemValue(player, address_name)
 
   local success, value = pcall(pMem.GetPMemUsingPoint, player, address_name)
   if not success then
-    return string.format("%s: Error", key)
+    return key .. ": Error"
   end
 
-  local formatString = string.format("%s: %d", key, value)
-  return formatString
+  return key .. ": " .. tostring(value)
 end
 
 -- Parses the Note2 entry and returns a formatted string
@@ -36,10 +35,8 @@ local function parseNote2(note)
     if line:match(":") then
       local key, value = line:match("([^:]+):%s*(.*)")
       result = result .. value .. ": " .. key .. "\n"
-      print("Line with colon:", line, " -> ", value .. ": " .. key)
     else
       result = result .. line .. "\n"
-      print("Line without colon:", line)
     end
   end
   return result
@@ -47,9 +44,13 @@ end
 
 -- Function to get Note2 contents if they exist
 local function getNote2(address_name)
-  local lookUpValue = config.PlayerMemoryAddresses[address_name]
-  if lookUpValue and lookUpValue.Note2 then
-    return parseNote2(lookUpValue.Note2)
+  for sectionName, section in pairs(config) do
+    if type(section) == "table" then
+      local obj = section[address_name]
+      if obj and obj.Note2 then
+        return parseNote2(obj.Note2)
+      end
+    end
   end
   return nil
 end
@@ -76,21 +77,16 @@ local function displaySpecialCases(address_name)
   return nil
 end
 
--- Function to look up an address and print the containing object
+-- Function to look up an address and return the value
 local function lookUpValue(address_name, oneOrTwo)
   for sectionName, section in pairs(config) do
     if type(section) == "table" then
       for key, obj in pairs(section) do
         if key == address_name then
-          -- print("Found in section:", sectionName)
-          -- print("Object name:", key)
-          -- print("Object details:", obj)
-
           -- Determine the read function
           local readFunction = pMem.getReadFunction(obj.Type)
           if not readFunction then
-            print("Failed to determine read function for type:", obj.Type)
-            return
+            return nil
           end
 
           -- Perform the read operation based on the determined function
@@ -98,10 +94,8 @@ local function lookUpValue(address_name, oneOrTwo)
           if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
             if oneOrTwo then
               value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
-              -- print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
             else
-              -- print("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
-              return
+              return nil
             end
           elseif sectionName == "Player1And2Addresses" then
             if oneOrTwo then
@@ -110,32 +104,44 @@ local function lookUpValue(address_name, oneOrTwo)
               local address = obj[concat]
               if address then
                 value = readFunction(address)
-                -- print("Using read function for address", address)
               else
-                -- print("Concatenated address not found in object:", concat)
-                return
+                return nil
               end
             else
-              -- print("OneOrTwo argument is required for Player1And2Addresses but not provided")
-              return
+              return nil
             end
           elseif sectionName == "SystemMemoryAddresses" then
             local address = obj.Address
             value = readFunction(address)
-            -- print("Using read function for SystemMemoryAddresses address", address)
           else
             local address = obj.ADDRESS
             value = readFunction(address)
-            -- print("Using read function for address", address)
           end
 
-          -- print("Value from read function:", value)
-          return
+          return value
         end
       end
     end
   end
-  print("Address not found")
+  return nil
+end
+
+-- Function to look up the name based on the value and address name
+local function lookUpName(value, address_name)
+  for sectionName, section in pairs(config) do
+    if type(section) == "table" then
+      local obj = section[address_name]
+      if obj and obj.Note2 then
+        for line in obj.Note2:gmatch("([^\n]*)\n?") do
+          local key, val = line:match("([^:]+):%s*(.*)")
+          if key and tonumber(key) == value then
+            return val
+          end
+        end
+      end
+    end
+  end
+  return "Name not found"
 end
 
 -- Return the functions as a module
@@ -147,5 +153,6 @@ return {
   formatPMemValue = formatPMemValue,
   parseNote2 = parseNote2,
   getNote2 = getNote2,
-  lookUpValue = lookUpValue
+  lookUpValue = lookUpValue,
+  lookUpName = lookUpName
 }
