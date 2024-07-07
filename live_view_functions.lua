@@ -20,9 +20,9 @@ local function lookUpValue(address_name, oneOrTwo)
   local value
   if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
     if oneOrTwo then
-      value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
+      value = pMem.GetPMemValue(oneOrTwo, address_name)
     else
-      error("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
+      error("OneOrTwo argument is required for GetPMemValue() but not provided")
     end
   elseif sectionName == "Player1And2Addresses" then
     if oneOrTwo then

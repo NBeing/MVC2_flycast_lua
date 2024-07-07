@@ -5,13 +5,16 @@ display = require './training/display_functions'
 liveView = require './training/live_view_functions'
 ui = config.ui
 
+-- mvc2char = require '.training/data/mvc2/utils/characters'
+-- mvc2char = require '.training/data/mvc2/data/stages'
+
 -- Example usage
 local function exampleUsage()
   local address_name = "Stun_Check" -- PMem
-  local address_name = "Sentinel_214kk_Timer" -- SpecChar
-  -- local address_name = "Combo_Meter_Value" -- P1P2
+  -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
+  local address_name = "Combo_Meter_Value" -- P1P2
   -- local address_name = "Input_DEC" -- Sys
-  -- local address_name = "Zangief" -- CharInfo
+  local address_name = "RubyHeart" -- CharInfo
   -- local address_name = "Boat2" -- StagesInfo
   -- local address_name = "Right" -- InputsInfo
 
@@ -26,14 +29,19 @@ end
 
 function cbOverlay()
   ui.beginWindow("Note2 Display", 0, 0, 0, 0)
-
   -- Draw
-  local value = liveView.lookUpValue("Knockdown_State", 1)
-  local name = liveView.lookUpName(value, "Knockdown_State")
+  -- local value = liveView.lookUpValue("X_Position_Arena", 1)
+  -- local name = liveView.lookUpName(value, "ID_2")
+  local tempTable = {
+    pMem.GetPMemValue("X_Position_Arena", 1)
+  }
+  ui.text("Address: " .. tempTable[1])
+  ui.text("Value: " .. tempTable[2])
+
+  config.writeFloat(tempTable[1], 1000)
 
   ui.text(value)
-  ui.text(name)
-  ui.text(exampleUsage())
+  -- ui.text(loc)
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

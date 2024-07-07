@@ -35,10 +35,10 @@ local function GetPoint(oneOrTwo)
 end
 
 -- Retrieves the value from a memory address based on the player's point character and the address name.
--- @param oneOrTwo The player number (1 or 2).
 -- @param address_name The name of the memory address.
+-- @param oneOrTwo The player number (1 or 2).
 -- @return Number from the memory address.
-local function GetPMemUsingPoint(oneOrTwo, address_name)
+local function GetPMemValue(address_name, oneOrTwo)
   local pointCharForPlayer = GetPoint(oneOrTwo)
   local concat = pointCharForPlayer .. address_name
 
@@ -64,11 +64,11 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
   end
 
   local value = readFunction(address)
-  return value
+  return address, value
 end
 
 -- Return the functions as a module
 return {
   GetPoint = GetPoint,
-  GetPMemUsingPoint = GetPMemUsingPoint
+  GetPMemValue = GetPMemValue
 }
