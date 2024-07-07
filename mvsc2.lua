@@ -5,8 +5,9 @@ display = require './training/display_functions'
 
 ui = config.ui
 
+-- Example usage
 local function exampleUsage()
-  local address_name = "Stun_Check"
+  local address_name = "Sentinel_214kk_Timer"
 
   local json_object, structure = display.parseJSONWithOrder(address_name)
 
@@ -21,20 +22,20 @@ function cbOverlay()
   ui.beginWindow("New", 0, 10, 300, 0)
 
   -- Draw
-  local value = display.lookUpValue("Stun_Check", 1)
+  -- local value = display.lookUpValue("Stun_Check", 1)
   -- local name = display.lookUpName(value, "Stun_Check")
 
-  if value then
-    -- ui.text(value)
-    -- ui.text(name)
-    ui.text(exampleUsage())
-  end
+  -- if value then
+  -- ui.text(value)
+  -- ui.text(name)
+  ui.text(exampleUsage())
+  -- end
 
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
   --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
-  --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
+  --   MEMORY.w rite8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
 
   --   ui.beginWindow("Game", 10, 10, 300, 0)
   --   ui.text("Game Timer")

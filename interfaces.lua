@@ -1,44 +1,53 @@
 -- interfaces.lua
--- Interface for PlayerMemoryAddress
-PlayerMemoryAddress = {
+-- Interface for PlayerMemoryAddresses
+local PlayerMemoryAddresses = {
   "Description",
   "hexOffset",
   "decOffset",
   "Type",
   "Note1",
   "Note2",
-  -- Allows for dynamic keys
+  -- Dynamic keys like "P1_A_", "P1_B_", etc.
   __index = function(t, k)
+    if k:match("^P[12]_[ABC]_.*") then
+      return rawget(t, k)
+    end
     return rawget(t, k)
   end
 }
 
 -- Interface for SpecificCharacterAddresses
-SpecificCharacterAddresses = {
+local SpecificCharacterAddresses = {
   "Description",
   "Type",
   "Note1",
   "Note2",
-  -- Allows for dynamic keys
+  -- Dynamic keys like "P1_A_", "P1_B_", etc.
   __index = function(t, k)
+    if k:match("^P[12]_[ABC]_.*") then
+      return rawget(t, k)
+    end
     return rawget(t, k)
   end
 }
 
 -- Interface for Player1And2Addresses
-Player1And2Addresses = {
+local Player1And2Addresses = {
   "Description",
   "Type",
   "Note1",
   "Note2",
-  -- Allows for dynamic keys
+  -- Dynamic keys like "P1_", "P2_", etc.
   __index = function(t, k)
+    if k:match("^P[12]_.*") then
+      return rawget(t, k)
+    end
     return rawget(t, k)
   end
 }
 
 -- Interface for SystemMemoryAddresses
-SystemMemoryAddresses = {
+local SystemMemoryAddresses = {
   "Description",
   "Address",
   "Type",
@@ -51,7 +60,7 @@ SystemMemoryAddresses = {
 }
 
 -- Interface for CharacterInfo
-CharacterInfo = {
+local CharacterInfo = {
   "Dec",
   "Hex",
   "ENNameDev",
@@ -73,7 +82,7 @@ CharacterInfo = {
 }
 
 -- Interface for StagesInfo
-StagesInfo = {
+local StagesInfo = {
   "Dec",
   "Hex",
   "Name",
@@ -82,7 +91,7 @@ StagesInfo = {
 }
 
 -- Interface for InputsInfo
-InputsInfo = {
+local InputsInfo = {
   "Dec",
   "Hex",
   "Custom1",
@@ -91,7 +100,7 @@ InputsInfo = {
 }
 
 return {
-  PlayerMemoryAddress = PlayerMemoryAddress,
+  PlayerMemoryAddresses = PlayerMemoryAddresses,
   SpecificCharacterAddresses = SpecificCharacterAddresses,
   Player1And2Addresses = Player1And2Addresses,
   SystemMemoryAddresses = SystemMemoryAddresses,

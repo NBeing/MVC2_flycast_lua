@@ -2,32 +2,30 @@ local config = require './training/mvc2_config'
 local pMem = require './training/player_functions'
 local interfaces = require './training/interfaces'
 
--- Function to get the concatenated key
+-- get the concatenated key
 local function getKeyPrefix(player, address_name)
   local prefix = player == 1 and "P1_" or player == 2 and "P2_" or ""
   return prefix .. address_name
 end
 
--- Function to get the structure of the object from interfaces.lua
+-- get the structure of the object from interfaces.lua
 local function getObjectStructure(interface_name)
   -- print("Getting structure for interface:", interface_name)
   local structure = interfaces[interface_name]
   if not structure then
-    -- print("Structure not found for interface:", interface_name)
+    print("Structure not found for interface:", interface_name)
   end
   return structure
 end
 
--- Function to parse JSON object and keep the order of keys
-local function parseJSONWithOrder(address_name)
+-- determine which section the address_name belongs to and get the object
+local function getSectionAndObject(address_name)
   local sectionName, obj
-
-  -- Determine which section the address_name belongs to
   for name, section in pairs(config.jSS) do
     if section[address_name] then
       sectionName = name
       obj = section[address_name]
-      print("Found section:", sectionName)
+      -- print("Found section:", sectionName)
       break
     end
   end
@@ -36,10 +34,62 @@ local function parseJSONWithOrder(address_name)
     error("Address not found: " .. address_name)
   end
 
+  return sectionName, obj
+end
+
+local function parseJSONWithOrder(address_name)
+  local sectionName, obj = getSectionAndObject(address_name)
+
   -- Get the structure of the object
   local structure = getObjectStructure(sectionName)
   if not structure then
     error("Structure not found for section: " .. sectionName)
+  else
+    -- print("Structure found for section: ", sectionName)
+  end
+
+  -- Print the structure for debugging
+  for i, key in ipairs(structure) do
+    -- print("Structure key:", key)
+  end
+
+  -- Insert dynamic keys for PlayerMemoryAddresses and SpecificCharacterAddresses
+  if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
+    local dynamicKeys = {
+      "P1_A_" .. address_name,
+      "P1_B_" .. address_name,
+      "P1_C_" .. address_name,
+      "P2_A_" .. address_name,
+      "P2_B_" .. address_name,
+      "P2_C_" .. address_name
+    }
+    -- Insert dynamic keys after the Type key
+    local newStructure = {}
+    for i, key in ipairs(structure) do
+      table.insert(newStructure, key)
+      if key == "Type" then
+        for _, dynamicKey in ipairs(dynamicKeys) do
+          table.insert(newStructure, dynamicKey)
+        end
+      end
+    end
+    structure = newStructure
+  elseif sectionName == "Player1And2Addresses" then
+    local dynamicKeys = {
+      "P1_" .. address_name,
+      "P2_" .. address_name
+    }
+    -- Insert dynamic keys after the Type key
+    local newStructure = {}
+    for i, key in ipairs(structure) do
+      table.insert(newStructure, key)
+      if key == "Type" then
+        for _, dynamicKey in ipairs(dynamicKeys) do
+          table.insert(newStructure, dynamicKey)
+        end
+      end
+    end
+    structure = newStructure
   end
 
   return obj, structure
@@ -47,7 +97,7 @@ end
 
 -- Function to display JSON contents in order with special handling for Note2
 local function displayJSONContents(json_object, structure)
-  local result = "\n"
+  local result = ""
 
   -- Display the keys and values in order
   for _, key in ipairs(structure) do
@@ -62,14 +112,32 @@ local function displayJSONContents(json_object, structure)
       else
         result = result .. key .. ": " .. tostring(json_object[key]) .. "\n"
       end
-      print("Adding key-value to result:", key, json_object[key])
+      -- print("Adding key-value to result:", key, json_object[key])
+    end
+  end
+
+  -- Include any additional keys not in the structure
+  for key, value in pairs(json_object) do
+    if not table.contains(structure, key) then
+      result = result .. key .. ": " .. tostring(value) .. "\n"
+      -- print("Adding additional key-value to result:", key, value)
     end
   end
 
   return result
 end
 
--- Function to get Note2 contents if they exist
+-- Function to check if a table contains a value
+function table.contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
+
+-- get Note2 contents if they exist
 local function getNote2(address_name)
   local obj = config.jSS.PlayerMemoryAddresses[address_name]
   if obj and obj.Note2 then
@@ -78,7 +146,7 @@ local function getNote2(address_name)
   return nil
 end
 
--- Main function to display PMem value
+-- Main display PMem value
 local function displayPMem(player, address_name)
   local key = getKeyPrefix(player, address_name)
 
@@ -90,7 +158,7 @@ local function displayPMem(player, address_name)
   return key .. ": " .. tostring(value)
 end
 
--- Function to look up an address and return the value
+-- look up an address and return the value
 local function lookUpValue(address_name, oneOrTwo)
   for sectionName, section in pairs(config.jSS) do
     if type(section) == "table" then
@@ -112,7 +180,7 @@ local function lookUpValue(address_name, oneOrTwo)
           if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
             if oneOrTwo then
               value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
-              print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
+              -- print("Using GetPMemUsingPoint() with player", oneOrTwo, "and address", address_name)
             else
               print("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
               return
@@ -152,7 +220,7 @@ local function lookUpValue(address_name, oneOrTwo)
   print("Address not found")
 end
 
--- Function to look up the name based on the value from Note2
+-- look up the name based on the value from Note2
 local function lookUpName(value, address_name)
   for sectionName, section in pairs(config.jSS) do
     if type(section) == "table" then
