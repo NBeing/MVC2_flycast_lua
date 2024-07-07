@@ -46,9 +46,9 @@ local function getReadFunction(objectType)
         -- print("Valid type:", objectType)
         if objectType == "Byte" then
           return config.read8
-        elseif objectType == "2 Byte" then
+        elseif objectType == "2 Bytes" then
           return config.read16
-        elseif objectType == "4 Byte" then
+        elseif objectType == "4 Bytes" then
           return config.read32
         elseif objectType == "Float" then
           return config.readFloat

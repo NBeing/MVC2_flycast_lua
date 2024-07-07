@@ -7,7 +7,13 @@ ui = config.ui
 
 -- Example usage
 local function exampleUsage()
-  local address_name = "Sentinel_214kk_Timer"
+  -- local address_name = "Stun_Check" -- PMem
+  -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
+  -- local address_name = "Combo_Meter_Value" -- P1P2
+  -- local address_name = "Input_DEC" -- Sys
+  local address_name = "Zangief" -- CharInfo
+  -- local address_name = "Boat2" -- StagesInfo
+  -- local address_name = "Right" -- InputsInfo
 
   local json_object, structure = display.parseJSONWithOrder(address_name)
 
@@ -22,8 +28,8 @@ function cbOverlay()
   ui.beginWindow("New", 0, 10, 300, 0)
 
   -- Draw
-  -- local value = display.lookUpValue("Stun_Check", 1)
-  -- local name = display.lookUpName(value, "Stun_Check")
+  local value = display.lookUpValue("Knockdown_State", 1)
+  local name = display.lookUpName(value, "Knockdown_State")
 
   -- if value then
   -- ui.text(value)

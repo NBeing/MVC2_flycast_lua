@@ -59,6 +59,8 @@ local SystemMemoryAddresses = {
   end
 }
 
+-- Information-Only Objects
+
 -- Interface for CharacterInfo
 local CharacterInfo = {
   "Dec",
@@ -83,20 +85,20 @@ local CharacterInfo = {
 
 -- Interface for StagesInfo
 local StagesInfo = {
+  "Name",
   "Dec",
   "Hex",
-  "Name",
-  "Custom2",
-  "Custom3"
+  "Custom1",
+  "Custom2"
 }
 
 -- Interface for InputsInfo
 local InputsInfo = {
+  "Name",
   "Dec",
   "Hex",
   "Custom1",
-  "Custom2",
-  "Name"
+  "Custom2"
 }
 
 return {

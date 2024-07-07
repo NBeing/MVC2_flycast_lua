@@ -14,8 +14,8 @@ local StagesInfo = jSS.StagesInfo
 local InputsInfo = jSS.InputsInfo
 local byteSize = {
   "Byte",
-  "2 Byte",
-  "4 Byte",
+  "2 Bytes",
+  "4 Bytes",
   "Float"
 }
 
