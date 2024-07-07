@@ -175,7 +175,6 @@ local function getSectionAndObject(address_name)
       return name, section[address_name]
     end
   end
-  error("Address not found: " .. address_name)
 end
 
 -- Important Constants

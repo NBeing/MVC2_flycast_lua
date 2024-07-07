@@ -18,22 +18,19 @@ function cbOverlay()
   local PMemPoint = ui.text("Test-pMem.GetPoint:  " .. pMem.GetPoint(1))
   --
   -- GetPMemValue()
-  local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("X_Position_Arena", 1))
+  local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("P1_X_Position_Arena"))
   --
   -- LookUpAll
-
-  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("ID_2", 1))
+  -- Addres
+  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("P1_ID_2"))
+  -- Value
+  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("P1_ID_2"))
+  -- Key
+  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("P1_ID_2"))
   --
-  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("ID_2", 1))
+  -- ReadNote2
+  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("ID_2"))
   --
-  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("ID_2", 1))
-  --
-  -- LookUpName
-  -- local LookupName = ui.text("Test-live.LookupName:  " .. live.LookUpName("Frame_Skip_Rate"))
-  --
-  -- -- ReadNote2
-  -- local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
-  -- --
   -- -- WriteFloat
 
   -- config.writeFloat(tempTable[1], 1000)

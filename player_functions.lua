@@ -29,16 +29,26 @@ local function GetPoint(oneOrTwo)
         return pointPrefix
       end
     else
-      return
+      -- print("Invalid player number")
+      return print("Invalid player number")
     end
   end
 end
 
 -- Retrieves the value from a memory address based on the player's point character and the address name.
 -- @param address_name The name of the memory address.
--- @param oneOrTwo The player number (1 or 2).
--- @return Number from the memory address.
-local function GetPMemValue(address_name, oneOrTwo)
+local function GetPMemValue(address_name)
+
+  local oneOrTwo
+
+  if address_name:sub(1, 3) == "P1_" then
+    oneOrTwo = 1
+  elseif address_name:sub(1, 3) == "P2_" then
+    oneOrTwo = 2
+  end
+
+  address_name = address_name:sub(4)
+
   local pointCharForPlayer = GetPoint(oneOrTwo)
   local concat = pointCharForPlayer .. address_name
 
