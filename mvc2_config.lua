@@ -150,6 +150,18 @@ local function determineReadFunction(objectType)
   return nil
 end
 
+-- Finds address_name in SS and returns the section name and object
+-- @param address_name Address/Keyword
+-- @return sectionName Section in SS: PlayerMemoryAddresses, SpecificCharacterAddresses, Player1And2Addresses, SystemMemoryAddresses
+local function getSectionAndObject(address_name)
+  for name, section in pairs(config.jSS) do
+    if section[address_name] then
+      return name, section[address_name]
+    end
+  end
+  error("Address not found: " .. address_name)
+end
+
 -- Important Constants
 -- Ensure the Frame_Counter address is correctly referenced
 local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.Address
@@ -182,5 +194,6 @@ return {
   ui = ui,
   MEMORY = MEMORY,
   byteSize = byteSize,
-  determineReadFunction = determineReadFunction
+  determineReadFunction = determineReadFunction,
+  getSectionAndObject = getSectionAndObject
 }

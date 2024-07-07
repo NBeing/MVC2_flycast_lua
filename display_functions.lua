@@ -14,25 +14,12 @@ local function getObjectStructure(interface_name)
   return structure
 end
 
--- Determines which section the `address_name` belongs to and get the object
--- @param address_name The name of the address
--- @return sectionName The name of the section
--- @return obj The object containing the address
-local function getSectionAndObject(address_name)
-  for name, section in pairs(config.jSS) do
-    if section[address_name] then
-      return name, section[address_name]
-    end
-  end
-  error("Address not found: " .. address_name)
-end
-
 -- Parses JSON data with order by using `getObjectStructure` and `getSectionAndObject`
 -- @param address_name The name of the address
 -- @return obj The parsed JSON object
 -- @return structure The structure of the object
 local function parseJSONWithOrder(address_name)
-  local sectionName, obj = getSectionAndObject(address_name)
+  local sectionName, obj = config.getSectionAndObject(address_name)
 
   -- Get the structure of the object
   local structure = getObjectStructure(sectionName)
@@ -107,7 +94,6 @@ local function displayJSONContents(json_object, structure)
 end
 
 return {
-  getSectionAndObject = getSectionAndObject,
   parseJSONWithOrder = parseJSONWithOrder,
   displayJSONContents = displayJSONContents
 }

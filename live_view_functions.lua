@@ -8,7 +8,7 @@ local pMem = require './training/player_functions'
 -- @param oneOrTwo The player number (1 or 2). OPTIONAL
 local function lookUpValue(address_name, oneOrTwo)
   -- Find the section
-  local sectionName, obj = display.getSectionAndObject(address_name)
+  local sectionName, obj = config.getSectionAndObject(address_name)
 
   -- Determine the read function
   local readFunction = config.determineReadFunction(obj.Type)
@@ -70,7 +70,7 @@ end
 
 -- Translates the `lookUpValue` based on `Note2`
 local function lookUpName(value, address_name)
-  local sectionName, obj = display.getSectionAndObject(address_name)
+  local sectionName, obj = config.getSectionAndObject(address_name)
   if obj.Note2 then
     return parseNote2(obj.Note2, value)
   end
