@@ -9,6 +9,21 @@ ui = config.ui
 -- mvc2char = require '.training/data/mvc2/utils/characters'
 -- mvc2char = require '.training/data/mvc2/data/stages'
 
+local function movePlayers()
+
+  -- Unlock Camera
+  config.write8(config.SystemMemoryAddresses.Camera_Lock.Address, 2)
+  -- Move Players to Right Corner
+  config.writeFloat(live.LookUpAddress("P1_X_Position_Arena"), 1100)
+  config.writeFloat(live.LookUpAddress("P2_X_Position_Arena"), 1250)
+  -- Move Camera
+  config.writeFloat(config.SystemMemoryAddresses.Camera_X_Position.Address, 960)
+  config.writeFloat(config.SystemMemoryAddresses.Camera_X_Rotation.Address, 960)
+  -- Lock Camera
+  -- Wait 
+  config.write8(config.SystemMemoryAddresses.Camera_Lock.Address, 1)
+end
+
 function cbOverlay()
 
   ui.beginWindow("Tests", 0, 0, 0, 0)
@@ -21,22 +36,23 @@ function cbOverlay()
   local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("P1_X_Position_Arena"))
   --
   -- LookUpAll
-  -- Addres
-  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("Frame_Skip_Rate"))
+  -- Address
+  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("Camera_X_Position"))
   -- Value
-  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("Frame_Skip_Rate"))
+  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("Camera_X_Position"))
   -- Key
-  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("Frame_Skip_Rate"))
+  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("Camera_X_Position"))
   --
   -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
+  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Camera_Lock"))
   --
-  -- -- WriteFloat
-
-  -- config.writeFloat(tempTable[1], 1000)
+  -- Test Move Players
+  ui.button('Move Players Right', function()
+    movePlayers()
+  end)
 
   ui.endWindow()
-
+  -- end)
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
   --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
   --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
