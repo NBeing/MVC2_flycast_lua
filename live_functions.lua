@@ -103,12 +103,12 @@ local function LookUpAll(address_name)
     end
 
     -- print("LookupName: Key not found for value: " .. tostring(getVal))
-    -- print("notfound")
 
     key = ""
   end
-  -- print(key)
-  -- print(address)
+  if key == nil then
+    key = "N/A"
+  end
   return address, value, key
 end
 

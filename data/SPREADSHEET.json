@@ -1286,8 +1286,8 @@
         "P2_A_Guardbreak_Flag": "0x2C268AF4",
         "P2_B_Guardbreak_Flag": "0x2C26963C",
         "P2_C_Guardbreak_Flag": "0x2C26A184",
-        "Note1": "Keeps track of how many attacks have been blocked during normal jump state",
-        "Note2": "Only tracked during NJ or Unfly"
+        "Note1": "Keeps track of how many attacks have been blocked during normal jump state.\nOnly tracked during NJ or Unfly.",
+        "Note2": ""
       },
       "Block_Meter": {
         "Description": "Block_Meter",
@@ -1300,8 +1300,8 @@
         "P2_A_Block_Meter": "0x2C268AF5",
         "P2_B_Block_Meter": "0x2C26963D",
         "P2_C_Block_Meter": "0x2C26A185",
-        "Note1": "Tracks blocked attacks, used for autoblock and fast-fall",
-        "Note2": "> 0: Can fast-fall\nRelated to autoblock. \nPushblock freezes number."
+        "Note1": "Tracks blocked attacks, used for autoblock and fast-fall. \nRelated to autoblock. \r\nPushblock freezes number.",
+        "Note2": "0: Cannot fast-fall\nGreater than 0: Can fast-fall"
       },
       "FlyingScreen": {
         "Description": "FlyingScreen",
@@ -1811,7 +1811,7 @@
     "SpecificCharacterAddresses": {
       "Bison_214kk_Timer": {
         "Description": "Bison_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Bison_214kk_Timer": "0x2C2685EE",
         "P1_B_Bison_214kk_Timer": "0x2C269136",
         "P1_C_Bison_214kk_Timer": "0x2C269C7E",
@@ -1823,7 +1823,7 @@
       },
       "Dhalsim_214kk_Timer": {
         "Description": "Dhalsim_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Dhalsim_214kk_Timer": "0x2C2685EC",
         "P1_B_Dhalsim_214kk_Timer": "0x2C269134",
         "P1_C_Dhalsim_214kk_Timer": "0x2C269C7C",
@@ -1835,7 +1835,7 @@
       },
       "Doom_214kk_Timer": {
         "Description": "Doom_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Doom_214kk_Timer": "0x2C2685EE",
         "P1_B_Doom_214kk_Timer": "0x2C269136",
         "P1_C_Doom_214kk_Timer": "0x2C269C7E",
@@ -1847,7 +1847,7 @@
       },
       "Iron_Man_214kk_Timer": {
         "Description": "Iron_Man_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Iron_Man_214kk_Timer": "0x2C2685E8",
         "P1_B_Iron_Man_214kk_Timer": "0x2C269130",
         "P1_C_Iron_Man_214kk_Timer": "0x2C269C78",
@@ -1859,7 +1859,7 @@
       },
       "Magneto_214kk_Timer": {
         "Description": "Magneto_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Magneto_214kk_Timer": "0x2C2685EA",
         "P1_B_Magneto_214kk_Timer": "0x2C269132",
         "P1_C_Magneto_214kk_Timer": "0x2C269C7A",
@@ -1883,7 +1883,7 @@
       },
       "Sentinel_214kk_Timer": {
         "Description": "Sentinel_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Sentinel_214kk_Timer": "0x2C2685E4",
         "P1_B_Sentinel_214kk_Timer": "0x2C26912C",
         "P1_C_Sentinel_214kk_Timer": "0x2C269C74",
@@ -1895,7 +1895,7 @@
       },
       "Storm_214kk_Timer": {
         "Description": "Storm_214kk_Timer",
-        "Type": "Byte",
+        "Type": "2 Bytes",
         "P1_A_Storm_214kk_Timer": "0x2C2685F4",
         "P1_B_Storm_214kk_Timer": "0x2C26913C",
         "P1_C_Storm_214kk_Timer": "0x2C269C84",
