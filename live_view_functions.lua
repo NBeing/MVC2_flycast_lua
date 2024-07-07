@@ -6,7 +6,7 @@ local pMem = require './training/player_functions'
 -- Determines if PMem/SCV or Other Type of Address.
 -- @param address_name The name of the address
 -- @param oneOrTwo The player number (1 or 2). OPTIONAL
-local function lookUpValue(address_name, oneOrTwo)
+local function LookUpValue(address_name, oneOrTwo)
   -- Find the section
   local sectionName, obj = config.getSectionAndObject(address_name)
 
@@ -15,12 +15,13 @@ local function lookUpValue(address_name, oneOrTwo)
   if not readFunction then
     error("Failed to determine read function for type: " .. obj.Type)
   end
-
-  -- Perform the read operation based on the determined function
+  -- print("Read function found:", readFunction)
+  -- -- Perform the read operation based on the determined function
   local value
+  -- Get Sub-Object from SS
   if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
     if oneOrTwo then
-      value = pMem.GetPMemValue(oneOrTwo, address_name)
+      value = pMem.GetPMemValue(address_name, oneOrTwo)
     else
       error("OneOrTwo argument is required for GetPMemValue() but not provided")
     end
@@ -44,40 +45,33 @@ local function lookUpValue(address_name, oneOrTwo)
     local address = obj.Address
     value = readFunction(address)
   end
+  -- print("LookupValue found:", value)
 
   return value
 end
 
--- Parses the Note2 string and looks up the name based on the value.
--- @param note2 The Note2 string to parse.
--- @param value The value to look up.
--- @return The name corresponding to the value.
-local function parseNote2(note2, value)
-  -- Iterate over each line in the Note2 string.
-  for line in note2:gmatch("([^\n]*)\n?") do
-    -- Extract the key and value from each line using regex.
-    local key, val = line:match("([^:]+):%s*(.*)")
+-- Translates the `lookUpValue` based on `Note2`
+local function LookUpName(address_name, oneOrTwo)
+  -- Get the value using lookUpValue function
+  local getVal = LookUpValue(address_name, oneOrTwo)
 
-    -- Check if the key matches the desired value.
-    if key and tonumber(key) == value then
-      return val
+  -- Get the section name and object
+  local sectionName, obj = config.getSectionAndObject(address_name)
+
+  -- If Note2 exists, parse it and find the corresponding key
+  if obj.Note2 then
+    for line in obj.Note2:gmatch("([^\n]*)\n?") do
+      local key, val = line:match("([^:]+):%s*(.*)") -- key is first match, val is second match
+      if key and tonumber(key) == getVal then
+        return val
+      end
     end
   end
-
-  -- If no name is found for the given value, throw an error.
-  error("Name not found for value: " .. value)
-end
-
--- Translates the `lookUpValue` based on `Note2`
-local function lookUpName(value, address_name)
-  local sectionName, obj = config.getSectionAndObject(address_name)
-  if obj.Note2 then
-    return parseNote2(obj.Note2, value)
-  end
-  error("Name not found for value: " .. value .. " and address: " .. address_name)
+  -- If no corresponding key is found, return an error message
+  return print("LookupName: Key not found for value: " .. tostring(getVal))
 end
 
 return {
-  lookUpValue = lookUpValue,
-  lookUpName = lookUpName
+  LookUpValue = LookUpValue,
+  LookUpName = LookUpName
 }

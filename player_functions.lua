@@ -64,7 +64,7 @@ local function GetPMemValue(address_name, oneOrTwo)
   end
 
   local value = readFunction(address)
-  return address, value
+  return value
 end
 
 -- Return the functions as a module

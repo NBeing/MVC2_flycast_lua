@@ -93,7 +93,27 @@ local function displayJSONContents(json_object, structure)
   return result
 end
 
+-- Main Call
+local function ReadAddressObject(address_name)
+  -- local address_name = "Stun_Check" -- PMem
+  -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
+  -- local address_name = "Combo_Meter_Value" -- P1P2
+  -- local address_name = "Input_DEC" -- Sys
+  -- local address_name = "RubyHeart" -- CharInfo
+  -- local address_name = "Boat2" -- StagesInfo
+  -- local address_name = "Right" -- InputsInfo
+
+  local json_object, structure = display.parseJSONWithOrder(address_name) -- returns two values and assigns them to json_object and structure
+
+  if json_object then
+    return display.displayJSONContents(json_object, structure)
+  else
+    return "Object not found"
+  end
+end
+
 return {
-  parseJSONWithOrder = parseJSONWithOrder,
-  displayJSONContents = displayJSONContents
+  -- parseJSONWithOrder = parseJSONWithOrder,
+  -- displayJSONContents = displayJSONContents,
+  ReadAddressObject = ReadAddressObject
 }
