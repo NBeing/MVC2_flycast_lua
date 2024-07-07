@@ -54,6 +54,8 @@ local MEMORY = flycast.memory
 
 -- Return as a module
 return {
+  MVC2_OBJ = MVC2_OBJ,
+  jSS = jSS,
   PlayerMemoryAddresses = PlayerMemoryAddresses,
   SpecificCharacterAddresses = SpecificCharacterAddresses,
   Player1And2Addresses = Player1And2Addresses,

@@ -5,17 +5,29 @@ display = require './training/display_functions'
 
 ui = config.ui
 
+local function exampleUsage()
+  local address_name = "Stun_Check"
+
+  local json_object, structure = display.parseJSONWithOrder(address_name)
+
+  if json_object then
+    return display.displayJSONContents(json_object, structure)
+  else
+    return "Object not found"
+  end
+end
+
 function cbOverlay()
   ui.beginWindow("New", 0, 10, 300, 0)
 
   -- Draw
-  local value = display.lookUpValue("Frame_Skip_Counter")
-  local name = display.lookUpName(value, "Frame_Skip_Counter")
+  local value = display.lookUpValue("Stun_Check", 1)
+  -- local name = display.lookUpName(value, "Stun_Check")
 
   if value then
-    ui.text(value)
-    ui.text(name)
-    ui.text(display.displayJSONContents(config.SystemMemoryAddresses.Frame_Skip_Counter))
+    -- ui.text(value)
+    -- ui.text(name)
+    ui.text(exampleUsage())
   end
 
   ui.endWindow()
