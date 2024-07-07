@@ -8,7 +8,7 @@ ui = config.ui
 -- Example usage
 local function exampleUsage()
   local address_name = "Stun_Check" -- PMem
-  -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
+  local address_name = "Sentinel_214kk_Timer" -- SpecChar
   -- local address_name = "Combo_Meter_Value" -- P1P2
   -- local address_name = "Input_DEC" -- Sys
   -- local address_name = "Zangief" -- CharInfo
@@ -28,12 +28,12 @@ function cbOverlay()
   ui.beginWindow("Note2 Display", 0, 0, 0, 0)
 
   -- Draw
-  local value = liveView.lookUpValue("Unfly", 1)
-  local name = liveView.lookUpName(value, "Unfly")
+  local value = liveView.lookUpValue("Knockdown_State", 1)
+  local name = liveView.lookUpName(value, "Knockdown_State")
 
   ui.text(value)
   ui.text(name)
-  -- ui.text(exampleUsage())
+  ui.text(exampleUsage())
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

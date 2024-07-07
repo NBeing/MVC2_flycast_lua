@@ -1,6 +1,7 @@
 -- Imports
 local util = require './training/utilities'
 local MVC2_OBJ = util.read_object_from_json_file('./training/data/SPREADSHEET.json')
+
 -- Abstractions
 local jSS = MVC2_OBJ.SPREADSHEET
 
@@ -43,6 +44,37 @@ local readFloat = function(address)
   return floatValue
 end
 
+-- Function to get the appropriate read function based on the type
+-- @param objectType The type of the object.
+-- @return The read function based on the type.
+local function determineReadFunction(objectType)
+  if objectType then
+    -- print("Type found:", objectType)
+    -- Check if the type is in config.byteSize
+    for _, type in ipairs(config.byteSize) do
+      if type == objectType then
+        -- print("Valid type:", objectType)
+        if objectType == "Byte" then
+          return config.read8
+        elseif objectType == "2 Bytes" then
+          return config.read16
+        elseif objectType == "4 Bytes" then
+          return config.read32
+        elseif objectType == "Float" then
+          return config.readFloat
+        else
+          -- print("Unknown type:", objectType)
+          return nil
+        end
+      end
+    end
+    -- print("Invalid type:", objectType)
+  else
+    -- print("Type not found for object")
+  end
+  return nil
+end
+
 -- Important Constants
 -- Ensure the Frame_Counter address is correctly referenced
 local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.Address
@@ -70,5 +102,6 @@ return {
   CURRENT_FRAME = CURRENT_FRAME,
   ui = ui,
   MEMORY = MEMORY,
-  byteSize = byteSize
+  byteSize = byteSize,
+  determineReadFunction = determineReadFunction
 }

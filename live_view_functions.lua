@@ -11,7 +11,7 @@ local function lookUpValue(address_name, oneOrTwo)
   local sectionName, obj = display.getSectionAndObject(address_name)
 
   -- Determine the read function
-  local readFunction = pMem.determineReadFunction(obj.Type)
+  local readFunction = config.determineReadFunction(obj.Type)
   if not readFunction then
     error("Failed to determine read function for type: " .. obj.Type)
   end
