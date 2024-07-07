@@ -15,19 +15,21 @@ function cbOverlay()
 
   -- Tests
   -- GetPoint()
-  local PMemPoint = ui.text("Test-GetPoint:  " .. pMem.GetPoint(1))
+  local PMemPoint = ui.text("Test-pMem.GetPoint:  " .. pMem.GetPoint(1))
   --
   -- GetPMemValue()
-  local GetPMemValue = ui.text("Test-GetPMemVal:  " .. pMem.GetPMemValue("X_Position_Arena", 1))
+  local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("X_Position_Arena", 1))
   --
   -- LookUpValue
-  local LookupValue = ui.text("Test-LookupValue:  " .. live.LookUpValue("Knockdown_State", 1))
+  local LookupValue = ui.text("Test-live.LookupValue:  " .. live.LookUpValue("Frame_Skip_Rate"))
   --
   -- LookUpName
-  local LookupName = ui.text("Test-LookupName:  " .. live.LookUpName("Knockdown_State", 1))
+  local LookupName = ui.text("Test-live.LookupName:  " .. live.LookUpName("Frame_Skip_Rate"))
   --
   -- ReadNote2
-  local ReadAddressObject = ui.text("Test-ReadNote2:  " .. display.ReadNote2("Knockdown_State"))
+  local ReadAddressObject = ui.text("Test-display.ReadNote2:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
+  --
+  -- -- WriteFloat
 
   -- config.writeFloat(tempTable[1], 1000)
 

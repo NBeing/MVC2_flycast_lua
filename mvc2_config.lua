@@ -32,7 +32,6 @@ local write16 = flycast.memory.write16
 local write32 = flycast.memory.write32
 
 -- Custom function to read float values with truncation to 7 decimal places and handling small numbers
--- Custom function to read float values with truncation to 7 decimal places and handling small numbers
 local readFloat = function(address)
   local intValue = read32(address)
 

@@ -103,17 +103,14 @@ local function ReadAddressObject(address_name)
   -- local address_name = "Boat2" -- StagesInfo
   -- local address_name = "Right" -- InputsInfo
 
-  local json_object, structure = display.parseJSONWithOrder(address_name) -- returns two values and assigns them to json_object and structure
-
+  local json_object, structure = parseJSONWithOrder(address_name) -- returns two values and assigns them to json_object and structure
   if json_object then
-    return display.displayJSONContents(json_object, structure)
+    return displayJSONContents(json_object, structure)
   else
     return "Object not found"
   end
 end
 
 return {
-  -- parseJSONWithOrder = parseJSONWithOrder,
-  -- displayJSONContents = displayJSONContents,
   ReadAddressObject = ReadAddressObject
 }

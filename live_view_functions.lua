@@ -61,14 +61,21 @@ local function LookUpName(address_name, oneOrTwo)
   -- If Note2 exists, parse it and find the corresponding key
   if obj.Note2 then
     for line in obj.Note2:gmatch("([^\n]*)\n?") do
-      local key, val = line:match("([^:]+):%s*(.*)") -- key is first match, val is second match
-      if key and tonumber(key) == getVal then
-        return val
+      local keyNumberAsString, valStringInObject = line:match("([^:]+):%s*(.*)") -- key is first match, val is second match
+      if keyNumberAsString and tonumber(keyNumberAsString) == getVal then
+        return valStringInObject
       end
     end
   end
   -- If no corresponding key is found, return an error message
-  return print("LookupName: Key not found for value: " .. tostring(getVal))
+  local errorString = "LookupName: Key not found for value: " .. tostring(getVal) .. " in "
+  if obj.Description then
+    errorString = errorString .. obj.Description
+  else
+    errorString = errorString .. sectionName
+  end
+  -- print("LookupName: Key not found for value: " .. tostring(getVal))
+  return errorString
 end
 
 return {
