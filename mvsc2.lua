@@ -2,7 +2,7 @@
 config = require './training/mvc2_config'
 pMem = require './training/player_functions'
 display = require './training/display_functions'
-
+liveView = require './training/live_view_functions'
 ui = config.ui
 
 -- Example usage
@@ -25,15 +25,15 @@ local function exampleUsage()
 end
 
 function cbOverlay()
-  ui.beginWindow("New", 0, 0, 0, 0)
+  ui.beginWindow("Note2 Display", 0, 0, 0, 0)
 
   -- Draw
-  -- local value = display.lookUpValue("Unfly", 1)
-  -- local name = display.lookUpName(value, "Unfly")
+  local value = liveView.lookUpValue("Unfly", 1)
+  local name = liveView.lookUpName(value, "Unfly")
 
-  -- ui.text(value)
-  -- ui.text(name)
-  ui.text(exampleUsage())
+  ui.text(value)
+  ui.text(name)
+  -- ui.text(exampleUsage())
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and

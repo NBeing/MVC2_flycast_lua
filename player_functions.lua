@@ -37,7 +37,7 @@ end
 -- Function to get the appropriate read function based on the type
 -- @param objectType The type of the object.
 -- @return The read function based on the type.
-local function getReadFunction(objectType)
+local function determineReadFunction(objectType)
   if objectType then
     -- print("Type found:", objectType)
     -- Check if the type is in config.byteSize
@@ -89,7 +89,7 @@ local function GetPMemUsingPoint(oneOrTwo, address_name)
   end
 
   -- Determine the read function
-  local readFunction = getReadFunction(lookup.Type)
+  local readFunction = determineReadFunction(lookup.Type)
   if not readFunction then
     error("Failed to determine read function for type: " .. tostring(lookup.Type))
   end
@@ -102,5 +102,5 @@ end
 return {
   GetPoint = GetPoint,
   GetPMemUsingPoint = GetPMemUsingPoint,
-  getReadFunction = getReadFunction
+  determineReadFunction = determineReadFunction
 }

@@ -2,7 +2,10 @@ local config = require './training/mvc2_config'
 local pMem = require './training/player_functions'
 local interfaces = require './training/interfaces'
 
--- Function to get the structure of the object from interfaces.lua
+-- Function to get the structure of the object from `interfaces.lua`
+--- Retrieves the structure of an interface.
+-- @param interface_name The name of the interface.
+-- @return The structure of the interface.
 local function getObjectStructure(interface_name)
   local structure = interfaces[interface_name]
   if not structure then
@@ -11,7 +14,10 @@ local function getObjectStructure(interface_name)
   return structure
 end
 
--- Function to determine which section the address_name belongs to and get the object
+-- Determines which section the `address_name` belongs to and get the object
+-- @param address_name The name of the address
+-- @return sectionName The name of the section
+-- @return obj The object containing the address
 local function getSectionAndObject(address_name)
   for name, section in pairs(config.jSS) do
     if section[address_name] then
@@ -21,7 +27,7 @@ local function getSectionAndObject(address_name)
   error("Address not found: " .. address_name)
 end
 
--- Parses JSON data with order
+-- Parses JSON data with order by using `getObjectStructure` and `getSectionAndObject`
 -- @param address_name The name of the address
 -- @return obj The parsed JSON object
 -- @return structure The structure of the object
@@ -100,75 +106,8 @@ local function displayJSONContents(json_object, structure)
   return result
 end
 
--- Function to look up an address and return the value
--- Determines if PMem/SCV or Other Type of Address.
--- @param address_name The name of the address
--- @param oneOrTwo The player number (1 or 2)
-local function lookUpValue(address_name, oneOrTwo)
-  -- Find the section
-  local sectionName, obj = getSectionAndObject(address_name)
-
-  -- Determine the read function
-  local readFunction = pMem.getReadFunction(obj.Type)
-  if not readFunction then
-    error("Failed to determine read function for type: " .. obj.Type)
-  end
-
-  -- Perform the read operation based on the determined function
-  local value
-  if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
-    if oneOrTwo then
-      value = pMem.GetPMemUsingPoint(oneOrTwo, address_name)
-    else
-      error("OneOrTwo argument is required for GetPMemUsingPoint() but not provided")
-    end
-  elseif sectionName == "Player1And2Addresses" then
-    if oneOrTwo then
-      local prefix = oneOrTwo == 1 and "P1_" or "P2_"
-      local concat = prefix .. address_name
-      local address = obj[concat]
-      if address then
-        value = readFunction(address)
-      else
-        error("Concatenated address not found in object: " .. concat)
-      end
-    else
-      error("OneOrTwo argument is required for Player1And2Addresses but not provided")
-    end
-  elseif sectionName == "SystemMemoryAddresses" then
-    local address = obj.Address
-    value = readFunction(address)
-  else
-    local address = obj.Address
-    value = readFunction(address)
-  end
-
-  return value
-end
-
--- Parse Note2 and look up the name based on the value
-local function parseNote2(note2, value)
-  for line in note2:gmatch("([^\n]*)\n?") do
-    local key, val = line:match("([^:]+):%s*(.*)")
-    if key and tonumber(key) == value then
-      return val
-    end
-  end
-  error("Name not found for value: " .. value)
-end
-
--- Main function to look up the name based on the value from Note2
-local function lookUpName(value, address_name)
-  local sectionName, obj = getSectionAndObject(address_name)
-  if obj.Note2 then
-    return parseNote2(obj.Note2, value)
-  end
-  error("Name not found for value: " .. value .. " and address: " .. address_name)
-end
-
 return {
+  getSectionAndObject = getSectionAndObject,
   parseJSONWithOrder = parseJSONWithOrder,
-  displayJSONContents = displayJSONContents,
-  lookUpName = lookUpName,
-  lookUpValue = lookUpValue
+  displayJSONContents = displayJSONContents
 }
