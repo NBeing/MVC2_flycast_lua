@@ -20,15 +20,20 @@ function cbOverlay()
   -- GetPMemValue()
   local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("X_Position_Arena", 1))
   --
-  -- LookUpValue
-  local LookupValue = ui.text("Test-live.LookupValue:  " .. live.LookUpValue("Frame_Skip_Rate"))
+  -- LookUpAll
+
+  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("ID_2", 1))
+  --
+  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("ID_2", 1))
+  --
+  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("ID_2", 1))
   --
   -- LookUpName
-  local LookupName = ui.text("Test-live.LookupName:  " .. live.LookUpName("Frame_Skip_Rate"))
+  -- local LookupName = ui.text("Test-live.LookupName:  " .. live.LookUpName("Frame_Skip_Rate"))
   --
-  -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
-  --
+  -- -- ReadNote2
+  -- local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
+  -- --
   -- -- WriteFloat
 
   -- config.writeFloat(tempTable[1], 1000)
