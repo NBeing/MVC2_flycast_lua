@@ -11,7 +11,7 @@ local function LookUpValue(address_name, oneOrTwo)
   local sectionName, obj = config.getSectionAndObject(address_name)
 
   -- Determine the read function
-  local readFunction = config.determineReadFunction(obj.Type)
+  local readFunction = config.determineType(obj.Type, "read")
   if not readFunction then
     error("Failed to determine read function for type: " .. obj.Type)
   end
@@ -82,3 +82,10 @@ return {
   LookUpValue = LookUpValue,
   LookUpName = LookUpName
 }
+-- write("X_Position_Arena", 20)
+-- Find address_name in SS, use PMem if necessary,
+-- return section name and object
+-- Push the object's "Type" into determineType
+-- Store the result of what type of read function we need to use because
+-- we will need to use that to write to it. If we matched read8, we
+-- will need to use write8 to write to it.

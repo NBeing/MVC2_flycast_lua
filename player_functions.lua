@@ -58,7 +58,7 @@ local function GetPMemValue(address_name, oneOrTwo)
   end
 
   -- Determine the read function
-  local readFunction = config.determineReadFunction(lookup.Type)
+  local readFunction = config.determineType(lookup.Type, "read")
   if not readFunction then
     error("Failed to determine read function for type: " .. tostring(lookup.Type))
   end

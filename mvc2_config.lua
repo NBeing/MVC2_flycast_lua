@@ -121,10 +121,9 @@ end
 -- Function to get the appropriate read function based on the type
 -- @param objectType The type of the object.
 -- @return The read function based on the type.
-local function determineReadFunction(objectType)
-  if objectType then
-    -- print("Type found:", objectType)
-    -- Check if the type is in config.byteSize
+local function determineType(objectType, readOrWrite)
+  if objectType and readOrWrite == "read" then
+    -- Get Read Type
     for _, type in ipairs(config.byteSize) do
       if type == objectType then
         -- print("Valid type:", objectType)
@@ -143,7 +142,25 @@ local function determineReadFunction(objectType)
       end
     end
     print("Invalid type:", objectType)
-  else
+  elseif objectType and readOrWrite == "write" then
+    -- Get Write Type
+    for _, type in ipairs(config.byteSize) do
+      if type == objectType then
+        -- print("Valid type:", objectType)
+        if objectType == "Byte" then
+          return config.write8
+        elseif objectType == "2 Bytes" then
+          return config.write16
+        elseif objectType == "4 Bytes" then
+          return config.write32
+        elseif objectType == "Float" then
+          return config.writeFloat
+        else
+          print("Unknown type:", objectType)
+          return nil
+        end
+      end
+    end
     print("Type not found for object")
   end
   return nil
@@ -193,6 +210,6 @@ return {
   ui = ui,
   MEMORY = MEMORY,
   byteSize = byteSize,
-  determineReadFunction = determineReadFunction,
+  determineType = determineType,
   getSectionAndObject = getSectionAndObject
 }

@@ -2,7 +2,7 @@
 config = require './training/mvc2_config'
 pMem = require './training/player_functions'
 display = require './training/display_functions'
-live = require './training/live_view_functions'
+live = require './training/live_functions'
 --
 ui = config.ui
 
@@ -27,7 +27,7 @@ function cbOverlay()
   local LookupName = ui.text("Test-live.LookupName:  " .. live.LookUpName("Frame_Skip_Rate"))
   --
   -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadNote2:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
+  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
   --
   -- -- WriteFloat
 
