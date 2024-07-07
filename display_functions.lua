@@ -95,6 +95,12 @@ end
 
 -- Main Call
 local function ReadAddressObject(address_name)
+  -- do stupid-check for prefixes of P1_ or P2_, and remove them before passing it to the next function
+  if address_name:sub(1, 3) == "P1_" or address_name:sub(1, 3) == "P2" then
+    address_name = address_name:sub(4)
+    print("Removed prefix: " .. address_name)
+    print("Caught stupid-check")
+  end
   -- local address_name = "Stun_Check" -- PMem
   -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
   -- local address_name = "Combo_Meter_Value" -- P1P2

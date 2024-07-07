@@ -14,17 +14,29 @@ local function LookUpAll(address_name)
   local oneOrTwo
   local playerPrefix
 
-  if address_name:sub(1, 3) == "P1_" then
-    -- print("P1")
+  -- Check for P1_[ABC]_ and P2_[ABC]_ prefixes first
+  if address_name:sub(1, 5) == "P1_A_" or address_name:sub(1, 5) == "P1_B_" or address_name:sub(1, 5) == "P1_C_" then
+    oneOrTwo = 1
+    playerPrefix = "P1_"
+    address_name = address_name:sub(6)
+  elseif address_name:sub(1, 5) == "P2_A_" or address_name:sub(1, 5) == "P2_B_" or address_name:sub(1, 5) == "P2_C_" then
+    oneOrTwo = 2
+    playerPrefix = "P2_"
+    address_name = address_name:sub(6)
+    -- Check for P1_ and P2_ prefixes next
+  elseif address_name:sub(1, 3) == "P1_" then
     oneOrTwo = 1
     playerPrefix = "P1_"
     address_name = address_name:sub(4)
   elseif address_name:sub(1, 3) == "P2_" then
-    -- print("P2")
     oneOrTwo = 2
     playerPrefix = "P2_"
     address_name = address_name:sub(4)
   end
+
+  -- print(playerPrefix)
+  -- print(address_name)
+  -- 
   -- Find the section
   local sectionName, obj = config.getSectionAndObject(address_name)
 
@@ -37,7 +49,7 @@ local function LookUpAll(address_name)
 
   -- Get Sub-Object from SS
   if sectionName == "PlayerMemoryAddresses" or sectionName == "SpecificCharacterAddresses" then
-
+    -- print("1")
     local pointCharForPlayer = pMem.GetPoint(oneOrTwo)
     if not pointCharForPlayer then
       error("Point character not found for player: " .. oneOrTwo)
@@ -58,11 +70,13 @@ local function LookUpAll(address_name)
       print("OneOrTwo argument is required for GetPMemValue() but not provided")
     end
   elseif sectionName == "Player1And2Addresses" then
-    -- print("1")
+    -- print("Player1And2Addresses")
     if oneOrTwo then
-      local prefix = oneOrTwo == 1 and "P1_" or "P2_"
-      local concat = prefix .. address_name
+      -- print(address_name)
+      local concat = playerPrefix .. address_name
+      -- print(concat)
       address = obj[concat]
+      -- print(address)
       if address then
         value = readFunction(address)
       else
@@ -71,13 +85,15 @@ local function LookUpAll(address_name)
     else
       error("OneOrTwo argument is required for Player1And2Addresses but not provided")
     end
-    address = obj.Address
+    print(address)
+    print(value)
+
   elseif sectionName == "SystemMemoryAddresses" then
-    print("1")
+    -- print("1")
     address = obj.Address
     value = readFunction(address)
   else
-    print("1")
+    print("You put in some other type of address that isn't the spreadsheet object!")
     address = obj.Address
     value = readFunction(address)
   end

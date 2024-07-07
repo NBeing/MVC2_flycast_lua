@@ -22,15 +22,14 @@ function cbOverlay()
   --
   -- LookUpAll
   -- Addres
-  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("P1_X_Position_Arena"))
+  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("Frame_Skip_Rate"))
   -- Value
-  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("P1_X_Position_Arena"))
+  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("Frame_Skip_Rate"))
   -- Key
-  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("P1_X_Position_Arena"))
+  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("Frame_Skip_Rate"))
   --
   -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " ..
-                                      display.ReadAddressObject("P1_X_Position_Arena"))
+  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Frame_Skip_Rate"))
   --
   -- -- WriteFloat
 
