@@ -7,15 +7,15 @@ ui = config.ui
 
 -- Example usage
 local function exampleUsage()
-  -- local address_name = "Stun_Check" -- PMem
+  local address_name = "Stun_Check" -- PMem
   -- local address_name = "Sentinel_214kk_Timer" -- SpecChar
   -- local address_name = "Combo_Meter_Value" -- P1P2
   -- local address_name = "Input_DEC" -- Sys
-  local address_name = "Zangief" -- CharInfo
+  -- local address_name = "Zangief" -- CharInfo
   -- local address_name = "Boat2" -- StagesInfo
   -- local address_name = "Right" -- InputsInfo
 
-  local json_object, structure = display.parseJSONWithOrder(address_name)
+  local json_object, structure = display.parseJSONWithOrder(address_name) -- returns two values and assigns them to json_object and structure
 
   if json_object then
     return display.displayJSONContents(json_object, structure)
@@ -25,23 +25,20 @@ local function exampleUsage()
 end
 
 function cbOverlay()
-  ui.beginWindow("New", 0, 10, 300, 0)
+  ui.beginWindow("New", 0, 0, 0, 0)
 
   -- Draw
-  local value = display.lookUpValue("Knockdown_State", 1)
-  local name = display.lookUpName(value, "Knockdown_State")
+  -- local value = display.lookUpValue("Unfly", 1)
+  -- local name = display.lookUpName(value, "Unfly")
 
-  -- if value then
   -- ui.text(value)
   -- ui.text(name)
   ui.text(exampleUsage())
-  -- end
-
   ui.endWindow()
 
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
   --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
-  --   MEMORY.w rite8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
+  --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
 
   --   ui.beginWindow("Game", 10, 10, 300, 0)
   --   ui.text("Game Timer")
