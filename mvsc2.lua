@@ -4,458 +4,60 @@ pMem = require './training/player_functions'
 display = require './training/display_functions'
 live = require './training/live_functions'
 --
+doMove = require './training/do_move_functions'
+sequence_manager = require './training/sequence_manager'
+moveChar = require './training/move_characters_functions'
+--
 ui = config.ui
 
-local function movePlayers()
-  -- Unlock Camera
-  write8(SystemMemoryAddresses.Camera_Lock.Address, 2)
-  -- Move Players to Right Corner
-  writeFloat(live.LookUpAddress("P1_X_Position_Arena"), 1100)
-  writeFloat(live.LookUpAddress("P2_X_Position_Arena"), 1250)
-  -- Move Camera
-  writeFloat(SystemMemoryAddresses.Camera_X_Position.Address, 960)
-  writeFloat(SystemMemoryAddresses.Camera_X_Rotation.Address, 960)
-  -- Lock Camera
-  -- Wait 
-  write8(SystemMemoryAddresses.Camera_Lock.Address, 1)
-end
-
-local function ForceSpecials(specialID)
-  local base = live.LookUpAddress("P1_Base")
-  local Special_Attack_ID = PlayerMemoryAddresses.Special_Attack_ID.hexOffset
-  local Special_Strength = PlayerMemoryAddresses.Special_Strength.hexOffset
-  local Stun_Check = PlayerMemoryAddresses.Stun_Check.hexOffset
-  local Action_Flags = PlayerMemoryAddresses.Action_Flags.hexOffset
-  local Animation_Reset = PlayerMemoryAddresses.Animation_Reset.hexOffset
-  local Knockdown_State = PlayerMemoryAddresses.Knockdown_State.hexOffset
-
-  write8(base + Special_Attack_ID, specialID)
-  write8(base + Special_Strength, 0)
-  write8(base + Stun_Check, 0)
-  write8(base + Action_Flags, 0)
-  write8(base + Animation_Reset, 0)
-  write16(base + Knockdown_State, 21) -- Special_Attacks
-end
-
-------------------------------------
--- Sequence management
-local startSequence = false
-local captureFirstFrame = nil
-local actionSequence = {
+----
+-- Define a custom sequence
+local customSequence = {
   {
     waitFrames = 10,
     action = function()
-      ForceSpecials(1)
+      doMove.ForceSpecials(1)
     end
   },
   {
-    waitFrames = 10,
+    waitFrames = 20,
     action = function()
-      ForceSpecials(3)
+      doMove.ForceSpecials(3)
     end
   }
+  -- Add more actions as needed
 }
-local currentActionIndex = 1
 
-function doSequenceOnButtonPress()
-  local currentFrame = flycast.state.getFrameNumber()
-  if not captureFirstFrame then
-    captureFirstFrame = currentFrame
-  end
-
-  local frameDifference = currentFrame - captureFirstFrame
-
-  if currentActionIndex <= #actionSequence and frameDifference >= actionSequence[currentActionIndex].waitFrames then
-    actionSequence[currentActionIndex].action()
-    currentActionIndex = currentActionIndex + 1
-    captureFirstFrame = currentFrame
-  end
-
-  if currentActionIndex > #actionSequence then
-    startSequence = false
-    captureFirstFrame = nil
-    currentActionIndex = 1
-  end
-end
--------------------------------------------------
-
+----
 function cbVBlank()
-  if startSequence then
-    doSequenceOnButtonPress()
-  end
+  sequence_manager.runSequence()
 end
 
 function cbOverlay()
-
   ui.beginWindow("Tests", 0, 0, 0, 0)
-
   -- Tests
   -- GetPoint()
-  -- local PMemPoint = ui.text("Test-pMem.GetPoint:  " .. pMem.GetPoint(1))
-  --
-  -- GetPMemValue()
-  -- local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("P1_X_Position_Arena"))
-  --
-  -- LookUpAll
-  -- Address
-  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("P1_Knockdown_State"))
-  -- Value
-  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("P1_Knockdown_State"))
-  -- Key
-  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("P1_Knockdown_State"))
-  --
-  -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Knockdown_State"))
-  --
-  -- Test Move Players
+  local PMemPoint = ui.text("T-pMem.GetPoint:  " .. tostring(pMem.GetPoint(1)))
+  local GetPMemValue = ui.text("T-pMem.GetPMemVal:  " .. tostring(pMem.GetPMemValue("P1_X_Position_Arena")))
+  local LookUpAddress = ui.text("T-live.LookUpAddress:  " .. tostring(live.LookUpAddress("P1_Knockdown_State")))
+  local LookUpValue = ui.text("T-live.LookUpValue:  " .. tostring(live.LookUpValue("P1_Knockdown_State")))
+  local LookUpKey = ui.text("T-live.LookUpKey:  " .. tostring(live.LookUpKey("P1_Knockdown_State")))
+  local rAdrObj = ui.text("T-display.rAdrObj:  " .. tostring(display.ReadAddressObject("Knockdown_State")))
+  -- Move Players
   ui.button('Move Players Right', function()
-    movePlayers()
+    moveChar.movePlayers()
   end)
-  --
   -- Create the button to start the sequence
   ui.button('Do Special', function()
-    startSequence = true
+    sequence_manager.startSequence(customSequence)
   end)
 
   ui.endWindow()
 end
 
--- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
---   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
---   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
-
---   ui.beginWindow("Game", 10, 10, 300, 0)
---   ui.text("Game Timer")
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.game_timer))
-
---   ui.text("Stage")
---   ui.rightText(STAGES[MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id)])
---   ui.endWindow()
-
---   ui.beginWindow("P1", math.floor((flycast.state.display.width / 4) - 125),
---     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_health))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_health))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_health))
-
---   ui.text("")
-
---   ui.text("Level")
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_level))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
---     ui.text("Character 1 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
---     ui.text("Character 2 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
---     ui.text("Character 3 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   ui.endWindow()
-
---   ui.beginWindow("P1 Dummy", math.floor((flycast.state.display.width / 4) - 250),
---     math.floor((flycast.state.display.height * (3 / 4))) - 125, 160, 0)
-
---   ui.button('P1 char 1 Max Unfly', function()
---     flycast.memory.write8(DC_MVC2_MEMORY_TABLE.p1_char1_unfly, 255)
---   end)
-
---   ui.button('Do the Funny', function()
---     -- doSpecial()
---   end)
---   ui.button('Do the load', function()
---     flycast.emulator.loadState(1)
---     jump(1)
---     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
---     print("Load state occurred on frame:", CURRENT_FRAME)
---   end)
---   ui.button('Do the save', function()
---     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
---     print("Save state was saved on frame:", CURRENT_FRAME)
---     flycast.emulator.saveState(1)
---     -- 24 - 0
---     -- 25 - 0
---     -- 26 - 2
---   end)
-
---   ui.button('Switch Character Ass', function()
---     switch_character_a(1)
---   end)
---   ui.button('Switch Character B', function()
---     switch_character_b(1)
---   end)
-
---   ui.button('Jump', function()
---     jump(1)
---   end)
---   ui.button('Forward', function()
---     forward(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
---   end)
---   ui.button('Back', function()
---     block(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
---   end)
---   ui.button('Crouch', function()
---     crouch(1)
---   end)
---   ui.button('Release', function()
---     release_all(1)
---   end)
-
---   ui.endWindow()
-
---   ui.beginWindow("P2", math.floor((flycast.state.display.width * (3 / 4)) - 125),
---     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_health))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_health))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
---     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
---   else
---     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
---   end
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_health))
-
---   ui.text("")
-
---   ui.text("Level")
---   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_level))
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
---     ui.text("Character 1 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
---     ui.text("Character 2 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
---     ui.text("Character 3 Facing")
---     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_facing_right) == 1 then
---       ui.rightText("Right")
---     else
---       ui.rightText("Left")
---     end
---   end
-
---   ui.endWindow()
-
---   ui.beginWindow("P2 Dummy", math.floor(flycast.state.display.width * (3 / 4)) + 125,
---     math.floor(flycast.state.display.height * (3 / 4)) - 125, 160, 0)
-
---   ui.button('Switch Character A', function()
---     switch_character_a(2)
---   end)
---   ui.button('Switch Character B', function()
---     switch_character_b(2)
---   end)
-
---   ui.button('Jump', function()
---     jump(2)
---   end)
---   ui.button('Forward', function()
---     forward(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
---   end)
---   ui.button('Back', function()
---     block(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
---   end)
---   ui.button('Crouch', function()
---     crouch(2)
---   end)
---   ui.button('Release', function()
---     release_all(2)
---   end)
-
---   ui.endWindow()
--- end
--- end
-
--- function release_pb(player)
---   time_to_release_pb = nil
---   flycast.input.releaseButtons(player, BTN_X | BTN_Y)
--- end
--- function pushblock(player)
---   CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
---   flycast.input.pressButtons(player, BTN_X | BTN_Y)
---   -- if time_to_release_pb == nil then
---   --     time_to_release_pb = current_frame + 2 
---   -- end
---   -- release_all(player)
-
--- end
--- function switch_character_a(player)
---   release_all(player)
-
---   local BTN_B = 1 << 1
---   local BTN_A = 1 << 2
---   local BTN_Y = 1 << 9
---   local BTN_X = 1 << 10
---   flycast.input.pressButtons(player, BTN_X | BTN_A)
-
--- end
-
--- function switch_character_b(player)
---   release_all(player)
-
---   local BTN_B = 1 << 1
---   local BTN_A = 1 << 2
---   local BTN_Y = 1 << 9
---   local BTN_X = 1 << 10
---   flycast.input.pressButtons(player, BTN_Y | BTN_B)
-
--- end
--- function doSpecial()
---   -- 0x8C268340 --based
---   -- local based = 0x8C268340 --p1
---   local based2 = 0x8C2688E4 -- p2
---   flycast.memory.write8(based2 + 0x01E9, 0x4) -- special id
---   flycast.memory.write8(based2 + 0x01A3, 0x0) -- strength
---   flycast.memory.write8(based2 + 0x05, 0x0) -- reset anim
---   flycast.memory.write8(based2 + 0x06, 0x0) -- reset anim
---   flycast.memory.write8(based2 + 0x07, 0x0) -- reset anim ???
---   flycast.memory.write8(based2 + 0x01d0, 0x15) -- set special move state
-
---   -- local based = 0x8C268340 --p1
---   local based1 = 0x8C268340 -- p2
---   flycast.memory.write8(based1 + 0x01E9, 0x4) -- special id
---   flycast.memory.write8(based1 + 0x01A3, 0x0) -- strength
---   flycast.memory.write8(based1 + 0x05, 0x0) -- reset anim
---   flycast.memory.write8(based1 + 0x06, 0x0) -- reset anim
---   flycast.memory.write8(based1 + 0x07, 0x0) -- reset anim ???
---   flycast.memory.write8(based1 + 0x01d0, 0x15) -- set special move state
--- end
-
--- function jump(player)
---   local DPAD_DOWN = 1 << 5
---   local DPAD_UP = 1 << 4
---   flycast.input.releaseButtons(player, DPAD_DOWN)
---   flycast.input.pressButtons(player, DPAD_UP)
--- end
-
--- function forward(player, facing_right)
---   local DPAD_LEFT = 1 << 6
---   local DPAD_RIGHT = 1 << 7
---   if facing_right == 1 then
---     flycast.input.releaseButtons(player, DPAD_LEFT)
---     flycast.input.pressButtons(player, DPAD_RIGHT)
---   else
---     flycast.input.releaseButtons(player, DPAD_RIGHT)
---     flycast.input.pressButtons(player, DPAD_LEFT)
---   end
--- end
-
--- function block(player, facing_right)
---   local DPAD_LEFT = 1 << 6
---   local DPAD_RIGHT = 1 << 7
---   if facing_right == 1 then
---     flycast.input.releaseButtons(player, DPAD_RIGHT)
---     flycast.input.pressButtons(player, DPAD_LEFT)
---   else
---     flycast.input.releaseButtons(player, DPAD_LEFT)
---     flycast.input.pressButtons(player, DPAD_RIGHT)
---   end
--- end
-
--- function crouch(player)
---   local DPAD_UP = 1 << 4
---   local DPAD_DOWN = 1 << 5
-
---   flycast.input.releaseButtons(player, DPAD_UP)
---   flycast.input.pressButtons(player, DPAD_DOWN)
--- end
-
--- function crouch_block(player, facing_right)
---   release_all(player)
---   local DPAD_DOWN = 1 << 5
---   local DPAD_LEFT = 1 << 6
---   local DPAD_RIGHT = 1 << 7
-
---   if facing_right == 1 then
---     flycast.input.pressButtons(player, DPAD_DOWN | DPAD_LEFT)
---   else
---     flycast.input.pressButtons(player, DPAD_DOWN | DPAD_RIGHT)
---   end
--- end
-
--- function release_all(player)
---   local DPAD_UP = 1 << 4
---   local DPAD_DOWN = 1 << 5
---   local DPAD_LEFT = 1 << 6
---   local DPAD_RIGHT = 1 << 7
-
---   local BTN_B = 1 << 1
---   local BTN_A = 1 << 2
---   local BTN_Y = 1 << 9
---   local BTN_X = 1 << 10
-
---   flycast.input.releaseButtons(player, DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT)
---   flycast.input.releaseButtons(player, BTN_X | BTN_A | BTN_Y | BTN_B)
-
---   flycast.memory.write16(DC_MVC2_MEMORY_TABLE.p1_char1_magneto_flight_timer, 0x00)
-
--- end
-
 flycast_callbacks = {
-  -- Start = cbStart,
-  -- Resume = cbResume,
+  -- start = cbStart,
+  -- resume = cbResume,
   overlay = cbOverlay,
   vblank = cbVBlank
 }
