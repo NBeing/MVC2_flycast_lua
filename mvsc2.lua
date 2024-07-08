@@ -6,7 +6,7 @@ live = require './training/live_functions'
 --
 doMove = require './training/do_move_functions'
 sequence_manager = require './training/sequence_manager'
-moveChar = require './training/move_characters_functions'
+move_characters = require './training/move_characters_functions'
 --
 ui = config.ui
 
@@ -20,7 +20,7 @@ local customSequence = {
     end
   },
   {
-    waitFrames = 20,
+    waitFrames = 9,
     action = function()
       doMove.ForceSpecials(3)
     end
@@ -28,28 +28,30 @@ local customSequence = {
   -- Add more actions as needed
 }
 
-----
 function cbVBlank()
-  sequence_manager.runSequence()
+  -- local frameSkipRate = read8(0x2C289620)
+  -- print(frameSkipRate)
+  local frameSkipTracker = read8(ALL.Frame_Skip_Counter)
+  print(frameSkipTracker)
+  if frameSkipTracker == 0 then
+    sequence_manager.runSequence()
+  end
 end
 
 function cbOverlay()
   ui.beginWindow("Tests", 0, 0, 0, 0)
-  -- Tests
-  -- GetPoint()
   local PMemPoint = ui.text("T-pMem.GetPoint:  " .. tostring(pMem.GetPoint(1)))
   local GetPMemValue = ui.text("T-pMem.GetPMemVal:  " .. tostring(pMem.GetPMemValue("P1_X_Position_Arena")))
   local LookUpAddress = ui.text("T-live.LookUpAddress:  " .. tostring(live.LookUpAddress("P1_Knockdown_State")))
   local LookUpValue = ui.text("T-live.LookUpValue:  " .. tostring(live.LookUpValue("P1_Knockdown_State")))
   local LookUpKey = ui.text("T-live.LookUpKey:  " .. tostring(live.LookUpKey("P1_Knockdown_State")))
   local rAdrObj = ui.text("T-display.rAdrObj:  " .. tostring(display.ReadAddressObject("Knockdown_State")))
-  -- Move Players
-  ui.button('Move Players Right', function()
-    moveChar.movePlayers()
-  end)
   -- Create the button to start the sequence
-  ui.button('Do Special', function()
+  ui.button('Do Sequence01', function()
     sequence_manager.startSequence(customSequence)
+  end)
+  ui.button('Move Camera', function()
+    sequence_manager.startSequence(move_characters)
   end)
 
   ui.endWindow()

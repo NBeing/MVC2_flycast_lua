@@ -12,7 +12,7 @@ local function ForceSpecials(specialID)
   local Knockdown_State = PlayerMemoryAddresses.Knockdown_State.hexOffset
 
   write8(base + Special_Attack_ID, specialID)
-  write8(base + Special_Strength, 0)
+  write8(base + Special_Strength, 1)
   write8(base + Stun_Check, 0)
   write8(base + Action_Flags, 0)
   write8(base + Animation_Reset, 0)
