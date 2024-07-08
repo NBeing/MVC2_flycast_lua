@@ -14,7 +14,7 @@ ui = config.ui
 -- Define a custom sequence
 local customSequence = {
   {
-    waitFrames = 10,
+    waitFrames = 0,
     action = function()
       doMove.ForceSpecials(1)
     end
@@ -28,17 +28,24 @@ local customSequence = {
   -- Add more actions as needed
 }
 
+local FS_FLAG = false
+
 function cbVBlank()
-  -- local frameSkipRate = read8(0x2C289620)
-  -- print(frameSkipRate)
-  local frameSkipTracker = read8(ALL.Frame_Skip_Counter)
-  print(frameSkipTracker)
-  if frameSkipTracker == 0 then
+  if FS_FLAG then
     sequence_manager.runSequence()
   end
 end
 
 function cbOverlay()
+
+  -- Check for frame skip
+  if read8(ALL.Frame_Skip_Counter) == 4 then
+    FS_FLAG = true
+    -- print("Frame Skip Enabled")
+  else
+    FS_FLAG = false
+  end
+
   ui.beginWindow("Tests", 0, 0, 0, 0)
   local PMemPoint = ui.text("T-pMem.GetPoint:  " .. tostring(pMem.GetPoint(1)))
   local GetPMemValue = ui.text("T-pMem.GetPMemVal:  " .. tostring(pMem.GetPMemValue("P1_X_Position_Arena")))
