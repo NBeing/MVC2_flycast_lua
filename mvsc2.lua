@@ -6,9 +6,6 @@ live = require './training/live_functions'
 --
 ui = config.ui
 
--- mvc2char = require '.training/data/mvc2/utils/characters'
--- mvc2char = require '.training/data/mvc2/data/stages'
-
 local function movePlayers()
   -- Unlock Camera
   write8(SystemMemoryAddresses.Camera_Lock.Address, 2)
@@ -23,20 +20,8 @@ local function movePlayers()
   write8(SystemMemoryAddresses.Camera_Lock.Address, 1)
 end
 
-local function ForceSpecials(oneOrTwo)
-  local oldFrame = CURRENT_FRAME
-  print("Old Frame:", oldFrame)
-
-  local base
-
-  if oneOrTwo == 1 then
-    -- print(base)
-    base = live.LookUpAddress("P1_Base")
-  elseif oneOrTwo == 2 then
-    -- print(base)
-    base = live.LookUpAddress("P2_Base")
-  end
-
+local function ForceSpecials(specialID)
+  local base = live.LookUpAddress("P1_Base")
   local Special_Attack_ID = PlayerMemoryAddresses.Special_Attack_ID.hexOffset
   local Special_Strength = PlayerMemoryAddresses.Special_Strength.hexOffset
   local Stun_Check = PlayerMemoryAddresses.Stun_Check.hexOffset
@@ -44,13 +29,60 @@ local function ForceSpecials(oneOrTwo)
   local Animation_Reset = PlayerMemoryAddresses.Animation_Reset.hexOffset
   local Knockdown_State = PlayerMemoryAddresses.Knockdown_State.hexOffset
 
-  write8(base + Special_Attack_ID, 0x1) -- Hyper-Grav
-  write8(base + Special_Strength, 0x0)
-  write8(base + Stun_Check, 0x0)
-  write8(base + Action_Flags, 0x0)
-  write8(base + Animation_Reset, 0x0)
-  write8(base + Knockdown_State, 0x15)
+  write8(base + Special_Attack_ID, specialID)
+  write8(base + Special_Strength, 0)
+  write8(base + Stun_Check, 0)
+  write8(base + Action_Flags, 0)
+  write8(base + Animation_Reset, 0)
+  write16(base + Knockdown_State, 21) -- Special_Attacks
+end
 
+------------------------------------
+-- Sequence management
+local startSequence = false
+local captureFirstFrame = nil
+local actionSequence = {
+  {
+    waitFrames = 10,
+    action = function()
+      ForceSpecials(1)
+    end
+  },
+  {
+    waitFrames = 10,
+    action = function()
+      ForceSpecials(3)
+    end
+  }
+}
+local currentActionIndex = 1
+
+function doSequenceOnButtonPress()
+  local currentFrame = flycast.state.getFrameNumber()
+  if not captureFirstFrame then
+    captureFirstFrame = currentFrame
+  end
+
+  local frameDifference = currentFrame - captureFirstFrame
+
+  if currentActionIndex <= #actionSequence and frameDifference >= actionSequence[currentActionIndex].waitFrames then
+    actionSequence[currentActionIndex].action()
+    currentActionIndex = currentActionIndex + 1
+    captureFirstFrame = currentFrame
+  end
+
+  if currentActionIndex > #actionSequence then
+    startSequence = false
+    captureFirstFrame = nil
+    currentActionIndex = 1
+  end
+end
+-------------------------------------------------
+
+function cbVBlank()
+  if startSequence then
+    doSequenceOnButtonPress()
+  end
 end
 
 function cbOverlay()
@@ -59,259 +91,241 @@ function cbOverlay()
 
   -- Tests
   -- GetPoint()
-  local PMemPoint = ui.text("Test-pMem.GetPoint:  " .. pMem.GetPoint(1))
+  -- local PMemPoint = ui.text("Test-pMem.GetPoint:  " .. pMem.GetPoint(1))
   --
   -- GetPMemValue()
-  local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("P1_X_Position_Arena"))
+  -- local GetPMemValue = ui.text("Test-pMem.GetPMemVal:  " .. pMem.GetPMemValue("P1_X_Position_Arena"))
   --
   -- LookUpAll
   -- Address
-  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("Camera_X_Position"))
+  local LookUpAddress = ui.text("Test-live.LookUpAddress:  " .. live.LookUpAddress("P1_Knockdown_State"))
   -- Value
-  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("Camera_X_Position"))
+  local LookUpValue = ui.text("Test-live.LookUpValue:  " .. live.LookUpValue("P1_Knockdown_State"))
   -- Key
-  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("Camera_X_Position"))
+  local LookUpKey = ui.text("Test-live.LookUpKey:  " .. live.LookUpKey("P1_Knockdown_State"))
   --
   -- ReadNote2
-  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Camera_Lock"))
+  local ReadAddressObject = ui.text("Test-display.ReadAddressObject:  " .. display.ReadAddressObject("Knockdown_State"))
   --
   -- Test Move Players
   ui.button('Move Players Right', function()
     movePlayers()
   end)
   --
-  -- flycast.state.getFrameNumber()
-  -- if flycast.state.getFrameNumber() % 2 == 0 then
-  --   ForceSpecials(1)
-  -- else
-  --   ForceSpecials(2)
-  -- end
-  -- Test Force Animation
-  ui.button(flycast.state.getFrameNumber(), function()
-    ForceSpecials(1)
+  -- Create the button to start the sequence
+  ui.button('Do Special', function()
+    startSequence = true
   end)
+
   ui.endWindow()
-
-  -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
-  --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
-  --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
-
-  --   ui.beginWindow("Game", 10, 10, 300, 0)
-  --   ui.text("Game Timer")
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.game_timer))
-
-  --   ui.text("Stage")
-  --   ui.rightText(STAGES[MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id)])
-  --   ui.endWindow()
-
-  --   ui.beginWindow("P1", math.floor((flycast.state.display.width / 4) - 125),
-  --     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_health))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_health))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_health))
-
-  --   ui.text("")
-
-  --   ui.text("Level")
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_level))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
-  --     ui.text("Character 1 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
-  --     ui.text("Character 2 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
-  --     ui.text("Character 3 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   ui.endWindow()
-
-  --   ui.beginWindow("P1 Dummy", math.floor((flycast.state.display.width / 4) - 250),
-  --     math.floor((flycast.state.display.height * (3 / 4))) - 125, 160, 0)
-
-  --   ui.button('P1 char 1 Max Unfly', function()
-  --     flycast.memory.write8(DC_MVC2_MEMORY_TABLE.p1_char1_unfly, 255)
-  --   end)
-
-  --   ui.button('Do the Funny', function()
-  --     -- doSpecial()
-  --   end)
-  --   ui.button('Do the load', function()
-  --     flycast.emulator.loadState(1)
-  --     jump(1)
-  --     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
-  --     print("Load state occurred on frame:", CURRENT_FRAME)
-  --   end)
-  --   ui.button('Do the save', function()
-  --     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
-  --     print("Save state was saved on frame:", CURRENT_FRAME)
-  --     flycast.emulator.saveState(1)
-  --     -- 24 - 0
-  --     -- 25 - 0
-  --     -- 26 - 2
-  --   end)
-
-  --   ui.button('Switch Character Ass', function()
-  --     switch_character_a(1)
-  --   end)
-  --   ui.button('Switch Character B', function()
-  --     switch_character_b(1)
-  --   end)
-
-  --   ui.button('Jump', function()
-  --     jump(1)
-  --   end)
-  --   ui.button('Forward', function()
-  --     forward(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
-  --   end)
-  --   ui.button('Back', function()
-  --     block(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
-  --   end)
-  --   ui.button('Crouch', function()
-  --     crouch(1)
-  --   end)
-  --   ui.button('Release', function()
-  --     release_all(1)
-  --   end)
-
-  --   ui.endWindow()
-
-  --   ui.beginWindow("P2", math.floor((flycast.state.display.width * (3 / 4)) - 125),
-  --     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_health))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_health))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
-  --     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
-  --   else
-  --     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
-  --   end
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_health))
-
-  --   ui.text("")
-
-  --   ui.text("Level")
-  --   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_level))
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
-  --     ui.text("Character 1 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
-  --     ui.text("Character 2 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
-  --     ui.text("Character 3 Facing")
-  --     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_facing_right) == 1 then
-  --       ui.rightText("Right")
-  --     else
-  --       ui.rightText("Left")
-  --     end
-  --   end
-
-  --   ui.endWindow()
-
-  --   ui.beginWindow("P2 Dummy", math.floor(flycast.state.display.width * (3 / 4)) + 125,
-  --     math.floor(flycast.state.display.height * (3 / 4)) - 125, 160, 0)
-
-  --   ui.button('Switch Character A', function()
-  --     switch_character_a(2)
-  --   end)
-  --   ui.button('Switch Character B', function()
-  --     switch_character_b(2)
-  --   end)
-
-  --   ui.button('Jump', function()
-  --     jump(2)
-  --   end)
-  --   ui.button('Forward', function()
-  --     forward(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
-  --   end)
-  --   ui.button('Back', function()
-  --     block(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
-  --   end)
-  --   ui.button('Crouch', function()
-  --     crouch(2)
-  --   end)
-  --   ui.button('Release', function()
-  --     release_all(2)
-  --   end)
-
-  --   ui.endWindow()
-  -- end
 end
 
--- VBlank Stuff (?)
--- local playing = false
--- local frame_started = flycast.state.getFrameNumber()
+-- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
+--   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
+--   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
 
--- function cbVBlank()
+--   ui.beginWindow("Game", 10, 10, 300, 0)
+--   ui.text("Game Timer")
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.game_timer))
 
---   flycast.state.getFrameNumber()
---   if flycast.state.getFrameNumber() % 2 == 0 then
---     ForceSpecials(1)
+--   ui.text("Stage")
+--   ui.rightText(STAGES[MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id)])
+--   ui.endWindow()
+
+--   ui.beginWindow("P1", math.floor((flycast.state.display.width / 4) - 125),
+--     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
 --   else
---     ForceSpecials(2)
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_id) + 1])
 --   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_health))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
+--   else
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_id) + 1])
+--   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_health))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
+--   else
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_id) + 1])
+--   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_health))
+
+--   ui.text("")
+
+--   ui.text("Level")
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_level))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_active) == 1 then
+--     ui.text("Character 1 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_active) == 1 then
+--     ui.text("Character 2 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char2_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_active) == 1 then
+--     ui.text("Character 3 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char3_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   ui.endWindow()
+
+--   ui.beginWindow("P1 Dummy", math.floor((flycast.state.display.width / 4) - 250),
+--     math.floor((flycast.state.display.height * (3 / 4))) - 125, 160, 0)
+
+--   ui.button('P1 char 1 Max Unfly', function()
+--     flycast.memory.write8(DC_MVC2_MEMORY_TABLE.p1_char1_unfly, 255)
+--   end)
+
+--   ui.button('Do the Funny', function()
+--     -- doSpecial()
+--   end)
+--   ui.button('Do the load', function()
+--     flycast.emulator.loadState(1)
+--     jump(1)
+--     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
+--     print("Load state occurred on frame:", CURRENT_FRAME)
+--   end)
+--   ui.button('Do the save', function()
+--     CURRENT_FRAME = flycast.memory.read32(DC_MVC2_MEMORY_TABLE.rom_framecount)
+--     print("Save state was saved on frame:", CURRENT_FRAME)
+--     flycast.emulator.saveState(1)
+--     -- 24 - 0
+--     -- 25 - 0
+--     -- 26 - 2
+--   end)
+
+--   ui.button('Switch Character Ass', function()
+--     switch_character_a(1)
+--   end)
+--   ui.button('Switch Character B', function()
+--     switch_character_b(1)
+--   end)
+
+--   ui.button('Jump', function()
+--     jump(1)
+--   end)
+--   ui.button('Forward', function()
+--     forward(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
+--   end)
+--   ui.button('Back', function()
+--     block(1, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p1_char1_facing_right))
+--   end)
+--   ui.button('Crouch', function()
+--     crouch(1)
+--   end)
+--   ui.button('Release', function()
+--     release_all(1)
+--   end)
+
+--   ui.endWindow()
+
+--   ui.beginWindow("P2", math.floor((flycast.state.display.width * (3 / 4)) - 125),
+--     math.floor((flycast.state.display.height / 4) - 50), 250, 0)
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
+--   else
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_id) + 1])
+--   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_health))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
+--   else
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_id) + 1])
+--   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_health))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
+--     ui.text("* " .. CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
+--   else
+--     ui.text(CHARACTER[MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_id) + 1])
+--   end
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_health))
+
+--   ui.text("")
+
+--   ui.text("Level")
+--   ui.rightText(MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_level))
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_active) == 1 then
+--     ui.text("Character 1 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_active) == 1 then
+--     ui.text("Character 2 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char2_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_active) == 1 then
+--     ui.text("Character 3 Facing")
+--     if MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char3_facing_right) == 1 then
+--       ui.rightText("Right")
+--     else
+--       ui.rightText("Left")
+--     end
+--   end
+
+--   ui.endWindow()
+
+--   ui.beginWindow("P2 Dummy", math.floor(flycast.state.display.width * (3 / 4)) + 125,
+--     math.floor(flycast.state.display.height * (3 / 4)) - 125, 160, 0)
+
+--   ui.button('Switch Character A', function()
+--     switch_character_a(2)
+--   end)
+--   ui.button('Switch Character B', function()
+--     switch_character_b(2)
+--   end)
+
+--   ui.button('Jump', function()
+--     jump(2)
+--   end)
+--   ui.button('Forward', function()
+--     forward(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
+--   end)
+--   ui.button('Back', function()
+--     block(2, MEMORY.read8(DC_MVC2_MEMORY_TABLE.p2_char1_facing_right))
+--   end)
+--   ui.button('Crouch', function()
+--     crouch(2)
+--   end)
+--   ui.button('Release', function()
+--     release_all(2)
+--   end)
+
+--   ui.endWindow()
+-- end
 -- end
 
 -- function release_pb(player)
@@ -440,7 +454,8 @@ end
 -- end
 
 flycast_callbacks = {
-  -- start = cbStart,
+  -- Start = cbStart,
+  -- Resume = cbResume,
   overlay = cbOverlay,
   vblank = cbVBlank
 }
