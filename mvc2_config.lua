@@ -7,13 +7,15 @@ local MVC2_OBJ = util.read_object_from_json_file('./training/data/SPREADSHEET.js
 -- Abstractions
 local jSS = MVC2_OBJ.SPREADSHEET
 
-local PlayerMemoryAddresses = jSS.PlayerMemoryAddresses
-local SpecificCharacterAddresses = jSS.SpecificCharacterAddresses
-local Player1And2Addresses = jSS.Player1And2Addresses
-local SystemMemoryAddresses = jSS.SystemMemoryAddresses
-local CharacterInfo = jSS.CharacterInfo
-local StagesInfo = jSS.StagesInfo
-local InputsInfo = jSS.InputsInfo
+PlayerMemoryAddresses = jSS.PlayerMemoryAddresses
+SpecificCharacterAddresses = jSS.SpecificCharacterAddresses
+Player1And2Addresses = jSS.Player1And2Addresses
+SystemMemoryAddresses = jSS.SystemMemoryAddresses
+CharacterInfo = jSS.CharacterInfo
+StagesInfo = jSS.StagesInfo
+InputsInfo = jSS.InputsInfo
+--
+ALL = MVC2_OBJ.AllAddresses
 
 local byteSize = {
   "Byte",
@@ -23,16 +25,16 @@ local byteSize = {
 }
 
 -- Readers / Writers Aliases
-local read8 = flycast.memory.read8
-local read16 = flycast.memory.read16
-local read32 = flycast.memory.read32
+read8 = flycast.memory.read8
+read16 = flycast.memory.read16
+read32 = flycast.memory.read32
 --
-local write8 = flycast.memory.write8
-local write16 = flycast.memory.write16
-local write32 = flycast.memory.write32
+write8 = flycast.memory.write8
+write16 = flycast.memory.write16
+write32 = flycast.memory.write32
 
 -- Custom function to read float values with truncation to 7 decimal places and handling small numbers
-local readFloat = function(address)
+readFloat = function(address)
   local intValue = read32(address)
 
   if intValue == 0 then
@@ -67,7 +69,7 @@ local readFloat = function(address)
 end
 
 -- Write a float value to a memory address
-local function writeFloat(address, value)
+writeFloat = function(address, value)
   -- print("Attempting to write float value:", value, "to address:", string.format("0x%X", address))
 
   -- Handle the special case of zero
@@ -178,12 +180,10 @@ local function getSectionAndObject(address_name)
 end
 
 -- Important Constants
--- Ensure the Frame_Counter address is correctly referenced
-local CURRENT_FRAME_ADDRESS = SystemMemoryAddresses.Frame_Counter.Address
-local CURRENT_FRAME = read32(CURRENT_FRAME_ADDRESS)
+CURRENT_FRAME = read32(SystemMemoryAddresses.Frame_Counter.Address)
 
 -- UI and Memory Aliases
-local ui = flycast.ui
+ui = flycast.ui
 local MEMORY = flycast.memory
 
 -- Return as a module
@@ -197,6 +197,7 @@ return {
   CharacterInfo = CharacterInfo,
   StagesInfo = StagesInfo,
   InputsInfo = InputsInfo,
+  all = all,
   read8 = read8,
   read16 = read16,
   read32 = read32,
@@ -207,7 +208,6 @@ return {
   writeFloat = writeFloat,
   CURRENT_FRAME = CURRENT_FRAME,
   ui = ui,
-  MEMORY = MEMORY,
   byteSize = byteSize,
   determineType = determineType,
   getSectionAndObject = getSectionAndObject

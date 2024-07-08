@@ -10,18 +10,47 @@ ui = config.ui
 -- mvc2char = require '.training/data/mvc2/data/stages'
 
 local function movePlayers()
-
   -- Unlock Camera
-  config.write8(config.SystemMemoryAddresses.Camera_Lock.Address, 2)
+  write8(SystemMemoryAddresses.Camera_Lock.Address, 2)
   -- Move Players to Right Corner
-  config.writeFloat(live.LookUpAddress("P1_X_Position_Arena"), 1100)
-  config.writeFloat(live.LookUpAddress("P2_X_Position_Arena"), 1250)
+  writeFloat(live.LookUpAddress("P1_X_Position_Arena"), 1100)
+  writeFloat(live.LookUpAddress("P2_X_Position_Arena"), 1250)
   -- Move Camera
-  config.writeFloat(config.SystemMemoryAddresses.Camera_X_Position.Address, 960)
-  config.writeFloat(config.SystemMemoryAddresses.Camera_X_Rotation.Address, 960)
+  writeFloat(SystemMemoryAddresses.Camera_X_Position.Address, 960)
+  writeFloat(SystemMemoryAddresses.Camera_X_Rotation.Address, 960)
   -- Lock Camera
   -- Wait 
-  config.write8(config.SystemMemoryAddresses.Camera_Lock.Address, 1)
+  write8(SystemMemoryAddresses.Camera_Lock.Address, 1)
+end
+
+local function ForceSpecials(oneOrTwo)
+  local oldFrame = CURRENT_FRAME
+  print("Old Frame:", oldFrame)
+
+  local base
+
+  if oneOrTwo == 1 then
+    -- print(base)
+    base = live.LookUpAddress("P1_Base")
+  elseif oneOrTwo == 2 then
+    -- print(base)
+    base = live.LookUpAddress("P2_Base")
+  end
+
+  local Special_Attack_ID = PlayerMemoryAddresses.Special_Attack_ID.hexOffset
+  local Special_Strength = PlayerMemoryAddresses.Special_Strength.hexOffset
+  local Stun_Check = PlayerMemoryAddresses.Stun_Check.hexOffset
+  local Action_Flags = PlayerMemoryAddresses.Action_Flags.hexOffset
+  local Animation_Reset = PlayerMemoryAddresses.Animation_Reset.hexOffset
+  local Knockdown_State = PlayerMemoryAddresses.Knockdown_State.hexOffset
+
+  write8(base + Special_Attack_ID, 0x1) -- Hyper-Grav
+  write8(base + Special_Strength, 0x0)
+  write8(base + Stun_Check, 0x0)
+  write8(base + Action_Flags, 0x0)
+  write8(base + Animation_Reset, 0x0)
+  write8(base + Knockdown_State, 0x15)
+
 end
 
 function cbOverlay()
@@ -50,9 +79,19 @@ function cbOverlay()
   ui.button('Move Players Right', function()
     movePlayers()
   end)
-
+  --
+  -- flycast.state.getFrameNumber()
+  -- if flycast.state.getFrameNumber() % 2 == 0 then
+  --   ForceSpecials(1)
+  -- else
+  --   ForceSpecials(2)
+  -- end
+  -- Test Force Animation
+  ui.button(flycast.state.getFrameNumber(), function()
+    ForceSpecials(1)
+  end)
   ui.endWindow()
-  -- end)
+
   -- if MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id) == MEMORY.read8(DC_MVC2_MEMORY_TABLE.stage_id_select) and
   --   MEMORY.read8(DC_MVC2_MEMORY_TABLE.in_match) == 4 then
   --   MEMORY.write8(DC_MVC2_MEMORY_TABLE.game_timer, 99)
@@ -132,11 +171,6 @@ function cbOverlay()
 
   --   ui.button('Do the Funny', function()
   --     -- doSpecial()
-  --     doSpecial2()
-  --     -- local Camera_Lock = flycast.memory.write8(0x2C26A51F, 0x02)
-  --     -- local Camera_X_Position = flycast.memory.write16(0x2C26A56C, 10000)
-  --     -- local Camera_X_Rotation = flycast.memory.write16(0x2C26A524, 10000)
-  --     -- local Camera_Lock = flycast.memory.write8(0x2C26A51F, 0x00)    
   --   end)
   --   ui.button('Do the load', function()
   --     flycast.emulator.loadState(1)
@@ -266,6 +300,20 @@ function cbOverlay()
   -- end
 end
 
+-- VBlank Stuff (?)
+-- local playing = false
+-- local frame_started = flycast.state.getFrameNumber()
+
+-- function cbVBlank()
+
+--   flycast.state.getFrameNumber()
+--   if flycast.state.getFrameNumber() % 2 == 0 then
+--     ForceSpecials(1)
+--   else
+--     ForceSpecials(2)
+--   end
+-- end
+
 -- function release_pb(player)
 --   time_to_release_pb = nil
 --   flycast.input.releaseButtons(player, BTN_X | BTN_Y)
@@ -319,18 +367,6 @@ end
 --   flycast.memory.write8(based1 + 0x06, 0x0) -- reset anim
 --   flycast.memory.write8(based1 + 0x07, 0x0) -- reset anim ???
 --   flycast.memory.write8(based1 + 0x01d0, 0x15) -- set special move state
--- end
--- function doSpecial2()
---   -- 0x8C268340 --based
---   -- local based = 0x8C268340 --p1
---   local based2 = 0x8C268340 -- p2
---   flycast.memory.write8(based2 + 0x01E9, 0xB) -- special id
---   flycast.memory.write8(based2 + 0x01A3, 0x0) -- strength
---   flycast.memory.write8(based2 + 0x05, 0x0) -- reset anim
---   flycast.memory.write8(based2 + 0x06, 0x0) -- reset anim
---   flycast.memory.write8(based2 + 0x07, 0x0) -- reset anim ???
---   flycast.memory.write8(based2 + 0x01d0, 0x1D) -- set special move state
-
 -- end
 
 -- function jump(player)
@@ -403,28 +439,8 @@ end
 
 -- end
 
--- local playing = false
--- local frame_started = flycast.state.getFrameNumber()
--- local frametable = buttonUtil.test_input_table()
--- function cbVBlank()
---   -- Timer Infinite
---   --  flycast.memory.write8(0x8c289630, 0x63)
---   local fc = flycast.state.getFrameNumber()
---    -- release_all_buttons_DC()
---    if playing and fc > frame_started then
---      if frametable[fc - frame_started] ~= nil then
---        print("Should play", fc, frame_started, frametable[fc - frame_started])
---        buttonUtil.setFriendlyKeys_DC(frametable[fc - frame_started])
---      else
---        print("Stopping dude")
---        playing = false
---        buttonUtil.release_all_buttons_DC()
---      end
---    end
---  end
-
 flycast_callbacks = {
   -- start = cbStart,
-  overlay = cbOverlay
-  -- vblank = cbVBlank
+  overlay = cbOverlay,
+  vblank = cbVBlank
 }
