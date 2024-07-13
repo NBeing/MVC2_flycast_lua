@@ -16,13 +16,19 @@ local customSequence = {
   {
     waitFrames = 0,
     action = function()
-      doMove.ForceSpecials(10)
+      doMove.ForceNormals()
     end
   }
   -- {
+  --   waitFrames = 15,
+  --   action = function()
+  --     doMove.ForceSpecials(1, 1)
+  --   end
+  -- }
+  -- {
   --   waitFrames = 9,
   --   action = function()
-  --     doMove.ForceSpecials(3)
+  --     doMove.ForceSupers(3)
   --   end
   -- }
   -- Add more actions as needed
@@ -49,8 +55,8 @@ function cbOverlay()
   ui.beginWindow("Tests", 0, 0, 0, 0)
   -- local PMemPoint = ui.text("T-pMem.GetPoint:  " .. tostring(pMem.GetPoint(1)))
   -- local GetPMemValue = ui.text("T-pMem.GetPMemVal:  " .. tostring(pMem.GetPMemValue("P1_X_Position_Arena")))
-  -- local LookUpAddress = ui.text("T-live.LookUpAddress:  " .. tostring(live.LookUpAddress("P1_Knockdown_State")))
-  -- local LookUpValue = ui.text("T-live.LookUpValue:  " .. tostring(live.LookUpValue("P1_Knockdown_State")))
+  -- local LookUpAddress = ui.text("T-live.LookUpAddress:  " .. tostring(live.LookUpAddress("P1_Animation_Timer_Main")))
+  -- local LookUpValue = ui.text("T-live.LookUpValue:  " .. tostring(live.LookUpValue("P1_Animation_Timer_Main")))
   -- local LookUpKey = ui.text("T-live.LookUpKey:  " .. tostring(live.LookUpKey("P1_Knockdown_State")))
   -- local rAdrObj = ui.text("T-display.rAdrObj:  " .. tostring(display.ReadAddressObject("Knockdown_State")))
   -- Create the button to start the sequence

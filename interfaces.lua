@@ -123,7 +123,6 @@ local CharacterInfo = {
   "SpecialID_20_1",
   "Note1",
   "Note2"
-
 }
 
 -- Interface for StagesInfo

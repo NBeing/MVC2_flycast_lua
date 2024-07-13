@@ -19,16 +19,6 @@ move_characters.movePlayersSteps = {
       writeFloat(SystemMemoryAddresses.Camera_X_Rotation.Address, 960)
     end
   },
-  -- {
-  --   waitFrames = 1,
-  --   action = function()
-  --   end
-  -- },
-  -- {
-  --   waitFrames = 1,
-  --   action = function()
-  --   end
-  -- },
   {
     waitFrames = 0,
     action = function()
